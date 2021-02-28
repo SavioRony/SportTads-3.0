@@ -5,11 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository {
+public interface ProdutoRepository extends JpaRepository<ProdutoModel, Integer> {
 
-    ProdutoModel findById(Integer id);
-
-    ProdutoModel deleteById(Integer id);
-
+    ProdutoModel findById(int id);
+    ProdutoModel deleteById(int id);
     ProdutoModel save(ProdutoModel produto);
 }

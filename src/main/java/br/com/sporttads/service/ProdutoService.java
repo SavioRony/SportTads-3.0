@@ -11,26 +11,26 @@ import java.util.List;
 public class ProdutoService {
 
     @Autowired
-    private ProdutoRepository repostirory;
+    private ProdutoRepository repository;
 
-    public ProdutoModel getById(Integer id) {
-        return repostirory.findById(id);
+    public ProdutoModel getById(int id) {
+        return repository.findById(id);
     }
 
-    public ProdutoModel delete(Integer id) {
-        return repostirory.deleteById(id);
+    public ProdutoModel delete(int id) {
+        return repository.deleteById(id);
     }
 
     public ProdutoModel post(ProdutoModel produto) {
-        return repostirory.save(produto);
+        return repository.save(produto);
     }
 
     public List<ProdutoModel> getAll() {
-        return repostirory.findAll();
+        return repository.findAll();
     }
 
     public ProdutoModel edit(ProdutoModel produto) {
-        return repostirory.save(produto);
+        return repository.save(produto);
     }
 
 
