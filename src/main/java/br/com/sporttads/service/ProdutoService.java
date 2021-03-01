@@ -13,12 +13,12 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
-    public ProdutoModel getById(int id) {
-        return repository.findById(id);
+    public ProdutoModel getById(Integer id) {
+        return repository.findById(id).orElse(new ProdutoModel());
     }
 
-    public ProdutoModel delete(int id) {
-        return repository.deleteById(id);
+     public void delete(Integer id) {
+        repository.deleteById(id);
     }
 
     public ProdutoModel post(ProdutoModel produto) {
@@ -29,8 +29,9 @@ public class ProdutoService {
         return repository.findAll();
     }
 
-    public ProdutoModel edit(ProdutoModel produto) {
-        return repository.save(produto);
+        public ProdutoModel edit(Integer id) {
+        ProdutoModel produtoModel = getById(id);
+        return repository.save(produtoModel);
     }
 
 

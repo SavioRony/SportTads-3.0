@@ -30,6 +30,9 @@ public class ProdutoModel {
         this.categoria = categoria;
     }
 
+    public ProdutoModel() {
+    }
+
     public String getNome() {
         return nome;
     }

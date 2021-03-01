@@ -16,7 +16,7 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(Integer id) {
+    public ResponseEntity getById(@PathVariable(value = "id") int id) {
         return new ResponseEntity(produtoService.getById(id), HttpStatus.OK);
     }
 
@@ -30,14 +30,14 @@ public class ProdutoController {
         return new ResponseEntity(produtoService.post(produto), HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity edit(@RequestBody ProdutoModel produto) {
-        return new ResponseEntity(produtoService.edit(produto), HttpStatus.OK);
+    @PutMapping("/update/{id}")
+    public ResponseEntity edit(@PathVariable(value = "id")Integer id, @RequestBody ProdutoModel produto) {
+        return new ResponseEntity(produtoService.edit(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(Integer id) {
-        return new ResponseEntity(produtoService.delete(id), HttpStatus.OK);
+    public void delete(@PathVariable(value = "id") Integer id) {
+        produtoService.delete(id);
     }
 }
 
