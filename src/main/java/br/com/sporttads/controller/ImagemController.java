@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import br.com.sporttads.dto.ImagemDTO;
 import br.com.sporttads.service.ImagemService;
+import br.com.sporttads.utils.DiscoUtils;
 
 @RestController
 @RequestMapping("/imagens")
@@ -22,9 +22,13 @@ public class ImagemController {
 	@Autowired
 	private ImagemService service;
 
+	@Autowired
+	private DiscoUtils disc;
+
 	@PostMapping()
-	public ResponseEntity<?> save(@RequestBody ImagemDTO dto) {
-		return new ResponseEntity<>(service.salvar(dto), HttpStatus.OK);
+	public ResponseEntity<?> save(@RequestParam MultipartFile foto) {
+		String caminho = disc.salvar(foto);
+		return new ResponseEntity<>(service.salvar(caminho), HttpStatus.OK);
 	}
 
 	@GetMapping()
@@ -37,14 +41,10 @@ public class ImagemController {
 		return new ResponseEntity<>(service.consultar(id), HttpStatus.OK);
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody ImagemDTO dto) {
-		return new ResponseEntity<>(service.alterar(id, dto), HttpStatus.OK);
-	}
-
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		service.deletar(id);
-		return ResponseEntity.ok("IMAGEM EXCLUÍDA COM SUCESSO!");
+		return ResponseEntity.ok("Imagem excluída com sucesso!");
 	}
+
 }

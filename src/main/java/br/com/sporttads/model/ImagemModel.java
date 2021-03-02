@@ -5,11 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
-
-import br.com.sporttads.dto.ImagemDTO;
-import javassist.bytecode.ByteArray;
 
 @Entity
 @Table(name = "tb_imagem")
@@ -18,44 +14,31 @@ public class ImagemModel {
 	@Id
 	@Column(name = "idImagem")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private Integer id;
 
-	private String nome;
+	private String caminho;
 
-	@Lob
-	private ByteArray imagem;
-
-	public String getNome() {
-		return nome;
+	public String getCaminho() {
+		return caminho;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setCaminho(String caminho) {
+		this.caminho = caminho;
 	}
 
-	public ByteArray getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(ByteArray imagem) {
-		this.imagem = imagem;
-	}
-
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public ImagemModel(String id, String nome, ByteArray imagem) {
+	public ImagemModel(Integer id, String caminho) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.imagem = imagem;
+		this.caminho = caminho;
 	}
 
-	public ImagemModel(ImagemDTO dto) {
+	public ImagemModel(String caminho) {
 		super();
-		this.nome = dto.getNome();
-		this.imagem = dto.getImagem();
+		this.caminho = caminho;
 	}
 
 	public ImagemModel() {
@@ -65,9 +48,8 @@ public class ImagemModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((caminho == null) ? 0 : caminho.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((imagem == null) ? 0 : imagem.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
@@ -80,27 +62,22 @@ public class ImagemModel {
 		if (getClass() != obj.getClass())
 			return false;
 		ImagemModel other = (ImagemModel) obj;
+		if (caminho == null) {
+			if (other.caminho != null)
+				return false;
+		} else if (!caminho.equals(other.caminho))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (imagem == null) {
-			if (other.imagem != null)
-				return false;
-		} else if (!imagem.equals(other.imagem))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ImagemModel [id=" + id + ", nome=" + nome + ", imagem=" + imagem + "]";
+		return "ImagemModel [id=" + id + ", caminho=" + caminho + "]";
 	}
 
 }
