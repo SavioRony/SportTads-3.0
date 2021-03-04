@@ -41,7 +41,7 @@ public class ImagemController {
 		return new ResponseEntity<>(service.consultar(id), HttpStatus.OK);
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		service.deletar(id);
 		return ResponseEntity.ok("Imagem excluída com sucesso!");

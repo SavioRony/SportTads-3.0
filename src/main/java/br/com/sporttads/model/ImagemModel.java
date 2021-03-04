@@ -33,12 +33,12 @@ public class ImagemModel {
 	public ImagemModel(Integer id, String caminho) {
 		super();
 		this.id = id;
-		this.caminho = caminho;
+		this.caminho = caminho.replace("\\", "/");
 	}
 
 	public ImagemModel(String caminho) {
 		super();
-		this.caminho = caminho;
+		this.caminho = caminho.replace("\\", "/");
 	}
 
 	public ImagemModel() {
