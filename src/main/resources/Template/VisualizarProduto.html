@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Visualizar Produto</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.thumbs img').click(function () {
+                var cover = $('.cover img');
+                var thumb = $(this).attr('src');
+                if (cover.attr('src') !== thumb) {
+                    cover.fadeTo('200', '0', function () {
+                        cover.attr('src', thumb);
+                        cover.fadeTo('150', '1');
+                    });
+                    $('.thumbs img').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <article>
+        <section class="product_images">
+            <h2>Produto</h2>
+            <div class="cover">
+                <img src="img/produto/chuteira 01.jpg" alt="produto" title="Produto">
+            </div>
+            <div class="thumbs">
+                <img src="img/produto/chuteira 01.jpg" class="active" alt="Chuteira" title="Chuteira">
+                <img src="img/produto/chuteira 02.jpg" alt="Chuteira" title="Chuteira">
+                <img src="img/produto/chuteira 03.jpg" alt="Chuteira" title="Chuteira">
+                <img src="img/produto/chuteira 04.jpg" alt="Chuteira" title="Chuteira">
+                <img src="img/produto/chuteira 05.jpg" alt="Chuteira" title="Chuteira">
+            </div>
+        </section>
+        <section class="product_info">
+            <h2>Comprar</h2>
+            <div class="info" >
+                <label>Qtd</label>
+                <input type="number" name="Quantidade"><br>
+                <label><strong>Total:</strong> R$ 150,00</label>
+                <button value="comprar" style="float: right;">COMPRAR</button>
+            </div>
+
+        </section>
+    </article>
+</body>
+
+</html>
