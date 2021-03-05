@@ -1,0 +1,43 @@
+.clearfix{
+  clear: both; /* Para limpar as tags flutuando acima ou abaixo*/
+}
+body {
+    background-color: #4099E6;
+  }
+
+.visualizarProdutos{
+  width: 100%;
+  background-color:#4099E6;  
+}
+
+.tabelaPreco{
+  float: inline-start;
+}
+div.carousel{
+  width: 50%;
+  max-height: 50%;
+  margin-left: 5%;
+       
+
+}
+
+div .carousel img{
+  border-image: 10px;
+
+}
+
+.secgeral{
+  max-width: 50%;
+  background: brown;
+}
+
+.sec1{
+  max-width: 50%;
+  background-color: darkgreen;
+}
+
+.sec2{
+  max-width: 50%;
+  margin-left: 50%;
+  background-color: gold;
+}
