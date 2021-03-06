@@ -5,10 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "tb_imagem")
+@Data
 public class ImagemModel {
 
 	@Id
@@ -18,66 +23,24 @@ public class ImagemModel {
 
 	private String caminho;
 
-	public String getCaminho() {
-		return caminho;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "idProduto", name = "idProduto")
+	private ProdutoModel produto;
+
+	public ImagemModel(String caminho, ProdutoModel produto) {
+		super();
+		this.caminho = caminho.replace("\\", "/");
+		this.produto = produto;
 	}
 
-	public void setCaminho(String caminho) {
-		this.caminho = caminho;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public ImagemModel(Integer id, String caminho) {
+	public ImagemModel(Integer id, String caminho, ProdutoModel produto) {
 		super();
 		this.id = id;
 		this.caminho = caminho.replace("\\", "/");
-	}
-
-	public ImagemModel(String caminho) {
-		super();
-		this.caminho = caminho.replace("\\", "/");
+		this.produto = produto;
 	}
 
 	public ImagemModel() {
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((caminho == null) ? 0 : caminho.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ImagemModel other = (ImagemModel) obj;
-		if (caminho == null) {
-			if (other.caminho != null)
-				return false;
-		} else if (!caminho.equals(other.caminho))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "ImagemModel [id=" + id + ", caminho=" + caminho + "]";
 	}
 
 }

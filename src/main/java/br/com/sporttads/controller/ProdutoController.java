@@ -23,7 +23,7 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable(value = "id") int id) {
+	public ResponseEntity<?> getById(@PathVariable Integer id) {
 		return new ResponseEntity<>(produtoService.getById(id), HttpStatus.OK);
 	}
 

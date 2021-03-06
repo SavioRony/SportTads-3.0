@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.sporttads.model.ImagemModel;
+import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.repository.ImagemRepository;
 
 @Service
@@ -14,8 +15,8 @@ public class ImagemService {
 	@Autowired
 	private ImagemRepository repository;
 
-	public ImagemModel salvar(String caminho) {
-		ImagemModel imagem = new ImagemModel(caminho);
+	public ImagemModel salvar(String caminho, ProdutoModel produto) {
+		ImagemModel imagem = new ImagemModel(caminho, produto);
 		return repository.save(imagem);
 	}
 
