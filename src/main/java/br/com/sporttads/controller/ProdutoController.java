@@ -16,34 +16,35 @@ import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.service.ProdutoService;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/produtos")
 public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
 
 	@GetMapping("/{id}")
-	public ResponseEntity getById(@PathVariable(value = "id") int id) {
-		return new ResponseEntity(produtoService.getById(id), HttpStatus.OK);
+	public ResponseEntity<?> getById(@PathVariable Integer id) {
+		return new ResponseEntity<>(produtoService.getById(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/all")
-	public ResponseEntity getAll() {
-		return new ResponseEntity(produtoService.getAll(), HttpStatus.OK);
+	@GetMapping()
+	public ResponseEntity<?> getAll() {
+		return new ResponseEntity<>(produtoService.getAll(), HttpStatus.OK);
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity post(@RequestBody ProdutoModel produto) {
-		return new ResponseEntity(produtoService.post(produto), HttpStatus.OK);
+	@PostMapping()
+	public ResponseEntity<?> post(@RequestBody ProdutoModel produto) {
+		return new ResponseEntity<>(produtoService.post(produto), HttpStatus.OK);
 	}
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity edit(@PathVariable(value = "id") Integer id, @RequestBody ProdutoModel produto) {
-		return new ResponseEntity(produtoService.edit(id), HttpStatus.OK);
+	@PutMapping("/{id}")
+	public ResponseEntity<?> edit(@PathVariable Integer id, @RequestBody ProdutoModel produto) {
+		return new ResponseEntity<>(produtoService.edit(id), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable(value = "id") Integer id) {
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		produtoService.delete(id);
+		return ResponseEntity.ok("Produto excluído com sucesso!");
 	}
 }

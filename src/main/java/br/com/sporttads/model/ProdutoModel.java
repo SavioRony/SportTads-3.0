@@ -1,16 +1,25 @@
 package br.com.sporttads.model;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.sporttads.enumeration.StatusEnumeration;
+import lombok.Data;
+
 @Entity
-@Table(name = "Produtos")
+@Table(name = "tb_produto")
+@Data
 public class ProdutoModel {
 
 	@Id
+	@Column(name = "idProduto")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
@@ -22,50 +31,23 @@ public class ProdutoModel {
 
 	private String categoria;
 
-	public Integer getId() {
-		return id;
-	}
+	private StatusEnumeration status;
+
+	@OneToMany(targetEntity = ImagemModel.class)
+	private List<ImagemModel> imagens;
 
 	public ProdutoModel(Integer id, String nome, Double preco, Integer quantidade, String categoria) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 		this.quantidade = quantidade;
 		this.categoria = categoria;
+		this.status = StatusEnumeration.ATIVO;
 	}
 
 	public ProdutoModel() {
+		this.status = StatusEnumeration.ATIVO;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
 }

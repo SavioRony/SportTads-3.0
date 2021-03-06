@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.service.ImagemService;
+import br.com.sporttads.service.ProdutoService;
 import br.com.sporttads.utils.DiscoUtils;
 
 @RestController
@@ -20,31 +22,35 @@ import br.com.sporttads.utils.DiscoUtils;
 public class ImagemController {
 
 	@Autowired
-	private ImagemService service;
+	private ImagemService imagemService;
+
+	@Autowired
+	private ProdutoService produtoService;
 
 	@Autowired
 	private DiscoUtils disc;
 
-	@PostMapping()
-	public ResponseEntity<?> save(@RequestParam MultipartFile foto) {
+	@PostMapping("/{idProduto}")
+	public ResponseEntity<?> save(@PathVariable Integer idProduto, @RequestParam MultipartFile foto) {
+		ProdutoModel produto = produtoService.getById(idProduto);
 		String caminho = disc.salvar(foto);
-		return new ResponseEntity<>(service.salvar(caminho), HttpStatus.OK);
+		return new ResponseEntity<>(imagemService.salvar(caminho, produto), HttpStatus.OK);
 	}
 
 	@GetMapping()
 	public ResponseEntity<?> findAll() {
-		return new ResponseEntity<>(service.listar(), HttpStatus.OK);
+		return new ResponseEntity<>(imagemService.listar(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable Integer id) {
-		return new ResponseEntity<>(service.consultar(id), HttpStatus.OK);
+		return new ResponseEntity<>(imagemService.consultar(id), HttpStatus.OK);
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
-		service.deletar(id);
-		return ResponseEntity.ok("Imagem excluída com sucesso!");
+		imagemService.deletar(id);
+		return ResponseEntity.ok("Imagem imagemService com sucesso!");
 	}
 
 }
