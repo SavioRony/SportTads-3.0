@@ -21,7 +21,7 @@
 								type="text" id="nomepesquisa" class="validate" name="nomepesquisa">
 						</div>
 						<div class="input-field col s2">
-							<button class="btn waves-effect waves-light" type="submit"
+							<button class="btn waves-effect light-blue accent-2" type="submit"
 								name="action">
 								Buscar <i class="material-icons right">search</i>
 							</button>
@@ -53,21 +53,13 @@
 							<td th:text="${produto.status}"></td>
 							<td><a th:href="@{editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
 							<td><a th:href="@{inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
-							<td><a href="">VISUALIZAR</a></td>
+							<td><a th:href="@{visualizarproduto}">VISUALIZAR</a></td>
 						</tr>
 					</tbody>
 				</table>
-				  <ul class="pagination">
-				    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				    <li class="active"><a href="#!">1</a></li>
-				    <li class="waves-effect"><a href="#!">2</a></li>
-				    <li class="waves-effect"><a href="#!">3</a></li>
-				    <li class="waves-effect"><a href="#!">4</a></li>
-				    <li class="waves-effect"><a href="#!">5</a></li>
-				    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-				  </ul>
 			</section>
-			<a style="float: right;" class="btn-floating btn-large waves-effect waves-light #87CEFA" href="cadastroproduto"><i class="material-icons">add</i></a>
+			<a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/}"><i class="material-icons">keyboard_arrow_left</i></a>
+			<a style="float: right;" class="btn-floating btn-large waves-effect light-blue accent-2" href="cadastroproduto"><i class="material-icons">add</i></a>
 		</fieldset>
 	</article>
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>

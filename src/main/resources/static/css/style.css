@@ -16,7 +16,7 @@ img{max-width: 100%;}
 .product_images{
     float: left; 
     width: 25%; 
-    margin-left: 24%; 
+    margin-left: 20%; 
     padding: 30px; 
     background: #fff; 
     box-shadow: 0 0 5px 2px #ccc;
@@ -27,7 +27,7 @@ img{max-width: 100%;}
 .product_info{
     float: right; 
     width: 25%; 
-    margin-right: 24%;
+    margin-right: 20%;
     padding: 30px; 
     background: #fff; 
     box-shadow: 0 0 5px 2px #ccc;

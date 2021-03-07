@@ -2,6 +2,8 @@
 <html>
 
 <head>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
@@ -26,6 +28,11 @@
             }
         }
     </script>
+    <style type="text/css">
+    	img{
+    		width: 150px;
+    	}
+    </style>
 
 </head>
 
@@ -33,26 +40,18 @@
     <article>
         <fieldset>
             <legend>Adicionar/Remover Imagens</legend>
-            <form action="" method="POST">
-                <section class="secao">
+
+                <section>
                     <label><strong>Selecione um novo arquivo de imagem </strong></label><br>
                     <form method="POST" action="" enctype="multipart/form-data">
                         <input type="file" name="imagem" id="imagem" onchange="previewImagem()" /><br>
                         <img><br>
                         <input type="submit" value="Adicionar Imagem"><br>
                     </form><br />
-
-                    <input type="checkbox" />
-                    <img src="" />
-
-                    <input type="checkbox" />
-                    <img src="" />
-
-                    <input type="checkbox" />
-                    <img src="" />
                 </section>
-                <button type="submit" style="float: right">Alterar e Salvar</button>
-            </form>
+               <a  href="#"th:href="@{/produtos/listaproduto}"> <button class="btn waves-effect  light-blue accent-2" type="submit">Submit
+    					<i class="material-icons right">send</i>Alterar e Salvar</button></a>
+
         </fieldset>
     </article>
     

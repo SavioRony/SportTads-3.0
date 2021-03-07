@@ -26,7 +26,7 @@
 	<article>
 		<fieldset>
 			<legend>Alterar Produto</legend>
-			<form action="salvarproduto" method="post" th:object="${produtoObj}">
+			<form action="alterarproduto" method="post" th:object="${produtoObj}">
 				<div>
 					<label>ID</label> <input type="text" name="id" th:field="*{id}"
 						readonly=“true”>
@@ -76,8 +76,7 @@
 						th:field="*{preco}" />
 				</div>
 				<br />
-				<button type="submit" style="float: right">Alterar - Ir
-					Imagens</button>
+				<button class="btn waves-effect light-blue accent-2" type="submit"> <i class="material-icons left">collections</i>Salvar - Alterar Imagens</button>
 			</form>
 		</fieldset>
 	</article>

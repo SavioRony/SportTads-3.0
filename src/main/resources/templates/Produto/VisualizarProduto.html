@@ -4,8 +4,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Visualizar Produto</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
     
     <script>
         $(function () {
@@ -27,29 +32,33 @@
 
 <body>
     <article>
+       <section>
+        <a  class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/produtos/listaproduto}"><i class="material-icons">keyboard_arrow_left</i></a>
+        </section>
         <section class="product_images">
             <h2>Produto</h2>
             <div class="cover">
                 <img src="img/produto/chuteira 01.jpg" alt="produto" title="Produto">
             </div>
             <div class="thumbs">
-                <img src="img/produto/chuteira 01.jpg" class="active" alt="Chuteira" title="Chuteira">
-                <img src="img/produto/chuteira 02.jpg" alt="Chuteira" title="Chuteira">
-                <img src="img/produto/chuteira 03.jpg" alt="Chuteira" title="Chuteira">
-                <img src="img/produto/chuteira 04.jpg" alt="Chuteira" title="Chuteira">
-                <img src="img/produto/chuteira 05.jpg" alt="Chuteira" title="Chuteira">
+                <img src="/img/produto/chuteira 01.jpg" class="active" alt="Chuteira" title="Chuteira">
+                <img src="/img/produto/chuteira 02.jpg" alt="Chuteira" title="Chuteira">
+                <img src="/img/produto/chuteira 03.jpg" alt="Chuteira" title="Chuteira">
+                <img src="/img/produto/chuteira 04.jpg" alt="Chuteira" title="Chuteira">
+                <img src="/img/produto/chuteira 05.jpg" alt="Chuteira" title="Chuteira">
             </div>
         </section>
         <section class="product_info">
+            <br>
             <h2>Comprar</h2>
             <div class="info" >
                 <label>Qtd</label>
-                <input type="number" name="Quantidade"><br>
-                <label><strong>Total:</strong> R$ 150,00</label>
-                <button value="comprar" style="float: right;">COMPRAR</button>
+                <input type="number" name="Quantidade" readonly="readonly"><br>
+                <label><strong>Preço:</strong></label>
+                <button value="comprar" style="float: right;" readonly="readonly">COMPRAR</button>
             </div>
-
         </section>
+        
     </article>
 </body>
 

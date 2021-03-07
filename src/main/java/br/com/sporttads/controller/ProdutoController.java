@@ -82,9 +82,17 @@ public class ProdutoController {
 		return andView;
 	}
 	
-	@GetMapping("/alterarproduto")
-	public ModelAndView telaAltera() {
-		ModelAndView andView = new ModelAndView("Produto/AlteraProduto");
+	@PostMapping("**/alterarproduto")
+	public ModelAndView telaAltera(ProdutoModel produto) {
+		produtoService.save(produto);
+		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");	
 		return andView;
 	}
+	
+	@GetMapping("/visualizarproduto")
+	public ModelAndView telaAltera() {
+		ModelAndView andView = new ModelAndView("Produto/VisualizarProduto");	
+		return andView;
+	}
+	
 }
