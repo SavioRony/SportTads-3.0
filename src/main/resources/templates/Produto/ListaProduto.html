@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<title>Lista Produto</title>
+</head>
+
+<body>
+	<article>
+		<fieldset>
+			<legend>Lista de Produtos</legend>
+			<section>
+				<form action="" method="GET"></form>
+				<div>
+					<div>
+						<input name="idProduto" placeholder="Nome Produto">
+					</div>
+
+					<div>
+						<button type="submit">Buscar</button>
+					</div>
+				</div>
+				</form>
+			</section>
+			<section>
+				<table class="striped">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Categoria</th>
+							<th>Preço</th>
+							<th>Quantidade</th>
+							<th>Editar</th>
+							<th>Inativa/Reativar</th>
+							<th>Visualizar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="produto : ${produtos}">
+							<td th:text="${produto.nome}"></td>
+							<td th:text="${produto.categoria}">99</td>
+							<td th:text="${produto.preco}"></td>
+							<td th:text="${produto.quantidade}"></td>
+							<td><a th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
+							<td><a href="">INATIVAR/REATIVAR</a></td>
+							<td><a href="">VISUALIZAR</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<a href=""><button type="button" style="float: right">Novo Produto</button></a>
+		</fieldset>
+	</article>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+</body>
+
+</html>

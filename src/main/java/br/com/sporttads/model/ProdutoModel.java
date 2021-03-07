@@ -15,7 +15,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "tb_produto")
-@Data
 public class ProdutoModel {
 
 	@Id
@@ -25,29 +24,113 @@ public class ProdutoModel {
 
 	private String nome;
 
+	private String descricao;
+	
 	private Double preco;
 
 	private Integer quantidade;
+	
+	private Integer estrelas;
 
 	private String categoria;
 
-	private StatusEnumeration status;
+	private String status;
 
 	@OneToMany(targetEntity = ImagemModel.class)
 	private List<ImagemModel> imagens;
 
-	public ProdutoModel(Integer id, String nome, Double preco, Integer quantidade, String categoria) {
+	public ProdutoModel(Integer id, String nome, String descricao, Double preco, Integer quantidade, Integer estrelas,
+			String categoria, String status) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.descricao = descricao;
 		this.preco = preco;
 		this.quantidade = quantidade;
+		this.estrelas = estrelas;
 		this.categoria = categoria;
-		this.status = StatusEnumeration.ATIVO;
+		this.status = status;
 	}
 
 	public ProdutoModel() {
-		this.status = StatusEnumeration.ATIVO;
+		this.status = "Ativo";
 	}
+	
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public List<ImagemModel> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<ImagemModel> imagens) {
+		this.imagens = imagens;
+	}
+
+	public Integer getEstrelas() {
+		return estrelas;
+	}
+
+	public void setEstrelas(Integer estrelas) {
+		this.estrelas = estrelas;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	
+	
 
 }

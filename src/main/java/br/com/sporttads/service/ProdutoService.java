@@ -21,11 +21,11 @@ public class ProdutoService {
 
 	public void delete(Integer id) {
 		ProdutoModel produto = getById(id);
-		produto.setStatus(StatusEnumeration.INATIVO);
+		produto.setStatus("Inativo");
 		repository.save(produto);
 	}
 
-	public ProdutoModel post(ProdutoModel produto) {
+	public ProdutoModel save(ProdutoModel produto) {
 		return repository.save(produto);
 	}
 
