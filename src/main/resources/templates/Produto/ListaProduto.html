@@ -31,6 +31,7 @@
 				<table class="striped">
 					<thead>
 						<tr>
+							<th>ID</th>
 							<th>Nome</th>
 							<th>Categoria</th>
 							<th>Preço</th>
@@ -42,12 +43,13 @@
 					</thead>
 					<tbody>
 						<tr th:each="produto : ${produtos}">
+							<td th:text="${produto.id}"></td>
 							<td th:text="${produto.nome}"></td>
 							<td th:text="${produto.categoria}">99</td>
 							<td th:text="${produto.preco}"></td>
 							<td th:text="${produto.quantidade}"></td>
-							<td><a th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
-							<td><a href="">INATIVAR/REATIVAR</a></td>
+							<td><a th:href="@{editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
+							<td><a th:href="@{inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
 							<td><a href="">VISUALIZAR</a></td>
 						</tr>
 					</tbody>

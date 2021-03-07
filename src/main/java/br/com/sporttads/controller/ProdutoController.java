@@ -48,8 +48,17 @@ public class ProdutoController {
 		
 		return andView;
 	}
+	
+	@GetMapping("/inativaativarproduto/{idproduto}")
+	public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
+		ProdutoModel produto = produtoService.getById(idproduto);
+		ModelAndView andView = new ModelAndView("Produto/InativaAtivaProduto");
+		andView.addObject("produtoObj", produto);
+		
+		return andView;
+	}
 
-	@PostMapping("/salvarproduto")
+	@PostMapping("**/salvarproduto")
 	public ModelAndView post(ProdutoModel produto) {
 		produtoService.save(produto);
 		ModelAndView andView = new ModelAndView("Produto/ListaProduto");	
