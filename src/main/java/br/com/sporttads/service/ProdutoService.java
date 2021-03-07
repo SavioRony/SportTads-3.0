@@ -37,5 +37,9 @@ public class ProdutoService {
 		ProdutoModel produtoModel = getById(id);
 		return repository.save(produtoModel);
 	}
+	
+	public List<ProdutoModel> findPessoaByName(String nome){
+		return repository.findPessoaByName(nome);
+	}
 
 }

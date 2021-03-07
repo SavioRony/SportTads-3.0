@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import br.com.sporttads.model.ProdutoModel;
@@ -40,7 +41,7 @@ public class ProdutoController {
 		return andView;
 	}
 	
-	@GetMapping("/editarproduto/{idproduto}")
+	@GetMapping("**/editarproduto/{idproduto}")
 	public ModelAndView editar(@PathVariable("idproduto") Integer idproduto) {
 		ProdutoModel produto = produtoService.getById(idproduto);
 		ModelAndView andView = new ModelAndView("Produto/AlteraProduto");
@@ -49,7 +50,7 @@ public class ProdutoController {
 		return andView;
 	}
 	
-	@GetMapping("/inativaativarproduto/{idproduto}")
+	@GetMapping("**/inativaativarproduto/{idproduto}")
 	public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
 		ProdutoModel produto = produtoService.getById(idproduto);
 		ModelAndView andView = new ModelAndView("Produto/InativaAtivaProduto");
@@ -67,17 +68,14 @@ public class ProdutoController {
 		return andView;
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> edit(@PathVariable Integer id, @RequestBody ProdutoModel produto) {
-		return new ResponseEntity<>(produtoService.edit(id), HttpStatus.OK);
+	@PostMapping("**/pesquisarproduto")
+	public ModelAndView pesquisarproduto(@RequestParam("nomepesquisa") String nomepesquisa) {
+		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
+		andView.addObject("produtos", produtoService.findPessoaByName(nomepesquisa));
+
+		return andView;
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer id) {
-		produtoService.delete(id);
-		return ResponseEntity.ok("Produto excluído com sucesso!");
-	}
-	
 	@GetMapping("/cadastroproduto")
 	public ModelAndView telaCadastro() {
 		ModelAndView andView = new ModelAndView("Produto/CadastroProduto");

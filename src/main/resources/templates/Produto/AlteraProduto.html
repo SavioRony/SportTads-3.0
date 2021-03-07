@@ -44,27 +44,12 @@
 				<div>
 					<label><strong>QTD estrelas</strong></label> <input name="estrelas"
 						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-						value="" th:field="*{estrelas}" />
+						 th:field="*{estrelas}" />
 				</div>
-				<br /> <span th:if="${produtoObj.status == 'Ativo'}">
-					<div>
-						<label><strong>Status</strong></label> <select name="status"
-							required="true">
-							<option value="ativo">Ativo</option>
-							<option value="Inativo">Inativo</option>
-						</select>
-					</div>
-					<br />
-				</span> <span th:if="${produtoObj.status == 'Inativo'}">
-					<div>
-						<label><strong>Status</strong></label> <select name="status"
-							required="true">
-							<option value="Inativo">Inativo</option>
-							<option value="ativo">Ativo</option>
-						</select>
-					</div>
-					<br />
-				</span>
+				<br /> 
+				<div>
+					<input th:field="*{status}" name="status" type="hidden">
+				</div>
 				<div>
 					<label><strong>Categoria</strong></label> <select name="categoria"
 						required="true">
