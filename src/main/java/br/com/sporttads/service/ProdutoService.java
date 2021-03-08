@@ -21,11 +21,11 @@ public class ProdutoService {
 
 	public void delete(Integer id) {
 		ProdutoModel produto = getById(id);
-		produto.setStatus(StatusEnumeration.INATIVO);
+		produto.setStatus("Inativo");
 		repository.save(produto);
 	}
 
-	public ProdutoModel post(ProdutoModel produto) {
+	public ProdutoModel save(ProdutoModel produto) {
 		return repository.save(produto);
 	}
 
@@ -36,6 +36,10 @@ public class ProdutoService {
 	public ProdutoModel edit(Integer id) {
 		ProdutoModel produtoModel = getById(id);
 		return repository.save(produtoModel);
+	}
+	
+	public List<ProdutoModel> findPessoaByName(String nome){
+		return repository.findPessoaByName(nome);
 	}
 
 }

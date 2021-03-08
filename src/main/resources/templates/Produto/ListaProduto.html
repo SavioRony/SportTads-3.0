@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<title>Lista Produto</title>
+</head>
+
+<body>
+	<article>
+		<fieldset>
+			<legend>Lista de Produtos</legend>
+				<form action="pesquisarproduto" method="post" class="col s12">
+					<div class="row">
+						<div class="input-field col s4">
+							<label for="nomepesquisa">Pesquisa pelo nome</label> <input
+								type="text" id="nomepesquisa" class="validate" name="nomepesquisa">
+						</div>
+						<div class="input-field col s2">
+							<button class="btn waves-effect light-blue accent-2" type="submit"
+								name="action">
+								Buscar <i class="material-icons right">search</i>
+							</button>
+						</div>
+					</div>
+				</form>
+			<section>
+				<table class="striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Categoria</th>
+							<th>Preço</th>
+							<th>Quantidade</th>
+							<th>Status</th>
+							<th>Editar</th>
+							<th>Inativa/Reativar</th>
+							<th>Visualizar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="produto : ${produtos}">
+							<td th:text="${produto.id}"></td>
+							<td th:text="${produto.nome}"></td>
+							<td th:text="${produto.categoria}">99</td>
+							<td th:text="${produto.preco}"></td>
+							<td th:text="${produto.quantidade}"></td>
+							<td th:text="${produto.status}"></td>
+							<td><a th:href="@{editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
+							<td><a th:href="@{inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
+							<td><a th:href="@{visualizarproduto}">VISUALIZAR</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/}"><i class="material-icons">keyboard_arrow_left</i></a>
+			<a style="float: right;" class="btn-floating btn-large waves-effect light-blue accent-2" href="cadastroproduto"><i class="material-icons">add</i></a>
+		</fieldset>
+	</article>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+</body>
+
+</html>

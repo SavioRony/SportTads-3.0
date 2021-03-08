@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <title>Alterar Imagem Produto</title>
+
+    <script>
+        function previewImagem() {
+            var imagem = document.querySelector('input[name=imagem]').files[0];
+            var preview = document.querySelector('img');
+
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (imagem) {
+                reader.readAsDataURL(imagem);
+            } else {
+                preview.src = "";
+            }
+        }
+    </script>
+    <style type="text/css">
+    	img{
+    		width: 150px;
+    	}
+    </style>
+
+</head>
+
+<body class="container">
+    <article>
+        <fieldset>
+            <legend>Adicionar/Remover Imagens</legend>
+
+                <section>
+                    <label><strong>Selecione um novo arquivo de imagem </strong></label><br>
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        <input type="file" name="imagem" id="imagem" onchange="previewImagem()" /><br>
+                        <img><br>
+                        <input type="submit" value="Adicionar Imagem"><br>
+                    </form><br />
+                </section>
+               <a  href="#"th:href="@{/produtos/listaproduto}"> <button class="btn waves-effect  light-blue accent-2" type="submit">Submit
+    					<i class="material-icons right">send</i>Alterar e Salvar</button></a>
+
+        </fieldset>
+    </article>
+    
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>    
+</body>
+
+</html>
