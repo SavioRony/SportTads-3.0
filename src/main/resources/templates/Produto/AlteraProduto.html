@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<div class="container">
 <head>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
@@ -27,30 +27,39 @@
 		<fieldset>
 			<legend>Alterar Produto</legend>
 			<form action="alterarproduto" method="post" th:object="${produtoObj}">
-				<div>
+		<div class="row">
+			<div class="col s12">
+				<div class="col s1">
 					<label>ID</label> <input type="text" name="id" th:field="*{id}"
 						readonly=“true”>
 				</div>
-				<div>
+				<div class="col s11">
 					<label><strong>Nome do Produto</strong></label> <input name="nome"
-						th:field="*{nome}" />
+						th:field="*{nome}" required="true" />
 				</div>
+			</div>
+		</div>
 				<br />
-				<div>
+		<div class="row">
+			<div class="col s12">
+				<div class="col s12">
 					<label><strong>Nome Extenso</strong></label> <input
-						name="descricao" th:field="*{descricao}" />
+						name="descricao" th:field="*{descricao}" required="true" />
+				</div>
+				</div>
 				</div>
 				<br />
-				<div>
+		<div class="row">
+			<div class="col s12">
+				<div class="col s6">
 					<label><strong>QTD estrelas</strong></label> <input name="estrelas"
 						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-						 th:field="*{estrelas}" />
+						 th:field="*{estrelas}" required="true"/>
 				</div>
-				<br /> 
 				<div>
 					<input th:field="*{status}" name="status" type="hidden">
 				</div>
-				<div>
+				<div class="col s6">
 					<label><strong>Categoria</strong></label> <select name="categoria"
 						required="true">
 						<option value="" disabled selected>Selecione</option>
@@ -62,27 +71,34 @@
 						<option value="Volei">Volei</option>
 					</select>
 				</div>
+			</div>
+		</div>
 				<br />
-				<div>
+		<div class="row">
+			<div class="col s12">
+				<div class="col s6">
 					<label><strong>Qtd Estoque</strong></label> <input
 						name="quantidade"
 						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-						th:field="*{quantidade}" />
+						th:field="*{quantidade}" required="true" />
 				</div>
-				<br />
-				<div>
+				<div class="col s6">
 					<label><strong>Preço</strong></label> <input name="preco"
 						onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46"
-						th:field="*{preco}" />
+						th:field="*{preco}" required="true" />
 				</div>
+			</div>
+		</div>
 				<br />
-				<button class="btn waves-effect light-blue accent-2" type="submit"> <i class="material-icons left">collections</i>Salvar - Alterar Imagens</button>
+				<a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/produtos/listaproduto}"><i class="material-icons">keyboard_arrow_left</i></a>
+				<button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit"> <i class="material-icons left">collections</i>Alterar Imagens</button>
 			</form>
 		</fieldset>
 	</article>
 
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	</div>
 </body>
 
 </html>

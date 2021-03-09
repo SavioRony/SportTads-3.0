@@ -36,7 +36,8 @@
 
 </head>
 
-<body class="container">
+<body>
+<div class="container">
     <article>
         <fieldset>
             <legend>Adicionar/Remover Imagens</legend>
@@ -49,14 +50,14 @@
                         <input type="submit" value="Adicionar Imagem"><br>
                     </form><br />
                 </section>
-               <a  href="#"th:href="@{/produtos/listaproduto}"> <button class="btn waves-effect  light-blue accent-2" type="submit">Submit
-    					<i class="material-icons right">send</i>Alterar e Salvar</button></a>
+               <a  href="#"th:href="@{/produtos/listaproduto}"> <button class="btn waves-effect  light-blue accent-2" type="submit"><i class="material-icons right">send</i>Salvar</button></a>
 
         </fieldset>
     </article>
     
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
-	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>    
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>   
+	</div> 
 </body>
 
 </html>

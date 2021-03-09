@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<article>
+	<div class="container">
 		<fieldset>
 			<legend>Lista de Produtos</legend>
 				<form action="pesquisarproduto" method="post" class="col s12">
@@ -51,17 +51,17 @@
 							<td th:text="${produto.preco}"></td>
 							<td th:text="${produto.quantidade}"></td>
 							<td th:text="${produto.status}"></td>
-							<td><a th:href="@{editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
-							<td><a th:href="@{inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
-							<td><a th:href="@{visualizarproduto}">VISUALIZAR</a></td>
+							<td><a href="#"th:href="@{/produtos/editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
+							<td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
+							<td><a href="#"th:href="@{/produtos/visualizarproduto}">VISUALIZAR</a></td>
 						</tr>
 					</tbody>
 				</table>
 			</section>
 			<a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/}"><i class="material-icons">keyboard_arrow_left</i></a>
-			<a style="float: right;" class="btn-floating btn-large waves-effect light-blue accent-2" href="cadastroproduto"><i class="material-icons">add</i></a>
+			<a style="float: right;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{cadastroproduto}"><i class="material-icons">add</i></a>
 		</fieldset>
-	</article>
+	</div>
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </body>
