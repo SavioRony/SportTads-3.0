@@ -21,32 +21,42 @@
 </head>
 
 <body>
+<div class="container">
 		<fieldset>
 			<legend>Inativar/Reativa Produto</legend>
 			<form action="salvarproduto" method="post" th:object="${produtoObj}">
 				<section>
-					<div>
+			<div class="row">
+				<div class="col s12">
+					<div class="col s1">
 						<label><strong>ID</strong></label> <input name="id"
 							th:field="*{id}" readonly />
 					</div>
-					<div>
+					<div class="col s11">
 						<label><strong>Nome</strong></label> <input name="nome"
 							th:field="*{nome}" readonly />
 					</div>
-					<br />
-					<div>
+				</div>
+			</div>		
+		<br />
+			<div class="row">
+				<div class="col s12">
+					<div class="col s12">
 						<label><strong>Nome Extenso</strong></label> <input
 							name="descricao" th:field="*{descricao}" readonly />
 					</div>
-					<br />
-					<div>
+				</div>
+			</div>		
+		<br />
+			<div class="row">
+				<div class="col s12">
+					<div class="col s4">
 						<label><strong>QTD estrelas</strong></label> <input
 							name="estrelas"
 							onkeypress="return event.charCode >= 48 && event.charCode <= 57"
 							th:field="*{estrelas}" readonly />
 					</div>
-					<br />
-					<div>
+				<div class="col s2">
 					<label><strong>Status</strong></label>
 					<div th:switch="${produtoObj.status}"> 
 					  <div th:case="'Ativo'">
@@ -56,6 +66,7 @@
 								<option value="Inativo">Inativo</option>
 							</select>
 						</div>
+						
 						<div th:case="'Inativo'">
 							<select name="status"
 								required="true">
@@ -63,31 +74,38 @@
 								<option value="Ativo">Ativo</option>
 							</select>
 						</div>
-						<br />
-						<div>
+						</div>
+					</div>	
+
+						<div class="col s6">
 							<label><strong>Categoria</strong></label> 
 							<input name="estrelas" th:field="*{categoria}" readonly />
 						</div>
-						<br />
-						<div>
+			<div class="row">
+				<div class="col s12">
+					<div class="col s6">
 							<label><strong>Qtd Estoque</strong></label> <input
 								name="quantidade" th:field="*{quantidade}"
 								onkeypress="return event.charCode >= 48 && event.charCode <= 57"
 								readonly/>
 						</div>
-					  <br>
-						<div>
+						<div class="col s6">
 							<label><strong>Preço</strong></label> 
 							<input name="preco" th:field="*{preco}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" readonly />
 						</div>
+					</div>
+				</div>		
 						<br />
-						<button type="submit" style="float: right">Salvar</button>
+						<a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/produtos/listaproduto}"><i class="material-icons">keyboard_arrow_left</i></a>
+						<button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit"> <i class="material-icons left">send</i>Salvar</button>
+			</form>
 				</section>
 			</form>
 		</fieldset>
 
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	</div>
 </body>
 
 </html>
