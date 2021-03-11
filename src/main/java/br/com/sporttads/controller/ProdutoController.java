@@ -1,6 +1,7 @@
 package br.com.sporttads.controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,6 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService produtoService;
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Integer id) {
-		return new ResponseEntity<>(produtoService.getById(id), HttpStatus.OK);
-	}
 
 	@GetMapping("/listaproduto")
 	public ModelAndView getAll() {
@@ -49,6 +46,15 @@ public class ProdutoController {
 		
 		return andView;
 	}
+
+	@GetMapping("**/visualizarproduto/{idproduto}")
+	public ModelAndView visualizarProduto(@PathVariable("idproduto") Integer idproduto) {
+		ProdutoModel produto = produtoService.getById(idproduto);
+		ModelAndView andView = new ModelAndView("Produto/VisualizarProduto");
+		andView.addObject("produtoObj", produto);
+
+		return andView;
+	}
 	
 	@GetMapping("**/inativaativarproduto/{idproduto}")
 	public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
@@ -62,7 +68,14 @@ public class ProdutoController {
 	@PostMapping("**/salvarproduto")
 	public ModelAndView post(ProdutoModel produto) {
 		produtoService.save(produto);
-		ModelAndView andView = new ModelAndView("Produto/ListaProduto");	
+		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
+		return andView;
+	}
+
+	@PostMapping("**/inativarreativarproduto")
+	public ModelAndView ativaReativar(ProdutoModel produto) {
+		produtoService.save(produto);
+		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
 		List<ProdutoModel> produtos = produtoService.getAll();
 		andView.addObject("produtos",produtos);
 		return andView;
@@ -71,7 +84,7 @@ public class ProdutoController {
 	@PostMapping("**/pesquisarproduto")
 	public ModelAndView pesquisarproduto(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-		andView.addObject("produtos", produtoService.findPessoaByName(nomepesquisa));
+		andView.addObject("produtos", produtoService.findPessoaByName(nomepesquisa.toUpperCase()));
 
 		return andView;
 	}
@@ -88,11 +101,5 @@ public class ProdutoController {
 		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");	
 		return andView;
 	}
-	
-	@GetMapping("/visualizarproduto")
-	public ModelAndView telaAltera() {
-		ModelAndView andView = new ModelAndView("Produto/VisualizarProduto");	
-		return andView;
-	}
-	
+
 }

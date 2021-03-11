@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Visualizar Produto</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
-    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
@@ -31,14 +31,13 @@
 </head>
 
 <body>
-    <article>
-       <section>
-        <a  class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/produtos/listaproduto}"><i class="material-icons">keyboard_arrow_left</i></a>
-        </section>
+        <form method="get" th:object="${produtoObj}">
+            <section class="botao">
+                <a  href="#"th:href="@{/produtos/listaproduto}">Volta</a>
+            </section>
         <section class="product_images">
-            <h2>Produto</h2>
             <div class="cover">
-                <img src="img/produto/chuteira 01.jpg" alt="produto" title="Produto">
+                <img src="/img/produto/chuteira 01.jpg" alt="produto" title="Produto">
             </div>
             <div class="thumbs">
                 <img src="/img/produto/chuteira 01.jpg" class="active" alt="Chuteira" title="Chuteira">
@@ -49,17 +48,19 @@
             </div>
         </section>
         <section class="product_info">
-            <br>
             <h2>Comprar</h2>
+            <br>
             <div class="info" >
+                <h5 th:text="*{nome}"></h5>
+                <p th:text="*{descricao}"></p>
                 <label>Qtd</label>
                 <input type="number" name="Quantidade" readonly="readonly"><br>
-                <label><strong>Preço:</strong></label>
-                <button value="comprar" style="float: right;" readonly="readonly">COMPRAR</button>
+                <h6>Preço: R$<span th:text="*{preco}">R$  </span></h6>
+                <a class="btn disabled" style="float: right;">COMPRAR</a>
             </div>
         </section>
-        
-    </article>
+        </form>
+
 </body>
 
 </html>

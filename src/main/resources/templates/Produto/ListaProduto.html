@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
-	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"/>
 	<title>Lista Produto</title>
 </head>
 
@@ -30,7 +30,7 @@
 				</form>
 			<section>
 				<table class="striped">
-					<thead>
+					<thead >
 						<tr>
 							<th>ID</th>
 							<th>Nome</th>
@@ -53,7 +53,7 @@
 							<td th:text="${produto.status}"></td>
 							<td><a href="#"th:href="@{/produtos/editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
 							<td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
-							<td><a href="#"th:href="@{/produtos/visualizarproduto}">VISUALIZAR</a></td>
+							<td><a href="#"th:href="@{/produtos/visualizarproduto/{idproduto}(idproduto=${produto.id})}">VISUALIZAR</a></td>
 						</tr>
 					</tbody>
 				</table>
