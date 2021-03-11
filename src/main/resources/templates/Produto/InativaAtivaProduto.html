@@ -60,19 +60,11 @@
                         <label><strong>Status</strong></label>
                         <div th:switch="${produtoObj.status}">
                             <div th:case="'Ativo'">
-                                <select name="status"
-                                        required="true">
-                                    <option value="Ativo">Ativo</option>
-                                    <option value="Inativo">Inativo</option>
-                                </select>
+                                <input value="Ativo" readonly>
                             </div>
 
                             <div th:case="'Inativo'">
-                                <select name="status"
-                                        required="true">
-                                    <option value="Inativo">Inativo</option>
-                                    <option value="Ativo">Ativo</option>
-                                </select>
+                                <input value="Inativo" readonly>
                             </div>
                         </div>
                     </div>
@@ -100,9 +92,21 @@
                     <br/>
                     <a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2" href="#"
                        th:href="@{/produtos/listaproduto}"><i class="material-icons">keyboard_arrow_left</i></a>
-                    <button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit"><i
-                            class="material-icons left">send</i>Salvar
-                    </button>
+
+                    <div th:switch="${produtoObj.status}">
+                        <div th:case="'Ativo'">
+                            <input type="hidden" name="status" value="Inativo">
+                            <button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit">Inativar
+                            </button>
+                        </div>
+
+                        <div th:case="'Inativo'">
+                            <input type="hidden" name="status" value="Ativo">
+                            <button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit">Ativar
+                            </button>
+                        </div>
+                    </div>
+
 
         </form>
     </fieldset>

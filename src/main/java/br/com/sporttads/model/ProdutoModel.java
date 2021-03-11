@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.sporttads.enumeration.StatusEnumeration;
 import lombok.Data;
 
 @Entity
 @Table(name = "tb_produto")
+@Data
 public class ProdutoModel {
 
 	@Id
@@ -23,17 +23,11 @@ public class ProdutoModel {
 	private Integer id;
 
 	private String nome;
-
 	private String descricao;
-	
 	private Double preco;
-
 	private Integer quantidade;
-	
 	private Integer estrelas;
-
 	private String categoria;
-
 	private String status;
 
 	@OneToMany(targetEntity = ImagemModel.class)
@@ -55,82 +49,5 @@ public class ProdutoModel {
 	public ProdutoModel() {
 		this.status = "Ativo";
 	}
-	
-	
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
-
-	public List<ImagemModel> getImagens() {
-		return imagens;
-	}
-
-	public void setImagens(List<ImagemModel> imagens) {
-		this.imagens = imagens;
-	}
-
-	public Integer getEstrelas() {
-		return estrelas;
-	}
-
-	public void setEstrelas(Integer estrelas) {
-		this.estrelas = estrelas;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	
-	
-	
 
 }
