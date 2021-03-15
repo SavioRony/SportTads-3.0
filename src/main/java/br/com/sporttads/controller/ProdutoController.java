@@ -1,5 +1,6 @@
 package br.com.sporttads.controller;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -100,6 +101,31 @@ public class ProdutoController {
 		produtoService.save(produto);
 		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");	
 		return andView;
+	}
+
+	@GetMapping("/{idproduto}")
+	public ResponseEntity pegarProduto(@PathVariable("idproduto") Integer id){
+		return new ResponseEntity(produtoService.getById(id), HttpStatus.OK);
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity pegarTodos(){
+		return new ResponseEntity(produtoService.getAll(), HttpStatus.OK);
+	}
+	
+	@PostMapping("/salvar")
+	public ResponseEntity salvar(@RequestBody ProdutoModel produto){
+		return new ResponseEntity(produtoService.save(produto), HttpStatus.OK);
+	}
+
+	@PutMapping("/alterar/{idproduto}")
+	public ResponseEntity alterar(@RequestBody ProdutoModel produto){
+		return new ResponseEntity(produtoService.save(produto), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/delete/{idproduto}")
+	public void apagar(@PathVariable("idproduto") Integer id){
+		produtoService.delete(id);
 	}
 
 }
