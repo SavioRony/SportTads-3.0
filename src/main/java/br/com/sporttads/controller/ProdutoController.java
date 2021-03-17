@@ -97,8 +97,9 @@ public class ProdutoController {
 	
 	@PostMapping("**/alterarproduto")
 	public ModelAndView telaAltera(ProdutoModel produto) {
-		produtoService.save(produto);
-		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");	
+		ProdutoModel produtoEditado = produtoService.save(produto);
+		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
+		andView.addObject("imagem",produtoEditado);
 		return andView;
 	}
 

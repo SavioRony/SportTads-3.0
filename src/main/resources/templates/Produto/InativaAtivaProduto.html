@@ -25,7 +25,7 @@
 <div class="container">
     <fieldset>
         <legend>Inativar/Reativa Produto</legend>
-        <form action="inativarreativarproduto" method="post" th:object="${produtoObj}">
+        <form th:action="@{/produtos/inativarreativarproduto}" method="post" th:object="${produtoObj}">
             <div class="row">
                 <div class="col s12">
                     <div class="col s1">

@@ -16,7 +16,7 @@ public class ImagemService {
 	private ImagemRepository repository;
 
 	public ImagemModel salvar(String caminho, ProdutoModel produto) {
-		ImagemModel imagem = new ImagemModel(caminho, produto);
+		ImagemModel imagem = new ImagemModel(caminho, produto.getId());
 		return repository.save(imagem);
 	}
 
@@ -30,5 +30,9 @@ public class ImagemService {
 
 	public void deletar(Integer id) {
 		repository.deleteById(id);
+	}
+	
+	public ImagemModel save(ImagemModel imagem) {
+		return repository.save(imagem);
 	}
 }

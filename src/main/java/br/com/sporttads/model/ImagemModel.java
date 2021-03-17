@@ -22,25 +22,65 @@ public class ImagemModel {
 	private Integer id;
 
 	private String caminho;
+	
+	@Column(length = 45, nullable = true)
+	private String logo;
+	
+	@Column
+	private Integer idProduto;
 
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "idProduto", name = "idProduto")
-	private ProdutoModel produto;
+//	@ManyToOne
+//	@JoinColumn(referencedColumnName = "idProduto", name = "idProduto")
+//	private ProdutoModel produto;
 
-	public ImagemModel(String caminho, ProdutoModel produto) {
+	public ImagemModel(String caminho, Integer produto) {
 		super();
 		this.caminho = caminho.replace("\\", "/");
-		this.produto = produto;
+		this.idProduto = idProduto;
 	}
 
-	public ImagemModel(Integer id, String caminho, ProdutoModel produto) {
+	public ImagemModel(Integer id, String caminho, Integer idProduto) {
 		super();
 		this.id = id;
 		this.caminho = caminho.replace("\\", "/");
-		this.produto = produto;
+		this.idProduto = idProduto;
 	}
 
 	public ImagemModel() {
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCaminho() {
+		return caminho;
+	}
+
+	public void setCaminho(String caminho) {
+		this.caminho = caminho;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public Integer getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto(Integer idProduto) {
+		this.idProduto = idProduto;
+	}
+	
+	
 
 }

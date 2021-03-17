@@ -30,8 +30,8 @@ public class ProdutoModel {
 	private String categoria;
 	private String status;
 
-	@OneToMany(targetEntity = ImagemModel.class)
-	private List<ImagemModel> imagens;
+//	@OneToMany(targetEntity = ImagemModel.class)
+//	private List<ImagemModel> imagens;
 
 	public ProdutoModel(Integer id, String nome, String descricao, Double preco, Integer quantidade, Integer estrelas,
 			String categoria, String status) {
@@ -49,5 +49,79 @@ public class ProdutoModel {
 	public ProdutoModel() {
 		this.status = "Ativo";
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Integer getEstrelas() {
+		return estrelas;
+	}
+
+	public void setEstrelas(Integer estrelas) {
+		this.estrelas = estrelas;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+//	public List<ImagemModel> getImagens() {
+//		return imagens;
+//	}
+//
+//	public void setImagens(List<ImagemModel> imagens) {
+//		this.imagens = imagens;
+//	}
+	
+	
 
 }

@@ -1,63 +1,58 @@
 <!DOCTYPE html>
-<html>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"/>
 
 <head>
-	<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
     <title>Alterar Imagem Produto</title>
-
-    <script>
-        function previewImagem() {
-            var imagem = document.querySelector('input[name=imagem]').files[0];
-            var preview = document.querySelector('img');
-
-            var reader = new FileReader();
-
-            reader.onloadend = function () {
-                preview.src = reader.result;
-            }
-
-            if (imagem) {
-                reader.readAsDataURL(imagem);
-            } else {
-                preview.src = "";
-            }
-        }
-    </script>
-    <style type="text/css">
-    	img{
-    		width: 150px;
-    	}
-    </style>
 
 </head>
 
 <body>
 <div class="container">
     <article>
+    <form th:action="@{/imagens/save}" th:object="${imagem}" method="post" 
+    		enctype="multipart/form-data"
+    		style="max-width: 500px; margin: 0 auto;">
         <fieldset>
             <legend>Adicionar/Remover Imagens</legend>
-
-                <section>
-                    <label><strong>Selecione um novo arquivo de imagem </strong></label><br>
-                    <form method="POST" action="" enctype="multipart/form-data">
-                        <input type="file" name="imagem" id="imagem" onchange="previewImagem()" /><br>
-                        <img><br>
-                        <input type="submit" value="Adicionar Imagem"><br>
-                    </form><br />
-                </section>
-               <a  href="#"th:href="@{/produtos/listaproduto}"> <button class="btn waves-effect  light-blue accent-2" type="submit"><i class="material-icons right">send</i>Salvar</button></a>
-
+             <label>ID Produto</label> 
+             <input type="text" name="id" th:field="*{id}" readonly=“true”>
+                <p>
+                    <label>Logo:</label>
+                    <input type="file" name="arquivoImagem" id="arquivoImagem" accept="image/png, image/jpeg"/>
+                </p>
+                <p>
+                    <img id="thumbnail" alt="Logo Preview" />
+                </p>
+               <a> <button class="btn waves-effect  light-blue accent-2" type="submit"><i class="material-icons right">send</i>Salvar</button></a>
+			</form>
         </fieldset>
     </article>
     
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>   
-	</div> 
+	</div>
+	    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#arquivoImagem').change(function(){
+                showImageThumbnail(this);
+            });
+        });
+        function showImageThumbnail(fileInput){
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function(e){
+                 $('#thumbnail').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
 </body>
 
 </html>
