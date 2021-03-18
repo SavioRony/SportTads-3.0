@@ -1,54 +1,59 @@
 <!DOCTYPE html>
-	<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
     <title>Alterar Imagem Produto</title>
 
 </head>
 
 <body>
-<div class="container">
-    <article>
-    <form th:action="@{/imagens/save}" th:object="${imagem}" method="post" 
-    		enctype="multipart/form-data"
-    		style="max-width: 500px; margin: 0 auto;">
-        <fieldset>
-            <legend>Adicionar/Remover Imagens</legend>
-             <label>ID Produto</label> 
-             <input type="text" name="id" th:field="*{id}" readonly=“true”>
+    <div class="container">
+        <article>
+
+            <fieldset>
+                <form th:action="@{/produtos/save}" th:object="${produto}" method="post" enctype="multipart/form-data" style="max-width: 500px; margin: 0 auto;"></form>
+                <legend>Adicionar/Remover Imagens</legend>
+                <input type="hidden" name="id" th:field="*{id}" readonly=“true”>
+                <input type="hidden" name="nome" th:field="*{nome}" readonly=“true”>
+                <input type="hidden" name="descricao" th:field="*{descricao}" readonly=“true”>
+                <input type="hidden" name="categoria" th:field="*{categoria}" readonly=“true”>
+                <input type="hidden" name="quantidade" th:field="*{quantidade}" readonly=“true”>
+                <input type="hidden" name="estrelas" th:field="*{estrelas}" readonly=“true”>
+                <input type="hidden" name="preco" th:field="*{preco}" readonly=“true”>
+                <input type="hidden" name="status" th:field="*{status}" readonly=“true”>
                 <p>
                     <label>Logo:</label>
-                    <input type="file" name="arquivoImagem" id="arquivoImagem" accept="image/png, image/jpeg"/>
+                    <input type="file" name="arquivoImagem" id="arquivoImagem" accept="image/png, image/jpeg" />
                 </p>
                 <p>
-                    <img id="thumbnail" alt="Logo Preview" />
+                    <img id="thumbnail" alt="Logo Preview" style="width: 25%" />
                 </p>
-               <a> <button class="btn waves-effect  light-blue accent-2" type="submit"><i class="material-icons right">send</i>Salvar</button></a>
-			</form>
-        </fieldset>
-    </article>
-    
-	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
-	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>   
-	</div>
-	    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#arquivoImagem').change(function(){
+                <a> <button class="btn waves-effect  light-blue accent-2" type="submit"><i class="material-icons right">send</i>Salvar</button></a>
+                </form>
+            </fieldset>
+        </article>
+    </div>
+    <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#arquivoImagem').change(function() {
                 showImageThumbnail(this);
             });
         });
-        function showImageThumbnail(fileInput){
+
+        function showImageThumbnail(fileInput) {
             file = fileInput.files[0];
             reader = new FileReader();
 
-            reader.onload = function(e){
-                 $('#thumbnail').attr('src', e.target.result);
+            reader.onload = function(e) {
+                $('#thumbnail').attr('src', e.target.result);
             };
             reader.readAsDataURL(file);
         }

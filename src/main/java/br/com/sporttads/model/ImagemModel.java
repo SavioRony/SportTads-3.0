@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -23,8 +24,8 @@ public class ImagemModel {
 
 	private String caminho;
 	
-	@Column(length = 45, nullable = true)
-	private String logo;
+//	@Column(length = 45, nullable = true)
+//	private String logo;
 	
 	@Column
 	private Integer idProduto;
@@ -65,13 +66,13 @@ public class ImagemModel {
 		this.caminho = caminho;
 	}
 
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+//	public String getLogo() {
+//		return logo;
+//	}
+//
+//	public void setLogo(String logo) {
+//		this.logo = logo;
+//	}
 
 	public Integer getIdProduto() {
 		return idProduto;
@@ -80,6 +81,13 @@ public class ImagemModel {
 	public void setIdProduto(Integer idProduto) {
 		this.idProduto = idProduto;
 	}
+	
+//	@Transient
+//	public String getImagemPath() {
+//		if(logo == null || id == null) return null;
+//		
+//		return "/imagem-salvas/" + id + "/" + logo;
+//	}
 	
 	
 

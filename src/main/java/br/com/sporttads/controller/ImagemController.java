@@ -65,33 +65,33 @@ public class ImagemController {
 		return ResponseEntity.ok("Imagem imagemService com sucesso!");
 	}
 	
-	@PostMapping("/save")
-	public String saveImagem(@ModelAttribute(name = "imagem") ProdutoModel produtoImagem, RedirectAttributes ra, 
-			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
-		ImagemModel imagem = new ImagemModel();
-		imagem.setIdProduto(produtoImagem.getId());
-		System.out.println("Produto ID: " + imagem.getIdProduto());
-		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
-		imagem.setLogo(nomeArquivo);
-		ImagemModel imagemSalva = imagemService.save(imagem);
-		
-		String uploadDiretorio = "/imagem-salvas/"+imagemSalva.getId();
-		
-		Path uploadPath = Paths.get(uploadDiretorio);
-		
-		if(!Files.exists(uploadPath)) {
-			Files.createDirectories(uploadPath);
-		}
-		
-		try(InputStream inputStream = multipartfile.getInputStream()){
-			Path filePath = uploadPath.resolve(nomeArquivo);
-			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		}catch(IOException e){
-			throw new IOException("Não foi possivel salvar o arquivo: " + nomeArquivo);
-		}
-		ra.addFlashAttribute("mensagem", "Produto alterado com sucesso.");
-		
-		return "redirect:/produtos/listaproduto";
-	}
+//	@PostMapping("/save")
+//	public String saveImagem(@ModelAttribute(name = "imagem") ProdutoModel produtoImagem, RedirectAttributes ra, 
+//			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
+//		ImagemModel imagem = new ImagemModel();
+//		imagem.setIdProduto(produtoImagem.getId());
+//		System.out.println("Produto ID: " + imagem.getIdProduto());
+//		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+//		imagem.setLogo(nomeArquivo);
+//		ImagemModel imagemSalva = imagemService.save(imagem);
+//		
+//		String uploadDiretorio = "./imagem-salvas/"+imagemSalva.getId();
+//		
+//		Path uploadPath = Paths.get(uploadDiretorio);
+//		
+//		if(!Files.exists(uploadPath)) {
+//			Files.createDirectories(uploadPath);
+//		}
+//		
+//		try(InputStream inputStream = multipartfile.getInputStream()){
+//			Path filePath = uploadPath.resolve(nomeArquivo);
+//			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+//		}catch(IOException e){
+//			throw new IOException("Não foi possivel salvar o arquivo: " + nomeArquivo);
+//		}
+//		ra.addFlashAttribute("mensagem", "Produto alterado com sucesso.");
+//		
+//		return "redirect:/produtos/listaproduto";
+//	}
 
 }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
-	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"/>
+
 	<title>Lista Produto</title>
 </head>
 
@@ -32,10 +32,11 @@
 					</div>
 				</form>
 			<section>
-				<table class="striped">
+				<table class="highlight">
 					<thead >
 						<tr>
 							<th>ID</th>
+							<th>Logo</th>
 							<th>Nome</th>
 							<th>Categoria</th>
 							<th>Preço</th>
@@ -49,6 +50,7 @@
 					<tbody>
 						<tr th:each="produto : ${produtos}">
 							<td th:text="${produto.id}"></td>
+							<td><img style="width: 50px" th:src="@{${produto.ImagemPath}}"></img></td>
 							<td th:text="${produto.nome}"></td>
 							<td th:text="${produto.categoria}">99</td>
 							<td th:text="${produto.preco}"></td>
@@ -62,7 +64,7 @@
 				</table>
 			</section>
 			<a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{/}"><i class="material-icons">keyboard_arrow_left</i></a>
-			<a style="float: right;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{cadastroproduto}"><i class="material-icons">add</i></a>
+			<a style="float: right;" class="btn-floating btn-large waves-effect light-blue accent-2"  href="#"th:href="@{cadastro}"><i class="material-icons">add</i></a>
 		</fieldset>
 	</div>
 	<script type="text/javascript" src="/materialize/js/materialize.js"></script>

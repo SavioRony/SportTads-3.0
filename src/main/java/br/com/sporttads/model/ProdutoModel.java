@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -29,6 +30,9 @@ public class ProdutoModel {
 	private Integer estrelas;
 	private String categoria;
 	private String status;
+	
+	@Column(length = 45, nullable = true)
+	private String logo;
 
 //	@OneToMany(targetEntity = ImagemModel.class)
 //	private List<ImagemModel> imagens;
@@ -112,6 +116,23 @@ public class ProdutoModel {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+	
+	@Transient
+	public String getImagemPath() {
+		if(logo == null || id == null) return null;
+		
+		return "/imagem-salvas/" + id + "/" + logo;
 	}
 
 //	public List<ImagemModel> getImagens() {

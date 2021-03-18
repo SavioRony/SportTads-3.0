@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.sporttads.enumeration.StatusEnumeration;
+import br.com.sporttads.model.ImagemModel;
 import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.repository.ProdutoRepository;
 
@@ -41,5 +42,6 @@ public class ProdutoService {
 	public List<ProdutoModel> findPessoaByName(String nome){
 		return repository.findPessoaByName(nome);
 	}
+	
 
 }

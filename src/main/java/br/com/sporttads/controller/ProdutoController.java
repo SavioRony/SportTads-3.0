@@ -1,5 +1,11 @@
 package br.com.sporttads.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -8,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +25,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import br.com.sporttads.model.ImagemModel;
 import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.service.ProdutoService;
 
@@ -67,8 +79,9 @@ public class ProdutoController {
 
 	@PostMapping("**/salvarproduto")
 	public ModelAndView post(ProdutoModel produto) {
-		produtoService.save(produto);
+		ProdutoModel produtoEditado = produtoService.save(produto);
 		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
+		andView.addObject("produto",produtoEditado);
 		return andView;
 	}
 
@@ -88,8 +101,14 @@ public class ProdutoController {
 
 		return andView;
 	}
+	
+	@GetMapping("/cadastro")
+	public String cadastro() {
+		return "redirect:/produtos/cadastroproduto";
+		
+	}
 
-	@GetMapping("/cadastroproduto")
+	@GetMapping("**/cadastroproduto")
 	public ModelAndView telaCadastro() {
 		ModelAndView andView = new ModelAndView("Produto/CadastroProduto");
 		return andView;
@@ -99,8 +118,34 @@ public class ProdutoController {
 	public ModelAndView telaAltera(ProdutoModel produto) {
 		ProdutoModel produtoEditado = produtoService.save(produto);
 		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
-		andView.addObject("imagem",produtoEditado);
+		andView.addObject("produto",produtoEditado);
 		return andView;
+	}
+	
+	@PostMapping("/save")
+	public String saveImagem(@ModelAttribute(name = "imagem") ProdutoModel produto,
+			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
+
+		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+		produto.setLogo(nomeArquivo);
+		ProdutoModel produtoSalvo = produtoService.save(produto);
+		
+		String uploadDiretorio = "./imagem-salvas/"+produtoSalvo.getId();
+		
+		Path uploadPath = Paths.get(uploadDiretorio);
+		
+		if(!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
+		
+		try(InputStream inputStream = multipartfile.getInputStream()){
+			Path filePath = uploadPath.resolve(nomeArquivo);
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		}catch(IOException e){
+			throw new IOException("Não foi possivel salvar o arquivo: " + nomeArquivo);
+		}
+	
+		return "redirect:/produtos/listaproduto";
 	}
 
 }
