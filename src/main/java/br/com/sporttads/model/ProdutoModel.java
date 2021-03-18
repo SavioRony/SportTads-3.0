@@ -33,7 +33,8 @@ public class ProdutoModel {
 	
 	@Column(length = 45, nullable = true)
 	private String logo;
-
+		
+	
 //	@OneToMany(targetEntity = ImagemModel.class)
 //	private List<ImagemModel> imagens;
 
@@ -117,8 +118,6 @@ public class ProdutoModel {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-
 
 	public String getLogo() {
 		return logo;
@@ -132,9 +131,10 @@ public class ProdutoModel {
 	public String getImagemPath() {
 		if(logo == null || id == null) return null;
 		
-		return "/imagem-salvas/" + id + "/" + logo;
+		return "/imagem-principal/" + id + "/" + logo;
 	}
 
+	
 //	public List<ImagemModel> getImagens() {
 //		return imagens;
 //	}
@@ -142,7 +142,6 @@ public class ProdutoModel {
 //	public void setImagens(List<ImagemModel> imagens) {
 //		this.imagens = imagens;
 //	}
-	
 	
 
 }

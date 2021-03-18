@@ -31,7 +31,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.sporttads.model.ImagemModel;
 import br.com.sporttads.model.ProdutoModel;
+import br.com.sporttads.service.ImagemService;
 import br.com.sporttads.service.ProdutoService;
+import br.com.sporttads.utils.FileUploadUtil;
 
 
 @Controller
@@ -40,7 +42,9 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
-
+	
+	@Autowired
+	private ImagemService imagemService;
 
 	@GetMapping("/listaproduto")
 	public ModelAndView getAll() {
@@ -123,29 +127,41 @@ public class ProdutoController {
 	}
 	
 	@PostMapping("/save")
-	public String saveImagem(@ModelAttribute(name = "imagem") ProdutoModel produto,
+	public ModelAndView saveProduto(@ModelAttribute(name = "produto") ProdutoModel produto,
 			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
 
 		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
 		produto.setLogo(nomeArquivo);
 		ProdutoModel produtoSalvo = produtoService.save(produto);
 		
-		String uploadDiretorio = "./imagem-salvas/"+produtoSalvo.getId();
+		String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
 		
-		Path uploadPath = Paths.get(uploadDiretorio);
-		
-		if(!Files.exists(uploadPath)) {
-			Files.createDirectories(uploadPath);
-		}
-		
-		try(InputStream inputStream = multipartfile.getInputStream()){
-			Path filePath = uploadPath.resolve(nomeArquivo);
-			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		}catch(IOException e){
-			throw new IOException("Não foi possivel salvar o arquivo: " + nomeArquivo);
-		}
+		FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);
+
+		ModelAndView andView = new ModelAndView("Produto/CadastrarImagemProduto");
+		andView.addObject("produto",produtoSalvo);
+		return andView;
+	}
 	
-		return "redirect:/produtos/listaproduto";
+	@PostMapping("/alterar")
+	public ModelAndView alterarProduto(@ModelAttribute(name = "imagem") ProdutoModel produto,
+			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
+
+		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+		produto.setLogo(nomeArquivo);
+		ProdutoModel produtoSalvo = produtoService.save(produto);
+		
+		String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
+		
+		FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);
+		
+		ImagemModel imagem = imagemService.findByIdProduto(produtoSalvo.getId());
+		System.out.println("ID IMAGEM " + imagem.getId());
+		
+		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
+		andView.addObject("produto",produtoSalvo);
+		andView.addObject("imagem",imagem);
+		return andView;
 	}
 
 }

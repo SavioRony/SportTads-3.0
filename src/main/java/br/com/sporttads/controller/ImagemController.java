@@ -28,6 +28,7 @@ import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.service.ImagemService;
 import br.com.sporttads.service.ProdutoService;
 import br.com.sporttads.utils.DiscoUtils;
+import br.com.sporttads.utils.FileUploadUtil;
 
 @Controller
 @RequestMapping("/imagens")
@@ -64,34 +65,39 @@ public class ImagemController {
 		imagemService.deletar(id);
 		return ResponseEntity.ok("Imagem imagemService com sucesso!");
 	}
-	
-//	@PostMapping("/save")
-//	public String saveImagem(@ModelAttribute(name = "imagem") ProdutoModel produtoImagem, RedirectAttributes ra, 
-//			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
-//		ImagemModel imagem = new ImagemModel();
-//		imagem.setIdProduto(produtoImagem.getId());
-//		System.out.println("Produto ID: " + imagem.getIdProduto());
-//		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
-//		imagem.setLogo(nomeArquivo);
-//		ImagemModel imagemSalva = imagemService.save(imagem);
-//		
-//		String uploadDiretorio = "./imagem-salvas/"+imagemSalva.getId();
-//		
-//		Path uploadPath = Paths.get(uploadDiretorio);
-//		
-//		if(!Files.exists(uploadPath)) {
-//			Files.createDirectories(uploadPath);
-//		}
-//		
-//		try(InputStream inputStream = multipartfile.getInputStream()){
-//			Path filePath = uploadPath.resolve(nomeArquivo);
-//			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-//		}catch(IOException e){
-//			throw new IOException("Não foi possivel salvar o arquivo: " + nomeArquivo);
-//		}
-//		ra.addFlashAttribute("mensagem", "Produto alterado com sucesso.");
-//		
-//		return "redirect:/produtos/listaproduto";
-//	}
+
+	@PostMapping("/save")
+	public String saveImagem(@ModelAttribute(name = "produto") ProdutoModel produto,
+			@RequestParam("arquivoImagem") MultipartFile[] multipartfiles) throws IOException {
+		
+		ImagemModel imagem = new ImagemModel();
+		imagem.setIdProduto(produto.getId());
+		
+		int count = 0;
+		for (MultipartFile multipartfile : multipartfiles) {
+			String imagemNome = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+			if (count == 0)
+				imagem.setImg01(imagemNome);
+			if (count == 1)
+				imagem.setImg02(imagemNome);
+			if (count == 2)
+				imagem.setImg03(imagemNome);
+			if (count == 3)
+				imagem.setImg04(imagemNome);
+
+			count++;
+		}
+
+		ImagemModel imagemSalva = imagemService.save(imagem);
+
+		String uploadDiretorio = "./imagens-produto/" + imagemSalva.getIdProduto();
+
+		for (MultipartFile multipartfile : multipartfiles) {
+			String imagemNome = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+			FileUploadUtil.saveFile(uploadDiretorio, multipartfile, imagemNome);
+		}
+
+		return "redirect:/produtos/listaproduto";
+	}
 
 }

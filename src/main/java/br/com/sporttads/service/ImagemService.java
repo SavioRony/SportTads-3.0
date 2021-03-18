@@ -27,6 +27,10 @@ public class ImagemService {
 	public ImagemModel consultar(Integer id) {
 		return repository.findById(id).orElse(new ImagemModel());
 	}
+	
+	public ImagemModel consultarIdProduto(Integer id) {
+		return repository.findById(id).orElse(new ImagemModel());
+	}
 
 	public void deletar(Integer id) {
 		repository.deleteById(id);
@@ -35,4 +39,9 @@ public class ImagemService {
 	public ImagemModel save(ImagemModel imagem) {
 		return repository.save(imagem);
 	}
+	
+	public ImagemModel findByIdProduto(Integer idProduto) {
+		return repository.findByIdProduto(idProduto);
+	}
+	
 }

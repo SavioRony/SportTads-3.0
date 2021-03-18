@@ -24,8 +24,17 @@ public class ImagemModel {
 
 	private String caminho;
 	
-//	@Column(length = 45, nullable = true)
-//	private String logo;
+	@Column(length = 45, nullable = true)
+	private String img01;
+
+	@Column(length = 45, nullable = true)
+	private String img02;
+	
+	@Column(length = 45, nullable = true)
+	private String img03;
+	
+	@Column(length = 45, nullable = true)
+	private String img04;
 	
 	@Column
 	private Integer idProduto;
@@ -81,14 +90,67 @@ public class ImagemModel {
 	public void setIdProduto(Integer idProduto) {
 		this.idProduto = idProduto;
 	}
+
+	public String getImg01() {
+		return img01;
+	}
+
+	public void setImg01(String img01) {
+		this.img01 = img01;
+	}
+
+	public String getImg02() {
+		return img02;
+	}
+
+	public void setImg02(String img02) {
+		this.img02 = img02;
+	}
+
+	public String getImg03() {
+		return img03;
+	}
+
+	public void setImg03(String img03) {
+		this.img03 = img03;
+	}
+
+	public String getImg04() {
+		return img04;
+	}
+
+	public void setImg04(String img04) {
+		this.img04 = img04;
+	}
 	
-//	@Transient
-//	public String getImagemPath() {
-//		if(logo == null || id == null) return null;
-//		
-//		return "/imagem-salvas/" + id + "/" + logo;
-//	}
 	
+	@Transient
+	public String getImagemPath01() {
+		if(img01 == null || idProduto == null) return null;
+		System.out.println("/imagens-produtos/" + idProduto + "/" + img01);
+		return "/imagens-produtos/" + idProduto + "/" + img01;
+	}
+	
+	@Transient
+	public String getImagemPath02() {
+		if(img02 == null || idProduto == null) return null;
+		
+		return "/imagens-produtos/" + idProduto + "/" + img02;
+	}
+	
+	@Transient
+	public String getImagemPath03() {
+		if(img03 == null || idProduto == null) return null;
+		
+		return "/imagens-produtos/" + idProduto + "/" + img03;
+	}
+	
+	@Transient
+	public String getImagemPath04() {
+		if(img04 == null || idProduto == null) return null;
+		
+		return "/imagens-produtos/" + idProduto + "/" + img04;
+	}
 	
 
 }
