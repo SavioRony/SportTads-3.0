@@ -23,6 +23,7 @@ public class ImagemModel {
 
 	private String caminho;
 
+	
 	@ManyToOne
 	@JoinColumn(name = "ID_PRODUTO")
 	private ProdutoModel produto;

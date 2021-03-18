@@ -117,7 +117,7 @@ public class ProdutoController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> alterar(@RequestBody ProdutoModel produto, @PathVariable Integer id) {
-		return new ResponseEntity<>(produtoService.save(produto), HttpStatus.OK);
+		return new ResponseEntity<>(produtoService.edit(id, produto), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
