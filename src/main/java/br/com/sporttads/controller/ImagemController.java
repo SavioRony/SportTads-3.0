@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.sporttads.model.ProdutoModel;
@@ -32,9 +31,9 @@ public class ImagemController {
 	private DiscoUtils disc;
 
 	@PostMapping("/{idProduto}")
-	public ResponseEntity<?> save(@PathVariable Integer idProduto, @RequestParam MultipartFile foto) {
+	public ResponseEntity<?> save(@PathVariable Integer idProduto, @RequestParam MultipartFile imagens) {
 		ProdutoModel produto = produtoService.getById(idProduto);
-		String caminho = disc.salvar(foto);
+		String caminho = disc.salvar(imagens);
 		return new ResponseEntity<>(imagemService.salvar(caminho, produto), HttpStatus.OK);
 	}
 
@@ -51,7 +50,7 @@ public class ImagemController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		imagemService.deletar(id);
-		return ResponseEntity.ok("Imagem imagemService com sucesso!");
+		return ResponseEntity.ok().build();
 	}
 
 }

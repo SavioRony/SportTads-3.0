@@ -12,19 +12,19 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "tb_imagem")
+@Table(name = "TB_IMAGEM")
 @Data
 public class ImagemModel {
 
 	@Id
-	@Column(name = "idImagem")
+	@Column(name = "ID_IMAGEM")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	private String caminho;
 
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "idProduto", name = "idProduto")
+	@JoinColumn(name = "ID_PRODUTO")
 	private ProdutoModel produto;
 
 	public ImagemModel(String caminho, ProdutoModel produto) {
