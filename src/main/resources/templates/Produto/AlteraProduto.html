@@ -41,7 +41,7 @@
                     <div class="row">
                         <div class="col s12">
                             <div class="col s6 offset-s3">
-                                <label>Logo</label>
+                                <span>Imagem Principal</span>
                                 <p>
                                     <img id="thumbnail" alt="Logo Preview" style="width: 25%; border: 1px solid black" th:src="@{${produtoObj.ImagemPath}}" />
                                 </p>
@@ -55,7 +55,7 @@
                         <div class="col s12">
                             <div class="col s1">
 
-                                <label>ID</label> <input style="text-transform: uppercase" type="text" name="id" th:field="*{id}" readonly=“true”>
+                                <label>ID</label> <input type="text" name="id" th:field="*{id}" readonly=“true”>
                             </div>
                             <div class="col s11">
                                 <label><strong>Nome do Produto</strong></label> <input name="nome" th:field="*{nome}" required="true" />

@@ -91,6 +91,8 @@ public class ProdutoController {
 
 	@PostMapping("**/inativarreativarproduto")
 	public ModelAndView ativaReativar(ProdutoModel produto) {
+		ProdutoModel p = produtoService.getById(produto.getId());
+		produto.setLogo(p.getLogo());
 		produtoService.save(produto);
 		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
 		List<ProdutoModel> produtos = produtoService.getAll();
@@ -101,7 +103,7 @@ public class ProdutoController {
 	@PostMapping("**/pesquisarproduto")
 	public ModelAndView pesquisarproduto(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-		andView.addObject("produtos", produtoService.findPessoaByName(nomepesquisa.toUpperCase()));
+		andView.addObject("produtos", produtoService.findPessoaByName(nomepesquisa));
 
 		return andView;
 	}
@@ -129,14 +131,21 @@ public class ProdutoController {
 	@PostMapping("/save")
 	public ModelAndView saveProduto(@ModelAttribute(name = "produto") ProdutoModel produto,
 			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
-
-		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+		
+		String nomeArquivo = "NotFile"; 
+		
+		if(!multipartfile.isEmpty()) {
+			nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+		}
+		
 		produto.setLogo(nomeArquivo);
+		
 		ProdutoModel produtoSalvo = produtoService.save(produto);
 		
-		String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
-		
-		FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);
+		if(!multipartfile.isEmpty()) {
+			String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
+			FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);		
+		}
 
 		ModelAndView andView = new ModelAndView("Produto/CadastrarImagemProduto");
 		andView.addObject("produto",produtoSalvo);
@@ -144,23 +153,27 @@ public class ProdutoController {
 	}
 	
 	@PostMapping("/alterar")
-	public ModelAndView alterarProduto(@ModelAttribute(name = "imagem") ProdutoModel produto,
+	public ModelAndView alterarProduto(@ModelAttribute(name = "produto") ProdutoModel produto,
 			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
-
-		String nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+		ProdutoModel p = produtoService.getById(produto.getId());
+		
+		String nomeArquivo = p.getLogo(); 
+		
+		if(!multipartfile.isEmpty()) {
+			nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+		}
+		
 		produto.setLogo(nomeArquivo);
 		ProdutoModel produtoSalvo = produtoService.save(produto);
 		
-		String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
-		
-		FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);
-		
+		if(!multipartfile.isEmpty()) {
+			String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
+			FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);		
+		}
 		ImagemModel imagem = imagemService.findByIdProduto(produtoSalvo.getId());
-		System.out.println("ID IMAGEM " + imagem.getId());
-		
 		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
-		andView.addObject("produto",produtoSalvo);
 		andView.addObject("imagem",imagem);
+		
 		return andView;
 	}
 

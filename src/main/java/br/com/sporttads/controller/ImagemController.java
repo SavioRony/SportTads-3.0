@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,24 +69,41 @@ public class ImagemController {
 
 	@PostMapping("/save")
 	public String saveImagem(@ModelAttribute(name = "produto") ProdutoModel produto,
-			@RequestParam("arquivoImagem") MultipartFile[] multipartfiles) throws IOException {
+			@RequestParam("arquivoImagem01") MultipartFile multipartfiles01,
+			@RequestParam("arquivoImagem02") MultipartFile multipartfiles02,
+			@RequestParam("arquivoImagem03") MultipartFile multipartfiles03,
+			@RequestParam("arquivoImagem04") MultipartFile multipartfiles04) throws IOException {
 		
 		ImagemModel imagem = new ImagemModel();
 		imagem.setIdProduto(produto.getId());
-		
-		int count = 0;
-		for (MultipartFile multipartfile : multipartfiles) {
-			String imagemNome = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
-			if (count == 0)
-				imagem.setImg01(imagemNome);
-			if (count == 1)
-				imagem.setImg02(imagemNome);
-			if (count == 2)
-				imagem.setImg03(imagemNome);
-			if (count == 3)
-				imagem.setImg04(imagemNome);
+		ArrayList<MultipartFile> multipartfiles = new ArrayList<>();
 
-			count++;
+		if (!multipartfiles01.isEmpty()) {
+			imagem.setImg01(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles01.getOriginalFilename())));
+			multipartfiles.add(multipartfiles01);
+		}else {
+			imagem.setImg01("NotFile");
+		}
+		
+		if (!multipartfiles02.isEmpty()) {
+			imagem.setImg02(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles02.getOriginalFilename())));
+			multipartfiles.add(multipartfiles02);
+		}else {
+			imagem.setImg02("NotFile");
+		}
+		
+		if (!multipartfiles03.isEmpty()) {
+			imagem.setImg03(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles03.getOriginalFilename())));
+			multipartfiles.add(multipartfiles03);
+		}else {
+			imagem.setImg03("NotFile");
+		}
+		
+		if (!multipartfiles04.isEmpty()) {
+			imagem.setImg04(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles04.getOriginalFilename())));
+			multipartfiles.add(multipartfiles04);
+		}else {
+			imagem.setImg04("NotFile");
 		}
 
 		ImagemModel imagemSalva = imagemService.save(imagem);
@@ -99,5 +117,55 @@ public class ImagemController {
 
 		return "redirect:/produtos/listaproduto";
 	}
+	
+	@PostMapping("/alterar")
+	public String alterarImagem(@ModelAttribute(name = "imagem") ImagemModel imagem,
+			@RequestParam("arquivoImagem01") MultipartFile multipartfiles01,
+			@RequestParam("arquivoImagem02") MultipartFile multipartfiles02,
+			@RequestParam("arquivoImagem03") MultipartFile multipartfiles03,
+			@RequestParam("arquivoImagem04") MultipartFile multipartfiles04) throws IOException {
+		
+			ImagemModel i = imagemService.consultar(imagem.getId());
+			ArrayList<MultipartFile> multipartfiles = new ArrayList<>();
 
+			if (!multipartfiles01.isEmpty()) {
+				imagem.setImg01(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles01.getOriginalFilename())));
+				multipartfiles.add(multipartfiles01);
+			}else {
+				imagem.setImg01(i.getImg01());
+			}
+			
+			if (!multipartfiles02.isEmpty()) {
+				imagem.setImg02(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles02.getOriginalFilename())));
+				multipartfiles.add(multipartfiles02);
+			}else {
+				imagem.setImg02(i.getImg02());
+			}
+			
+			if (!multipartfiles03.isEmpty()) {
+				imagem.setImg03(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles03.getOriginalFilename())));
+				multipartfiles.add(multipartfiles03);
+			}else {
+				imagem.setImg03(i.getImg03());
+			}
+			
+			if (!multipartfiles04.isEmpty()) {
+				imagem.setImg04(StringUtils.cleanPath(StringUtils.cleanPath(multipartfiles04.getOriginalFilename())));
+				multipartfiles.add(multipartfiles04);
+			}else {
+				imagem.setImg04(i.getImg04());
+			}
+
+
+		ImagemModel imagemSalva = imagemService.save(imagem);
+
+		String uploadDiretorio = "./imagens-produto/" + imagemSalva.getIdProduto();
+
+		for (MultipartFile multipartfile : multipartfiles) {
+			String imagemNome = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
+			FileUploadUtil.saveFile(uploadDiretorio, multipartfile, imagemNome);
+		}
+
+		return "redirect:/produtos/listaproduto";
+	}
 }

@@ -19,7 +19,7 @@ public class ImagemModel {
 
 	@Id
 	@Column(name = "idImagem")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String caminho;
@@ -128,28 +128,28 @@ public class ImagemModel {
 	public String getImagemPath01() {
 		if(img01 == null || idProduto == null) return null;
 		System.out.println("/imagens-produtos/" + idProduto + "/" + img01);
-		return "/imagens-produtos/" + idProduto + "/" + img01;
+		return "/imagens-produto/" + idProduto + "/" + img01;
 	}
 	
 	@Transient
 	public String getImagemPath02() {
 		if(img02 == null || idProduto == null) return null;
 		
-		return "/imagens-produtos/" + idProduto + "/" + img02;
+		return "/imagens-produto/" + idProduto + "/" + img02;
 	}
 	
 	@Transient
 	public String getImagemPath03() {
 		if(img03 == null || idProduto == null) return null;
 		
-		return "/imagens-produtos/" + idProduto + "/" + img03;
+		return "/imagens-produto/" + idProduto + "/" + img03;
 	}
 	
 	@Transient
 	public String getImagemPath04() {
 		if(img04 == null || idProduto == null) return null;
 		
-		return "/imagens-produtos/" + idProduto + "/" + img04;
+		return "/imagens-produto/" + idProduto + "/" + img04;
 	}
 	
 
