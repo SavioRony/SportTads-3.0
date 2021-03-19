@@ -18,19 +18,21 @@
 
             <fieldset>
                 <legend>Adicionar/Remover Imagens</legend>
-                <form th:action="@{/imagens/alterar}" method="post" th:object="${imagem}" enctype="multipart/form-data">
-                    <input type="hidden" name="idproduto" th:field="*{idProduto}">
-                    <input type="hidden" name="id" th:field="*{id}">
+                <form th:action="@{/imagens/save}" method="post" enctype="multipart/form-data">
+                    <span th:object="${produto}">
+				        <input type="hidden" name="idProduto" th:field="*{id}" >
+				    </span>
                     <div class="row">
                         <div class="col s12">
                             <div class="offset-s2 col s4 " style="border: 1px solid black; margin-right: 10px;">
                                 <h5 style="text-align: center;">Imagem Extra 01</h5>
                                 <p style="text-align: center">
-                                    <img id="thumbnail" alt="Logo Preview" style="width: 50%" th:src="@{${imagem.ImagemPath01}}" />
+                                    <img id="thumbnail" alt="Logo Preview" style="width: 50%" />
                                 </p>
                                 <div class="file-field input-field">
                                     <div class="btn light-blue accent-2">
-                                        <span>Imagem</span> <input type="file" name="arquivoImagem01" id="arquivoImagem01" accept="image/png, image/jpeg">
+                                        <span>Imagem</span>
+                                        <input type="file" name="arquivoImagem01" id="arquivoImagem01" accept="image/png, image/jpeg">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">
@@ -40,11 +42,12 @@
                             <div class="col s4" style="border: 1px solid black">
                                 <h5 style="text-align: center;">Imagem Extra 02</h5>
                                 <p style="text-align: center">
-                                    <img id="thumbnail1" alt="Logo Preview" style="width: 50%" th:src="@{${imagem.ImagemPath02}}" />
+                                    <img id="thumbnail1" alt="Logo Preview" style="width: 50%" />
                                 </p>
                                 <div class="file-field input-field">
                                     <div class="btn light-blue accent-2">
-                                        <span>Imagem</span> <input type="file" name="arquivoImagem02" id="arquivoImagem02" accept="image/png, image/jpeg">
+                                        <span>Imagem</span>
+                                        <input type="file" name="arquivoImagem02" id="arquivoImagem02" accept="image/png, image/jpeg">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">
@@ -56,13 +59,14 @@
                     <div class="row">
                         <div class="col s12">
                             <div class="offset-s2 col s4" style="border: 1px solid black; margin-right: 10px">
-                                <h5 style="text-align: center;">Imagem Extra 03</h5>
+                               <h5 style="text-align: center;">Imagem Extra 03</h5>
                                 <p style="text-align: center">
-                                    <img id="thumbnail2" alt="Logo Preview" style="width: 50%" th:src="@{${imagem.ImagemPath03}}" />
+                                    <img id="thumbnail2" alt="Logo Preview" style="width: 50%"/>
                                 </p>
                                 <div class="file-field input-field">
                                     <div class="btn light-blue accent-2">
-                                        <span>Imagem</span> <input type="file" name="arquivoImagem03" id="arquivoImagem03" accept="image/png, image/jpeg">
+                                        <span>Imagem</span>
+                                        <input type="file" name="arquivoImagem03" id="arquivoImagem03" accept="image/png, image/jpeg">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">
@@ -72,11 +76,12 @@
                             <div class="col s4" style="border: 1px solid black">
                                 <h5 style="text-align: center;">Imagem Extra 04</h5>
                                 <p style="text-align: center">
-                                    <img id="thumbnail3" alt="Logo Preview" style="width: 50%" th:src="@{${imagem.ImagemPath04}}" />
+                                    <img id="thumbnail3" alt="Logo Preview" style="width: 50%"/>
                                 </p>
                                 <div class="file-field input-field">
                                     <div class="btn light-blue accent-2">
-                                        <span>Imagem</span> <input type="file" name="arquivoImagem04" id="arquivoImagem04" accept="image/png, image/jpeg">
+                                        <span>Imagem</span>
+                                        <input type="file" name="arquivoImagem04" id="arquivoImagem04" accept="image/png, image/jpeg">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">
@@ -85,11 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <a>
-                        <button class="btn waves-effect  light-blue accent-2" type="submit">
-							<i class="material-icons right">send</i>Salvar
-						</button>
-                    </a>
+                    <a> <button class="btn waves-effect  light-blue accent-2" type="submit"><i class="material-icons right">send</i>Salvar</button></a>
                 </form>
             </fieldset>
         </article>
@@ -102,8 +103,6 @@
             $('#arquivoImagem01').change(function() {
                 showImageThumbnail(this);
             });
-
-
         });
 
         function showImageThumbnail(fileInput) {

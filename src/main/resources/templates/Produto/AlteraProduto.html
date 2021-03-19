@@ -1,111 +1,122 @@
 <!DOCTYPE html>
-<html>
-<div class="container">
-    <head>
-        <html xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:th="http://www.thymeleaf.org">
-        <script src="jquery-3.5.1.min.js"></script>
-        <script
-                src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              rel="stylesheet">
-        <link type="text/css" rel="stylesheet"
-              href="/materialize/css/materialize.css" media="screen,projection"/>
-        <link type="text/css" rel="stylesheet"
-              href="/materialize/css/materialize.min.css" media="screen,projection"/>
-        <title>Alterar Produto</title>
-        <script type="text/javascript">
-		  $(document).ready(function(){
-	    	$('select').formSelect();
-	  		});
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-        </script>
-        </head>
+<head>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+    
+    <title>Alterar Produto</title>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select').formSelect();
+        });
+        $(document).ready(function() {
+            $('#arquivoImagem').change(function() {
+                showImageThumbnail(this);
+            });
+        });
 
-    <body>
-    <article>
-        <fieldset>
-            <legend>Alterar Produto</legend>
-            <form action="alterarproduto" method="post" th:object="${produtoObj}">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="col s1">
-                            <label>ID</label> <input style="text-transform: uppercase" type="text" name="id"
-                                                     th:field="*{id}"
-                                                     readonly=“true”>
-                        </div>
-                        <div class="col s11">
-                            <label><strong>Nome do Produto</strong></label> <input name="nome"
-                                                                                   th:field="*{nome}" required="true"/>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col s12">
+        function showImageThumbnail(fileInput) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#thumbnail').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <article>
+            <fieldset>
+                <legend>Alterar Produto</legend>
+                <form th:action="@{/produtos/alterar}" th:object="${produtoObj}" method="post" enctype="multipart/form-data">
+                    <div class="row">
                         <div class="col s12">
-                            <label><strong>Nome Extenso</strong></label>
-                            <textarea rows="3" type="text" name="descricao" th:field="*{descricao}" maxlength="2000"
-                                      class="materialize-textarea" required="true"></textarea>
+                            <div class="col s6 offset-s3">
+                                <span>Imagem Principal</span>
+                                <p>
+                                    <img id="thumbnail" alt="Logo Preview" style="width: 25%; border: 1px solid black" th:src="@{${produtoObj.ImagemPath}}" />
+                                </p>
+                                <p>
+                                    <input type="file" name="arquivoImagem" id="arquivoImagem" accept="image/png, image/jpeg" />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col s1">
 
+                                <label>ID</label> <input type="text" name="id" th:field="*{id}" readonly=“true”>
+                            </div>
+                            <div class="col s11">
+                                <label><strong>Nome do Produto</strong></label> <input name="nome" th:field="*{nome}" required="true" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col s12">
-                        <div class="col s6">
-                            <label><strong>QTD estrelas</strong></label> <input name="estrelas"
-                                                                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                                                                th:field="*{estrelas}" required="true"/>
-                        </div>
-                        <div>
-                            <input th:field="*{status}" name="status" type="hidden">
-                        </div>
-                        <div class="col s6">
-                            <label><strong>Categoria</strong></label> <select name="categoria"
-                                                                              required="true">
-                            <option value="" disabled selected>Selecione</option>
-                            <option value="Aquaticos">Aquaticos</option>
-                            <option value="Basquete">Basquete</option>
-                            <option value="Fitness">Fitness</option>
-                            <option value="Futebol">Futebol</option>
-                            <option value="Marciais">Marciais</option>
-                            <option value="Volei">Volei</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col s12">
-                        <div class="col s6">
-                            <label><strong>Qtd Estoque</strong></label> <input
-                                name="quantidade"
-                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                th:field="*{quantidade}" required="true"/>
-                        </div>
-                        <div class="col s6">
-                            <label><strong>Preço</strong></label> <input name="preco"
-                                                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46"
-                                                                         th:field="*{preco}" required="true"/>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2" href="#"
-                   th:href="@{/produtos/listaproduto}"><i class="material-icons">keyboard_arrow_left</i></a>
-                <button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit"><i
-                        class="material-icons left">collections</i>Alterar Imagens
-                </button>
-            </form>
-        </fieldset>
-    </article>
+                    <br />
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col s12">
+                                <label><strong>Nome Extenso</strong></label>
+                                <textarea rows="3" type="text" name="descricao" th:field="*{descricao}" maxlength="2000" class="materialize-textarea" required="true"></textarea>
 
-    <script type="text/javascript" src="/materialize/js/materialize.js"></script>
-    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col s6">
+                                <label><strong>QTD estrelas</strong></label> <input name="estrelas" onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{estrelas}" required="true" />
+                            </div>
+                            <div>
+                                <input th:field="*{status}" name="status" type="hidden">
+                            </div>
+                            <div class="col s6">
+                                <label><strong>Categoria</strong></label> <select name="categoria" required="true">
+								<option value="" disabled selected>Selecione</option>
+								<option value="Aquaticos">Aquaticos</option>
+								<option value="Basquete">Basquete</option>
+								<option value="Fitness">Fitness</option>
+								<option value="Futebol">Futebol</option>
+								<option value="Marciais">Marciais</option>
+								<option value="Volei">Volei</option>
+							</select>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col s6">
+                                <label><strong>Qtd Estoque</strong></label> <input name="quantidade" onkeypress="return event.charCode >= 48 && event.charCode <= 57" th:field="*{quantidade}" required="true" />
+                            </div>
+                            <div class="col s6">
+                                <label><strong>Preço</strong></label> <input name="preco" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46" th:field="*{preco}" required="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <br /> <a style="float: left;" class="btn-floating btn-large waves-effect light-blue accent-2" href="#" th:href="@{/produtos/listaproduto}"><i
+						class="material-icons">keyboard_arrow_left</i></a>
+                    <button style="float: right;" class="btn waves-effect light-blue accent-2" type="submit">
+					<i class="material-icons left">collections</i>Alterar Imagens
+				</button>
+                </form>
+            </fieldset>
+        </article>
+
+        <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+        <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+    </div>
 </body>
 
 </html>
