@@ -22,11 +22,7 @@ public class ProdutoService {
 
 	public void delete(Integer id) {
 		ProdutoModel produto = getById(id);
-		if (produto.getStatus() == StatusEnumeration.ATIVO) {
-			produto.setStatus(StatusEnumeration.INATIVO);
-		} else {
-			produto.setStatus(StatusEnumeration.ATIVO);
-		}
+		produto.setStatus("Inativo");
 		repository.save(produto);
 	}
 
