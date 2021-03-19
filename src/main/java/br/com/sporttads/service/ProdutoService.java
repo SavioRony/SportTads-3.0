@@ -22,7 +22,11 @@ public class ProdutoService {
 
 	public void delete(Integer id) {
 		ProdutoModel produto = getById(id);
-		produto.setStatus("Inativo");
+		if (produto.getStatus() == StatusEnumeration.ATIVO) {
+			produto.setStatus(StatusEnumeration.INATIVO);
+		} else {
+			produto.setStatus(StatusEnumeration.ATIVO);
+		}
 		repository.save(produto);
 	}
 
@@ -34,12 +38,30 @@ public class ProdutoService {
 		return repository.findAll();
 	}
 
-	public ProdutoModel edit(Integer id) {
+	public ProdutoModel edit(Integer id, ProdutoModel editProduto) {
 		ProdutoModel produtoModel = getById(id);
+		if (editProduto.getNome() != null || editProduto.getNome().equals("")) {
+			produtoModel.setNome(editProduto.getNome());
+		}
+		if (editProduto.getCategoria() != null || editProduto.getCategoria().equals("")) {
+			produtoModel.setCategoria(editProduto.getCategoria());
+		}
+		if (editProduto.getDescricao() != null || editProduto.getDescricao().equals("")) {
+			produtoModel.setDescricao(editProduto.getDescricao());
+		}
+		if (editProduto.getEstrelas() != null) {
+			produtoModel.setEstrelas(editProduto.getEstrelas());
+		}
+		if (editProduto.getPreco() != null) {
+			produtoModel.setPreco(editProduto.getPreco());
+		}
+		if (editProduto.getQuantidade() != null) {
+			produtoModel.setQuantidade(editProduto.getQuantidade());
+		}
 		return repository.save(produtoModel);
 	}
-	
-	public List<ProdutoModel> findPessoaByName(String nome){
+
+	public List<ProdutoModel> findPessoaByName(String nome) {
 		return repository.findPessoaByName(nome);
 	}
 	
