@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Post Imagens</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+	crossorigin="anonymous"></script>
+</head>
+<style>
+.container {
+	margin-top: 100px;
+}
+
+#comprar {
+	width: 300px;
+	height: 40px;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+body {
+	background-color: #f1f1f1;
+}
+
+* {
+	font-family: 'Lato', sans-serif;
+}
+
+.w-100 {
+	width: 300px;
+	height: 350px;
+}
+
+.bi-star-fill {
+	color: #f2c832;
+}
+
+#quantidade {
+	width: 55px;
+	text-align: center;
+}
+
+.quantidade {
+	display: inline-flex;
+	margin-bottom: 20px;
+}
+
+.quantidade button {
+	width: 40px;
+}
+
+#voltar {
+	display: block;
+}
+</style>
+<body>
+	<div class="container">
+		<h1>Consulta de Produto</h1>
+		<div class="row">
+			<div class="form-group col-lg-8" id="painel1">
+				<div class="card bg-light">
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group col-lg-6">
+								<div id="carouselExampleControls" class="carousel slide"
+									data-ride="carousel">
+									<div class="carousel-inner">
+										<div class="carousel-item active">
+											<img src="../imagens/IMG1.jpg" class="d-block w-100">
+										</div>
+										<div class="carousel-item">
+											<img src="../imagens/IMG2.jpg" class="d-block w-100">
+										</div>
+										<div class="carousel-item">
+											<img src="../imagens/IMG3.jpg" class="d-block w-100">
+										</div>
+										<div class="carousel-item">
+											<img src="../imagens/IMG4.jpg" class="d-block w-100">
+										</div>
+										<div class="carousel-item">
+											<img src="../imagens/IMG5.jpg" class="d-block w-100">
+										</div>
+									</div>
+									<a class="carousel-control-prev"
+										href="#carouselExampleControls" role="button"
+										data-slide="prev"> <span
+										class="carousel-control-prev-icon"></span> <span
+										class="sr-only">Anterior</span>
+									</a> <a class="carousel-control-next"
+										href="#carouselExampleControls" role="button"
+										data-slide="next"> <span
+										class="carousel-control-next-icon"></span> <span
+										class="sr-only">Próximo</span>
+									</a>
+								</div>
+							</div>
+							<div class="form-group col-lg-6">
+								<div>
+									<b> Smart TV 55'' Samsung Crystal UHD 55TU8000 4K, Wi-fi,
+										Borda Infinita, Alexa built in, Controle Único, Visual Livre
+										de Cabos, Modo Ambiente Foto </b>
+								</div>
+								<br>
+								<div id="estrelas"></div>
+								<br>
+								<div>
+									<b>Categoria</b>
+								</div>
+								<br>
+								<div>Samsung Smart TV Crystal UHD 4K 2020 TU8000 55",
+									Borda ultrafina, Múltiplos assistentes pessoais, Design com
+									Cabos escondidos, Modo Ambiente Foto, Controle Remoto Único.
+									Imagens meramente ilustrativas. Todas as informações
+									divulgada...</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group col-lg-4" id="painel2">
+				<div class="card bg-light">
+					<div class="card-body">
+						<div>
+							<h3>R$ 10.000,00</h3>
+						</div>
+						<p>
+							em até 12x sem juros no <b>cartão de crédito</b>
+						</p>
+						<p>
+							em até 15x sem juros no <b>cartão de crédito Sport Tads</b>
+						</p>
+						Quantidade:
+						<div class="quantidade">
+							<button id="btn-menos" class="btn btn-dark">-</button>
+							<input id="quantidade" class="form-control" type="text">
+							<button id="btn-mais" class="btn btn-dark">+</button>
+						</div>
+						<button class="btn btn-primary" id="comprar">Comprar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="">Voltar para página anterior</a>
+	</div>
+</body>
+<script>
+	var quantidadeEstrelas = 4
+	var retornoEstrelas = ""
+	for (let i = 0; i < quantidadeEstrelas; i++) {
+		retornoEstrelas += "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\"" +
+            "class=\"bi bi-star-fill\" viewBox=\"0 0 16 16\" >"
+				+ "<path d=\"M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538." +
+            "792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z\" /></svg>"
+	}
+	$("#estrelas").html(retornoEstrelas)
+	$("#quantidade").val(1)
+	$("#btn-menos").click(function() {
+		var quantidade = parseInt($("#quantidade").val())
+		quantidade -= 1
+		$("#quantidade").val(quantidade)
+	})
+	$("#btn-mais").click(function() {
+		var quantidade = parseInt($("#quantidade").val())
+		quantidade += 1
+		$("#quantidade").val(quantidade)
+	})
+</script>
+
+</html>

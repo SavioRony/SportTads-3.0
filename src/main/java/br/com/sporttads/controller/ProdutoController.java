@@ -177,4 +177,10 @@ public class ProdutoController {
 		return andView;
 	}
 
+	@GetMapping("/consultar-produto")
+	public ModelAndView teste() {
+		ModelAndView andView = new ModelAndView("Produto/ConsultarProduto");
+		return andView;
+	}
+
 }
