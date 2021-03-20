@@ -62,15 +62,6 @@ public class ProdutoController {
 		
 		return andView;
 	}
-
-	@GetMapping("**/visualizarproduto/{idproduto}")
-	public ModelAndView visualizarProduto(@PathVariable("idproduto") Integer idproduto) {
-		ProdutoModel produto = produtoService.getById(idproduto);
-		ModelAndView andView = new ModelAndView("Produto/VisualizarProduto");
-		andView.addObject("produtoObj", produto);
-
-		return andView;
-	}
 	
 	@GetMapping("**/inativaativarproduto/{idproduto}")
 	public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
@@ -78,14 +69,6 @@ public class ProdutoController {
 		ModelAndView andView = new ModelAndView("Produto/InativaAtivaProduto");
 		andView.addObject("produtoObj", produto);
 		
-		return andView;
-	}
-
-	@PostMapping("**/salvarproduto")
-	public ModelAndView post(ProdutoModel produto) {
-		ProdutoModel produtoEditado = produtoService.save(produto);
-		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
-		andView.addObject("produto",produtoEditado);
 		return andView;
 	}
 
@@ -103,7 +86,7 @@ public class ProdutoController {
 	@PostMapping("**/pesquisarproduto")
 	public ModelAndView pesquisarproduto(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-		andView.addObject("produtos", produtoService.findPessoaByName(nomepesquisa));
+		andView.addObject("produtos", produtoService.findProdutoByName(nomepesquisa));
 
 		return andView;
 	}
@@ -111,7 +94,6 @@ public class ProdutoController {
 	@GetMapping("/cadastro")
 	public String cadastro() {
 		return "redirect:/produtos/cadastroproduto";
-		
 	}
 
 	@GetMapping("**/cadastroproduto")
@@ -177,9 +159,23 @@ public class ProdutoController {
 		return andView;
 	}
 
-	@GetMapping("/consultar-produto")
-	public ModelAndView teste() {
+	@GetMapping("/comprar-produto/{idproduto}")
+	public ModelAndView consultaCompra(@PathVariable("idproduto") Integer idproduto) {
+		ProdutoModel produto = produtoService.getById(idproduto);
+		ImagemModel imagens = imagemService.findByIdProduto(idproduto);
+		ModelAndView andView = new ModelAndView("Produto/DetalhesProdutoCompra");
+		andView.addObject("produto", produto);
+		andView.addObject("imagens", imagens);
+		return andView;
+	}
+
+	@GetMapping("/consultar-produto/{idproduto}")
+	public ModelAndView visualizarProduto(@PathVariable("idproduto") Integer idproduto) {
+		ProdutoModel produto = produtoService.getById(idproduto);
+		ImagemModel imagens = imagemService.findByIdProduto(idproduto);
 		ModelAndView andView = new ModelAndView("Produto/ConsultarProduto");
+		andView.addObject("produto", produto);
+		andView.addObject("imagens", imagens);
 		return andView;
 	}
 

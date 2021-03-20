@@ -57,8 +57,12 @@ public class ProdutoService {
 		return repository.save(produtoModel);
 	}
 
-	public List<ProdutoModel> findPessoaByName(String nome) {
-		return repository.findPessoaByName(nome);
+	public List<ProdutoModel> findProdutoByName(String nome) {
+		return repository.findByNomeContainingIgnoreCase(nome);
+	}
+
+	public List<ProdutoModel> findByCategoria(String nome) {
+		return repository.findByCategoria(nome);
 	}
 	
 

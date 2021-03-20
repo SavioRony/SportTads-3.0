@@ -31,7 +31,7 @@
 					</div>
 				</form>
 			<section>
-				<table class="highlight">
+				<table class="highlight centered">
 					<thead >
 						<tr>
 							<th>ID</th>
@@ -55,9 +55,16 @@
 							<td th:text="${produto.preco}"></td>
 							<td th:text="${produto.quantidade}"></td>
 							<td th:text="${produto.status}"></td>
-							<td><a href="#"th:href="@{/produtos/editarproduto/{idproduto}(idproduto=${produto.id})}"> EDITAR</a></td>
-							<td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}">INATIVAR/REATIVAR</a></td>
-							<td><a href="#"th:href="@{/produtos/visualizarproduto/{idproduto}(idproduto=${produto.id})}">VISUALIZAR</a></td>
+							<td><a href="#"th:href="@{/produtos/editarproduto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">edit</i></a></td>
+							<div th:switch="${produto.status}">
+								<div th:case="'Ativo'">
+									<td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">close</i></a></td>
+								</div>
+								<div th:case="'Inativo'">
+									<td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">check</i></a></td>
+								</div>
+							</div>
+							<td><a href="#"th:href="@{/produtos/consultar-produto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">open_in_new</i></a></td>
 						</tr>
 					</tbody>
 				</table>

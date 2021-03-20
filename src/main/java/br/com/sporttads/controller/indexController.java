@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sporttads.model.ProdutoModel;
@@ -24,6 +22,27 @@ public class indexController {
 		List<ProdutoModel> produtos = produtoService.getAll();
 		ModelAndView andView = new ModelAndView("index");
 		andView.addObject("produtos",produtos);
+		return andView;
+	}
+
+	@GetMapping ("/pesquisar-por-categotia")
+	public ModelAndView pesquisarPorCategoria(@RequestParam("categoria") String categoria) {
+		ModelAndView andView = new ModelAndView("index");
+		List<ProdutoModel> produtos;
+		if(categoria.equals("Todos")){
+			produtos = produtoService.getAll();
+		}else{
+			produtos = produtoService.findByCategoria(categoria);
+		}
+		andView.addObject("produtos", produtos);
+
+		return andView;
+	}
+
+	@GetMapping ("/pesquisar-por-nome")
+	public ModelAndView pesquisarPorNome(@RequestParam("nome") String nome) {
+		ModelAndView andView = new ModelAndView("index");
+		andView.addObject("produtos", produtoService.findProdutoByName(nome));
 		return andView;
 	}
 }

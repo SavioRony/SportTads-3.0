@@ -75,14 +75,6 @@ public class ImagemModel {
 		this.caminho = caminho;
 	}
 
-//	public String getLogo() {
-//		return logo;
-//	}
-//
-//	public void setLogo(String logo) {
-//		this.logo = logo;
-//	}
-
 	public Integer getIdProduto() {
 		return idProduto;
 	}
