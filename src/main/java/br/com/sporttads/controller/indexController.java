@@ -1,14 +1,29 @@
 package br.com.sporttads.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import br.com.sporttads.model.ProdutoModel;
+import br.com.sporttads.service.ProdutoService;
 
 @Controller
 public class indexController {
 
+	@Autowired
+	private ProdutoService produtoService;
+	
+			
 	@RequestMapping("/")
-	public String index() {
-		return "index";
+	public ModelAndView getAll() {
+		List<ProdutoModel> produtos = produtoService.getAll();
+		ModelAndView andView = new ModelAndView("index");
+		andView.addObject("produtos",produtos);
+		return andView;
 	}
 }
