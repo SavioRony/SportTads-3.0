@@ -126,4 +126,10 @@ public class ProdutoController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping("/consultar-produto")
+	public ModelAndView teste() {
+		ModelAndView andView = new ModelAndView("Produto/ConsultarProduto");
+		return andView;
+	}
+
 }
