@@ -1,4 +1,242 @@
 <!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>SportTads</title>
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+<link rel="stylesheet" th:href="@{/css/stylee.css}" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+<body>
+
+	<div class="corpo" layout:fragment="corpo">
+		<main role="main">
+
+
+			<section class="sectionBarraInicio jumbotron container-fluid">
+				<div class="container-fluid">
+					<div class="row div2 ">
+						<div class="col-sm-3 col-md-2 col-xs-2 col-xl-3 logo">LOGO</div>
+						<div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 barraPesquisa">
+
+						</div>
+						<div class="col-sm-3 col-md-3 col-xs-3 col-xl-3 login">
+							<a href="#"> LOGIN / CADASTRE-SE </a>
+						</div>
+						<div
+							class="col-sm-2 col-md-3 col-xs-3 col-xl-2 iconeCarrinhoDeCompras">
+							<a href="#">ÍCONE DO CARRINHO DE COMPRAS 
+						</div>
+						<a>
+					</div>
+				</div>
+			</section>
+
+			<section class="sectionCarousel container-fluid">
+				<div id="carouselCaptions" class="carousel slide"
+					data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#carouselCaptions" data-slide-to="0"
+							class="active"></li>
+						<li data-target="#carouselCaptions" data-slide-to="1"></li>
+						<li data-target="#carouselCaptions" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="../static/img/img 01.jpg" class="d-block w-100"
+								alt="esportes">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Vamos praticar esportes ?</h5>
+								<p>A SportTdas tem acessórios de qualidade!!</p>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img src="../static/img/img 02.jpg" class="d-block w-100"
+								alt="esportes">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Quer jogar uma partida de Vôlei ?</h5>
+								<p>Junte-se com os amigos e se divirta</p>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img src="../static/img/img 03.jpg" class="d-block w-100"
+								alt="esportes">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Gosta de aventura com bastante adrenalina ?</h5>
+								<p>Aqui na SportTads tem acessórios profissionais par
+									garantir a sua segurança!!</p>
+							</div>
+						</div>
+					</div>
+					<a class="carousel-control-prev" href="#carouselCaptions"
+						role="button" data-slide="prev"> <span
+						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+						class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#carouselCaptions"
+						role="button" data-slide="next"> <span
+						class="carousel-control-next-icon" aria-hidden="true"></span> <span
+						class="sr-only">Next</span>
+					</a>
+				</div>
+			</section>
+			<section class="jumbotron text-center pt-3 pb-3">
+				<div class="container">
+					<h1 class="jumbotron-heading">As melhores ofertas estão aqui
+						na SporTads !</h1>
+					<p class="lead text-muted">Aproveite a lista de ofertas.</p>
+
+					<form id="form-autocomplete">
+						<div class="form-row">
+							<div class="form-group col-md-10">
+								<input id="autocomplete-input" name="site" type="text"
+									class="form-control" placeholder="">
+							</div>
+							<div class="form-group col-md-2">
+								<button id="autocomplete-submit" type="button"
+									class="btn btn-primary">Pesquisar</button>
+							</div>
+						</div>
+					</form>
+
+				</div>
+			</section>
+
+			<section class="secLista">
+
+				<div class="categ">
+					Categoria: <select class="custom-select">
+
+						<option value="1">Todos</option>
+						<option value="2">Futebol</option>
+						<option value="3">Basquete</option>
+					</select>
+
+				</div>
+				<div class="clearfix album py-5 bg-light">
+					<div class="container">
+						<div class="form-group">
+							<button id="btn-alert"
+								class="btn btn-warning btn-lg btn-block hidden"
+								style="display: none;"></button>
+						</div>
+						<div class="row">
+							<div class="card-group col-md-3 pb-4"
+								th:each="prod : ${produtos}">
+								<div th:id="${prod.id}" class="card">
+									<div class="block-img">
+										<img class="card-img-top" th:src="@{${prod.ImagemPath}}"
+											alt="Card image cap">
+									</div>
+									<div class="card-body">
+										<h5 class="card-title" th:text="${prod.nome}"></h5>
+										<p class="card-text" th:text="${prod.descricao}"></p>
+										
+									<div>
+											<div>
+												<h6 class="badge badge-primary"
+													th:text="|R$ ${{prod.preco}}|">R$ 9,99</h6>
+											</div>
+
+											<div>
+												<a 	class="btn btn-sm btn-outline-secondary btnComprar"
+													role="button" aria-pressed="true" target="new">Comprar</a>
+											</div>
+									</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="loading">
+							<div id="loader-img" class="mx-auto loader"></div>
+							<a id="fim-btn" type='button' href='#'
+								class='btn btn-info mx-auto'>Fim! Voltar ao topo</a>
+						</div>
+					</div>
+				</div>
+
+			</section>
+			<footer>
+
+				<div class="container-fluid">
+					<div class="row ">
+						<div class="logo col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
+							<img class="logo" alt="Logo da empresa"
+								title="Aqui é apresentado o logo da empresa XYZ"
+								src="img/produto/logo.JPG" /> <br /> <a href="#"><img
+								alt="Link para o Facebook" src="img/produto/facebook.jpg" /></a> <a
+								href="#"><img alt="Link para o Twitter"
+								src="img/produto/twitter.jpg" /></a> <a href="#"><img
+								alt="Link par o Instagram" src="img/produto/Instragram.jpg" /></a>
+						</div>
+
+						<div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
+							<h3>Links</h3>
+							<a alt="direciona para a pagina inicial do site" href="#">Início</a><br />
+							<a href="#m">Produtos e Marcas</a><br /> <a
+								title="Vai para a pagina fale conosco" href="#">Fale conosco</a>
+							<br /> <a href="#"> Onde estamos</a><br />
+						</div>
+
+						<div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
+							<h3>Contato</h3>
+
+							<p>
+								<strong>Endereço:</strong> Av. Eng. Eusébio Stevaux, São
+								Paulo-SP, 04136-000.
+							</p>
+
+							<p>
+								<strong>Telefone:</strong><a href="tel:1135236923"> (11)
+									3523-6923 </a>
+							</p>
+							<!-- Este atributo href="tel:6135236923 é usado se precisa direcionar o número para discar no celular -->
+
+							<p>
+								<strong>Email:</strong><a
+									href="mailto:sporttads@sporttads.com.br">
+									sporttads@sporttads.com.br</a>
+							</p>
+
+						</div>
+					</div>
+				</div>
+				<br class="clearfix" />
+				<div class="direitosreservados">
+					<!--Usar uma tag DIV para fazer o efeito de cor de fundo -->
+					Todos os direitos reservados (@) 2017. <a href="termodeuso.html">Termos
+						de uso</a> e <a href="politicadeprivacidade.html">política de
+						privacidade</a>
+				</div>
+
+			</footer>
+
+		</main>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
 <html lang="pt">
 
 <head>
@@ -37,22 +275,22 @@ nav {
 		<br>
 		<div class="slider">
 			<ul class="slides">
-				<li><img src="/img/index/img 01.jpg"> <!-- random image -->
+				<li><img src="/img/index/img 01.jpg"> <!-- random image 
 					<div class="caption center-align">
 						<h3>Sport Tads</h3>
 						<h5 class="light grey-text text-lighten-3">Sport Tads</h5>
 					</div></li>
-				<li><img src="/img/index/img 02.jpg"> <!-- random image -->
+				<li><img src="/img/index/img 02.jpg"> <!-- random image 
 					<div class="caption left-align">
 						<h3>Sport Tads</h3>
 						<h5 class="light grey-text text-lighten-3">Sport Tads</h5>
 					</div></li>
-				<li><img src="/img/index/img 03.jpg"> <!-- random image -->
+				<li><img src="/img/index/img 03.jpg"> <!-- random image 
 					<div class="caption right-align">
 						<h3>Sport Tads</h3>
 						<h5 class="light grey-text text-lighten-3">Sport Tads</h5>
 					</div></li>
-				<li><img src="/img/index/img 04.jpg"> <!-- random image -->
+				<li><img src="/img/index/img 04.jpg"> <!-- random image 
 					<div class="caption center-align">
 						<h3>Sport Tads</h3>
 						<h5 class="light grey-text text-lighten-3">Sport Tads</h5>
@@ -72,3 +310,4 @@ nav {
 </body>
 
 </html>
+ -->
