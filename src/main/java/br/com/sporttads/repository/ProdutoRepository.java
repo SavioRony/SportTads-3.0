@@ -11,6 +11,7 @@ import br.com.sporttads.model.ProdutoModel;
 @Repository
 public interface ProdutoRepository extends JpaRepository<ProdutoModel, Integer> {
 	
-	@Query(value="Select * from tb_produto p where p.nome like %?1%", nativeQuery = true)
-	List<ProdutoModel> findPessoaByName(String Nome);
+	List<ProdutoModel> findByNomeContainingIgnoreCase(String Nome);
+
+	List<ProdutoModel> findByCategoria(String categoria);
 }

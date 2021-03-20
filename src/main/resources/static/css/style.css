@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -7,34 +7,37 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-
 }
 
-.clearfix{
-    clear: both; /* Para limpar as tags flutuando acima ou abaixo*/
+.clearfix {
+    clear: both;
+    /* Para limpar as tags flutuando acima ou abaixo*/
 }
 
-body{background: #fbfbfb;}
+body {
+    background: #fbfbfb;
+}
 
-img{max-width: 100%;}
+img {
+    max-width: 100%;
+}
 
-.product_images{
-    float: left; 
+.product_images {
+    float: left;
     width: 25%;
     margin-left: 20%;
-    padding: 30px; 
-    background: #fff; 
+    padding: 30px;
+    background: #fff;
     box-shadow: 0 0 5px 2px #ccc;
     display: inline;
-    
 }
 
-.botao{
+.botao {
     float: left;
     display: inline;
 }
 
-.product_info{
+.product_info {
     float: right;
     width: 25%;
     margin-right: 25%;
@@ -44,82 +47,86 @@ img{max-width: 100%;}
     display: inline;
 }
 
-
-.product_info h2{ 
+.product_info h2 {
     font-size: 1.3em;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.thumbs img{
+.thumbs img {
     float: left;
     width: 20%;
     padding: 2.5px;
     background: #eee;
     cursor: pointer;
 }
-.info{
+
+.info {
     padding: 2.5px;
     cursor: pointer;
 }
+
 .thumbs img:hover,
-.thumbs img.active{
+.thumbs img.active {
     background: #99ccff;
 }
 
-.carousel-item img{
-	heigth:auto;
-	
+.carousel-item img {
+    heigth: auto;
 }
 
-.um_terco, .um_terco a {
-    color:rgb(136,136,136);
-}   
-.um_terco .logo{ 
+.um_terco,
+.um_terco a {
+    color: rgb(136, 136, 136);
+}
+
+.um_terco .logo {
     width: 100%;
-    
 }
 
-.logo img{
+.logo img {
     width: 30px;
 }
 
-.direitosreservados{
+.direitosreservados {
     background-color: blue;
     color: white;
     text-align: center;
     padding-top: 47px;
     padding-bottom: 47px;
-}   
-.direitosreservados a{
-    color: white;   
 }
 
-.corpo {  padding-top: 2rem; }
+.direitosreservados a {
+    color: white;
+}
+
+.corpo {
+    padding-top: 2rem;
+}
 
 .block-img {
-	max-width: 100%; 
-	height: 100%;
-	object-fit: cover;
+    max-width: 100%;
+    height: 50%;
+    object-fit: cover;
 }
 
-.custom-select{
-	width:50px;
+.custom-select {
+    width: 50px;
 }
 
-.secLista .categ{
-	float:left;
-	
+.secLista .categ {
+    float: left;
 }
 
-.secLista .album{
-	
-	background: blue;
-	height: auto;
-	
+.secLista .album {
+    background: blue;
+    height: auto;
 }
 
-.btnComprar{
-	background-color: blue;
+.btn {
+    display: inline !important;
 }
 
+label {
+     display: inline !important;
+}
