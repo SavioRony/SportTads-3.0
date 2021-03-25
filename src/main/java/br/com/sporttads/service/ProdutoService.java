@@ -33,6 +33,9 @@ public class ProdutoService {
 	public List<ProdutoModel> getAll() {
 		return repository.findAll();
 	}
+	public List<ProdutoModel> getAllAtivo() {
+		return repository.findByStatus("Ativo");
+	}
 
 	public ProdutoModel edit(Integer id, ProdutoModel editProduto) {
 		ProdutoModel produtoModel = getById(id);
@@ -58,11 +61,11 @@ public class ProdutoService {
 	}
 
 	public List<ProdutoModel> findProdutoByName(String nome) {
-		return repository.findByNomeContainingIgnoreCase(nome);
+		return repository.findByNomeContainingIgnoreCaseAndStatus(nome,"Ativo");
 	}
 
 	public List<ProdutoModel> findByCategoria(String nome) {
-		return repository.findByCategoria(nome);
+		return repository.findByCategoriaAndStatus(nome,"Ativo");
 	}
 	
 

@@ -18,8 +18,8 @@ public class indexController {
 	
 			
 	@RequestMapping("/")
-	public ModelAndView getAll() {
-		List<ProdutoModel> produtos = produtoService.getAll();
+	public ModelAndView getAllAtivos() {
+		List<ProdutoModel> produtos = produtoService.getAllAtivo();
 		ModelAndView andView = new ModelAndView("index");
 		andView.addObject("produtos",produtos);
 		return andView;
@@ -30,7 +30,7 @@ public class indexController {
 		ModelAndView andView = new ModelAndView("index");
 		List<ProdutoModel> produtos;
 		if(categoria.equals("Todos")){
-			produtos = produtoService.getAll();
+			produtos = produtoService.getAllAtivo();
 		}else{
 			produtos = produtoService.findByCategoria(categoria);
 		}
