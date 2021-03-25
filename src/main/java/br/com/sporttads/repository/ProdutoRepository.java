@@ -11,7 +11,9 @@ import br.com.sporttads.model.ProdutoModel;
 @Repository
 public interface ProdutoRepository extends JpaRepository<ProdutoModel, Integer> {
 	
-	List<ProdutoModel> findByNomeContainingIgnoreCase(String Nome);
+	List<ProdutoModel> findByNomeContainingIgnoreCaseAndStatus(String Nome,String status);
 
-	List<ProdutoModel> findByCategoria(String categoria);
+	List<ProdutoModel> findByCategoriaAndStatus(String categoria,String ativo);
+
+	List<ProdutoModel> findByStatus(String status);
 }
