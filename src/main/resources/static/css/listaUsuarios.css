@@ -1,0 +1,16 @@
+table {
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+	padding: 50px;
+}
+
+thead {
+	color: white;
+}
+
+#btn-cadastrar {
+	float: right;
+}
