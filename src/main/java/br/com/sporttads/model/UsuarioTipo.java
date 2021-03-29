@@ -1,0 +1,17 @@
+package br.com.sporttads.model;
+
+public enum UsuarioTipo {
+    Administrador("Administrador"), Estoquista("Estoquista");
+
+
+    private String desc;
+
+    private UsuarioTipo( String desc) {
+
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+}

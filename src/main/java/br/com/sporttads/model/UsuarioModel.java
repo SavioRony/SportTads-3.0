@@ -3,6 +3,7 @@ package br.com.sporttads.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "usuario_model", indexes = {@Index(name = "idx_usuario_email", columnList = "email")})
 public class UsuarioModel extends EntidadeAbstrata<Long> {
 
 	@Column(nullable = false, unique = true)
