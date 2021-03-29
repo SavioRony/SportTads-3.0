@@ -48,7 +48,11 @@ public abstract class EntidadeAbstrata<ID extends Serializable> implements Seria
 	public String toString() {
 		
 		return "id = " + id;
-	} 
+	}
+
+	public boolean hasNotId(){
+		return id == null;
+	}
 	
 	
 }
