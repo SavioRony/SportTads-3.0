@@ -1,80 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 </head>
-<body>
-	<header th:fragment="cabecalho">
-		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-			<a class="navbar-brand" th:href="@{/home}">Sport Tads</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarCollapse" aria-controls="navbarCollapse"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarCollapse">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown" sec:authorize="hasAuthority('Administrador')"><a
-						class="btn btn-light dropdown-toggle" href="#" id="dropdown01"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown01">
-							<a class="dropdown-item" th:href="@{/usuario/cadastrar}"><div th:replace="fragments/icones :: cadastrar"></div>
-								Cadastro de Usuários
-							</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" th:href="@{/usuario/listar}">Lista de Usuários</a>
-						</div>
 
-					</li>
-					<li class="nav-item dropdown" sec:authorize="hasAuthority('Estoquista')"><a
-						class="btn btn-light dropdown-toggle" href="#" id="dropdown02"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Estoquista</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown02">
-							<a class="dropdown-item" th:href="@{/usuario/listar}">Lista de Usuários</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown"  sec:authorize="hasAnyAuthority('Estoquista','Administrador')"><a
-							class="btn btn-light dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Produtos</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown02">
-							<a class="dropdown-item" th:href="@{/produtos/cadastroproduto}">Cadastrar Produto</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" th:href="@{/produtos/listaproduto}">Lista de Produtos</a>
-						</div>
-					</li>
+<body class="bg-dark fixed-nav sticky-footer" id="page-top">
+    <header th:fragment="cabecalho">
+        <!--Navegação-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" id="mainNav">
+            <a href="index.html" class="navbar-brand">Sport Tads</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCurso" aria-control="navbarCurso" aria-expanded="false" aria-label="Navegação toggle">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div id="navbarCurso" class="collapse navbar-collapse">
+                <ul class="navbar-nav navbar-sidenav" id="linkarccordion">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" sec:authorize="hasAnyAuthority('Estoquista','Administrador')">
+                        <a href="#linksComponentes" class="nav-link nav-link-collapse collapse" data-toggle="collapse" data-parent="#linkarccordion">
+                            <i class="fas fa-users-cog"></i>
+                            <span class="nav-link-text">Usuários</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="linksComponentes">
+                            <li>
+                                <a th:href="@{/usuario/cadastrar}" sec:authorize="hasAuthority('Administrador')">
+                                    <i class="fas fa-user-plus"></i> Cadastro de Usuários
+                                </a>
+                            </li>
+                            <li sec:authorize="hasAnyAuthority('Estoquista','Administrador')">
+                                <a th:href="@{/usuario/listar}"><i class="fas fa-list"></i> Lista de Usuários</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" sec:authorize="hasAnyAuthority('Estoquista','Administrador')">
+                        <a href="#linkspaginas" class="nav-link nav-link-collapse collapse" data-toggle="collapse" data-parent="#linkarccordion">
+                            <i class="fas fa-archive"></i>
+                            <span class="nav-link-text">Produtos</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="linkspaginas">
+                            <li>
+                                <a th:href="@{/produtos/cadastroproduto}"><i class="fas fa-file-medical"></i> Cadastrar Produto</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/produtos/listaproduto}"><i class="fas fa-list"></i>Lista de Produtos</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav sidenav-toggler">
+                    <li class="nav-item">
+                        <a id="sidenavToggler" class="nav-link text-center">
+                            <i class="fa fa-fw fa-angle-left"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <form class="form-inline mt-2 mt-md-0" sec:authorize="!isAuthenticated()">
+                            <div class="form-check mb-2 mr-sm-2">
+                                <a class="btn btn-light my-2 my-sm-0" role="button" th:href="@{/login}">Login</a>
+                            </div>
 
-				</ul>
-
-				<form class="form-inline mt-2 mt-md-0" sec:authorize="!isAuthenticated()">
-					<div class="form-check mb-2 mr-sm-2">
-						<a class="btn btn-outline-success my-2 my-sm-0" role="button"
-							th:href="@{/login}">Login</a>
-					</div>
-
-					<div class="form-check mb-2 mr-sm-2">
-						<a class="btn btn-outline-success my-2 my-sm-0" role="button"
-							th:href="@{/u/novo/cadastro}">Cadastrar-se</a>
-					</div>
-				</form>
-
-				<form th:action="@{/logout}" sec:authorize="isAuthenticated()"
-					  method="post"  class="form-inline mt-2 mt-md-0">
-					<div class="btn-group mb-2 mr-sm-2">
-						<button type="button" class="btn btn-light">
-							<i class="fas fa-user"></i> <span class=""
-								sec:authentication="name">Bob</span>
-						</button>
-						<button type="button"
-							class="btn btn-light dropdown-toggle dropdown-toggle-split"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						</button>
-						<div class="dropdown-menu">
-							<button type="submit" class="dropdown-item">Sair</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</nav>
-	</header>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <a class="btn btn-light my-2 my-sm-0" role="button" th:href="@{/u/novo/cadastro}">Cadastrar-se</a>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" sec:authorize="isAuthenticated()" method="post" class="form-inline mt-2 mt-md-0">
+                            <div class="btn-group mb-2 mr-sm-2">
+                                <button type="button" class="btn btn-light">
+                                <i class="fas fa-user"></i> <span class=""
+                                    sec:authentication="name">Bob</span>
+                            </button>
+                                <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </button>
+                                <div class="dropdown-menu">
+                                    <button type="submit" class="dropdown-item">Sair</button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 </body>
+
 </html>

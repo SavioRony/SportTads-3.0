@@ -26,20 +26,20 @@ public class UsuarioController {
 	@GetMapping("/cadastrar")
 	public String cadastrar(UsuarioModel usuario, ModelMap model) {
 		model.addAttribute("usuario", usuario);
-		return "/Usuario/cadastroUsuario";
+		return "/Usuario/CadastroDeUsuario";
 	}
 	
 	@GetMapping("/listar")
 	public ModelAndView listar() {
 		List<UsuarioModel> usuarios = service.findAll();
-		return new ModelAndView("Usuario/listaUsuarios", "usuarios",usuarios);
+		return new ModelAndView("Usuario/ListaDeUsuario", "usuarios",usuarios);
 	}
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView preEditar(@PathVariable("id") Long id, RedirectAttributes attr, ModelMap model) {
 		UsuarioModel usuario = service.findById(id);
 		model.addAttribute("usuario", usuario);
-		return new ModelAndView("Usuario/cadastroUsuario", "usuario", usuario);
+		return new ModelAndView("Usuario/CadastroDeUsuario", "usuario", usuario);
 	}
 
 	@PostMapping("/editar")
