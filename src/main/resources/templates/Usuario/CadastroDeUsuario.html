@@ -30,7 +30,12 @@
             </div>
             <div class="card card-register mx-auto mt-5">
                 <div class="card-header">
+                    <span th:if="${usuario.id == null}">
                     Criar conta usuário
+                    </span>
+                    <span th:unless="${usuario.id == null}">
+                        Alterar Usuario
+                    </span>
                 </div>
                 <div class="card-body">
                     <form th:action="${usuario.id == null} ? @{/usuario/salvar} : @{/usuario/editar}" th:object="${usuario}" method="post">
