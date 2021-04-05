@@ -5,7 +5,6 @@ import br.com.sporttads.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,11 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 			// acessos públicos liberados
-			.antMatchers( "/webjars/**", "/css/**", "/img/**", "/materialize/**").permitAll()
+			.antMatchers( "/webjars/**", "/css/**", "/img/**", "/materialize/**", "/Dashboard/**").permitAll()
 			.antMatchers("/").permitAll()
 			//Permissões para imagens dos produtos
 			.antMatchers("/imagem-principal/**").permitAll()
 			.antMatchers("/imagens-produto/**").permitAll()
+			.antMatchers("/Dashboard/**").permitAll()
 
 			// acessos ao usuario
 			.antMatchers("/usuario/listar").hasAnyAuthority(ADMIN,ESTOQUISTA)
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 			.and()
 				.logout()
-				.logoutSuccessUrl("/home")
+				.logoutSuccessUrl("/login")
 			.and()
 				.exceptionHandling()
 				.accessDeniedPage("/acesso-negado");
