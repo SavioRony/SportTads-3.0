@@ -9,16 +9,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EntityScan(basePackages="br.com.sporttads.model")
-@ComponentScan(basePackages= {"br.*"})
-@EnableJpaRepositories(basePackages= {"br.*"})
+@EntityScan(basePackages = "br.com.sporttads.model")
+@ComponentScan(basePackages = { "br.*" })
+@EnableJpaRepositories(basePackages = { "br.*" })
 @EnableTransactionManagement
 public class ApiProjetoIntegradorSportTadsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiProjetoIntegradorSportTadsApplication.class, args);
 		System.out.println("API RODANDO!");
-		//System.out.println(new BCryptPasswordEncoder().encode("123456"));
+//		System.out.println("Senha 123456: " + new BCryptPasswordEncoder().encode("123456"));
 	}
 
 }

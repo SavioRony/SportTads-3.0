@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Dashboard/bibliotecas/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Dashboard/bibliotecas/font-awesome/css/font-awesome.min.css">
+    <link href="../Dashboard/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Dashboard/css/sb-admin.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <title>Lista de Produtos</title>
+</head>
+
+<style>
+    .btn-default {
+        border-radius: 50%;
+    }
+    table {
+        text-align: center;
+    }
+    h1 {
+        text-align: center;
+        padding: 50px;
+    }
+</style>
+
+<body>
+<div class="container">
+    <h1>Lista de Produtos</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Logo</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Status</th>
+                <th>Editar</th>
+                <th>Inativar/Reativar</th>
+                <th>Visualizar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Teste</td>
+                <td>Bola</td>
+                <td>Futebol</td>
+                <td>R$ 59,99</td>
+                <td>15</td>
+                <td>Ativo</td>
+                <td>
+                    <button class="btn btn-default"><i class="bi bi-pencil-fill"></i></button>
+                </td>
+                <td>
+                    <button class="btn btn-default"><i class="bi bi-toggles"></i></button>
+                </td>
+                <td>
+                    <button class="btn btn-default"><i class="bi bi-eye-fill"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>
