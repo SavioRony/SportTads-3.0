@@ -27,17 +27,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// acessos públicos liberados
 			.antMatchers( "/webjars/**", "/css/**", "/img/**", "/materialize/**").permitAll()
 			.antMatchers("/").permitAll()
+			.antMatchers("/cliente/**").permitAll() // fernando
+			.antMatchers("cliente/listar/{id}").permitAll()
+			
 			//Permissões para imagens dos produtos
 			.antMatchers("/imagem-principal/**").permitAll()
 			.antMatchers("/imagens-produto/**").permitAll()
-
+			
+			
 			// acessos ao usuario
 			.antMatchers("/usuario/listar").hasAnyAuthority(ADMIN,ESTOQUISTA)
 			.antMatchers("/usuario/**").hasAnyAuthority(ADMIN)
 
 			// acessos ao produtos
+			
 			.antMatchers("/produtos/comprar-produto/*").permitAll()
 			.antMatchers("/produtos/**").hasAnyAuthority(ADMIN,ESTOQUISTA)
+			
 
 
 				.anyRequest().authenticated()
