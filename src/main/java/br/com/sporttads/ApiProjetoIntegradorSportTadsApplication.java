@@ -18,7 +18,11 @@ public class ApiProjetoIntegradorSportTadsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiProjetoIntegradorSportTadsApplication.class, args);
 		System.out.println("API RODANDO!");
+
+		
+
 //		System.out.println("Senha 123456: " + new BCryptPasswordEncoder().encode("123456"));
+
 	}
 
 }
