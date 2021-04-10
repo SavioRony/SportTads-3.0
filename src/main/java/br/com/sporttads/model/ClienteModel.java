@@ -1,14 +1,17 @@
 package br.com.sporttads.model;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.List;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name="tb_cliente")
@@ -17,33 +20,47 @@ public class ClienteModel implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCliente;
+	private Long id;
 	private String nomeCompleto;
+	
+	@Column(unique = true)
 	private String cpf;
-	private String dataNascimento;
+	
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataNascimento;
+	
 	private String telPrincipal;
+	
+	@Column(unique = true)
 	private String email;
+	
 	private String senha;
-	private String estado;
-	private String cidade;
-	private String bairro;
-	private String cep;
-	private String endPrincipal; 
-	private String numero;
-	private String complemento;
-	//private List<enderecoEntrega> endEntrega;
+	
+	
+	//private List<enderecos> enderecos;
 	
 	public ClienteModel() {
 		super();
 	}
 
-	public Long getIdCliente() {
-		return idCliente;
+	public ClienteModel(Long id, String nomeCompleto, String cpf, LocalDate dataNascimento, String telPrincipal,
+			String email, String senha) {
+		super();
+		this.id = id;
+		this.nomeCompleto = nomeCompleto;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.telPrincipal = telPrincipal;
+		this.email = email;
+		this.senha = senha;
 	}
 
-	public void setIdCliente(Long idCliente) {
-		
-		this.idCliente = idCliente;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id= id;
 	}
 
 	public String getNomeCompleto() {
@@ -62,11 +79,12 @@ public class ClienteModel implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public String getDataNascimento() {
+	
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -94,65 +112,6 @@ public class ClienteModel implements Serializable{
 		this.senha = senha;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getEndPrincipal() {
-		return endPrincipal;
-	}
-
-	public void setEndPrincipal(String endPrincipal) {
-		this.endPrincipal = endPrincipal;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-	
-	
-	
-	
 	
 	
 	

@@ -44,17 +44,11 @@ public class ClienteService {
 		
 		cliente.setNomeCompleto(cliente.getNomeCompleto());
 		cliente.setCpf(cliente.getCpf());
-		cliente.setDataNascimento(cliente.getDataNascimento());
+		cliente.setDataNascimento(cliente.getDataNascimento()); 
 		cliente.setTelPrincipal(cliente.getTelPrincipal());
 		cliente.setEmail(cliente.getEmail());
 		cliente.setSenha(crypt);
-		cliente.setEstado(cliente.getEstado());
-		cliente.setCidade(cliente.getCidade());
-		cliente.setBairro(cliente.getBairro());
-		cliente.setCep(cliente.getCep());
-		cliente.setEndPrincipal(cliente.getEndPrincipal());
-		cliente.setNumero(cliente.getNumero());
-		cliente.setComplemento(cliente.getComplemento());
+
 					
 		repository.save(cliente);
 

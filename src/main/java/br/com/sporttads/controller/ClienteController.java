@@ -19,31 +19,37 @@ import br.com.sporttads.model.UsuarioModel;
 import br.com.sporttads.service.ClienteService;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
 	@Autowired
 	private ClienteService service;
 
-	@GetMapping("/cadastro")
-	public String cadastro() {
+	@GetMapping("/cadastrar")
+	public String cadastro(ClienteModel cliente, ModelMap model ) {
+		model.addAttribute("cliente", cliente);
 		return "cliente/cadastroCliente";
 	}
 
+	@GetMapping("/cad")
+	public String cada( ) {
+		return "cliente/cadastroCliente2";
+	}
+	
 	@PostMapping("/salvar")
 	public String salvar(ClienteModel cliente, RedirectAttributes attr) {
 		if (cliente.getSenha().length() < 3) {
 			attr.addFlashAttribute("falha", "A senha deve ter mais de 3 caracteres");
-			return "redirect:/cliente/cadastro";
+			return "redirect:/clientes/cadastrar";
 		}
 		service.salvar(cliente);
 		attr.addFlashAttribute("sucesso", "Cadastro inserido com sucesso.");
-		return "redirect:/cliente/cadastro";
+		return "redirect:/clientes/cadastrar";
 	}
 	
 	@GetMapping("/editar/{id}")
-	public String preEditar (@PathVariable("id") Long idCliente , ModelMap model ) {
-		model.addAttribute("clientes", service.findById(idCliente));
+	public String preEditar (@PathVariable("id") Long id , ModelMap model ) {
+		model.addAttribute("cliente", service.findById(id));
 		return "/cliente/cadastroCliente";
 	}
 	
@@ -53,10 +59,10 @@ public class ClienteController {
 		
 		if(cliente.getNomeCompleto().length() < 3 ){
 			attr.addFlashAttribute("falha", "O Nome tem que ter mais de 05 caracteres.");
-			return "redirect:/cliente/cadastro";
+			return "redirect:/clientes/cadastrar";
 		}else if(cliente.getSenha().length() < 3 ){
 			attr.addFlashAttribute("falha", "A senha tem que ter mais de 03 caracteres.");
-			return "redirect:/cliente/cadastro";
+			return "redirect:/clientes/cadastrar";
 		}
 		service.editar(cliente);
 		attr.addFlashAttribute("sucesso", "Operação realizada com sucesso.");

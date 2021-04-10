@@ -19,91 +19,64 @@
 </head>
 
 <body>
-<header >
-	
-</header>
-	<div class="container" >
+	<header>
+
+	</header>
+	<div class="container">
 		<h1>Cadastro de Cliente</h1>
-		<br/><br/>
-        <h3>Dados pessoais</h3><br/>
-		<form th:action="@{/cliente/editar}" th:object="${clientes}" th:method="post">
-		<div th:replace="fragments/alert :: alerta-sucesso">
-		
-		</div>
-	 	<div class="form-group">
-            <span>
-             <label>Código do cliente:</label> <input name="idCliente" th:field="*{idCliente}"> 
-        </span>
-        </div> 
+		<br /><br />
+		<h3>Dados pessoais</h3><br />
+		<form th:action="${cliente.id == null} ? @{/clientes/salvar} : @{/clientes/editar}" 
+	                  th:object="${cliente}" method="POST">
+			<div th:replace="fragments/alert :: alerta-sucesso">
+
+			</div>
+			<div class="form-group">
+				<span>
+					<label>Código do cliente:</label> 
+					<input name="id" id="id" th:field="*{id}" />
+				</span>
+			</div>
 			<div class="row">
 				<div class="form-group col-lg-12">
-					<label>Nome</label> <input type="text" name="nomeCompleto" id="nomeCompleto" class="form-control" th:field="*{nomeCompleto}" >
+					<label>Nome</label> <input type="text" name="nomeCompleto" id="nomeCompleto" class="form-control"
+						th:field="*{nomeCompleto}">
 				</div>
-                <div class="form-group col-lg-12">
-					<label>CPF</label> <input type="text" name="cpf" id="cpf" class="form-control" th:field="*{cpf}"
-						required="required">
-				</div>
-                <div class="form-group col-lg-12">
-					<label>Data de nascimento</label> <input type="text" name="dataNascimento" id="dataNascimento" class="form-control"
-					  th:field="*{dataNascimento}" required="required">
-				</div>
-
-                <div class="form-group col-lg-12">
-					<label>Telefone Principal</label> <input type="text" name="telPrincipal" id="telPrincipal" class="form-control"
-					 th:field="*{telPrincipal}" required="required">
+				<div class="form-group  col-lg-12">
+					<label>CPF</label> <input type="text"  name="cpf" id="cpf" class="form-control" 
+						th:field="*{cpf}" required="required">
 				</div>
 				<div class="form-group col-lg-12">
-				
-						<label>E-mail</label> <input type="email" name="email" id="email" class="form-control" 
-						 th:field="*{email}" required="required">
-						
-				</div>
-				<div class="form-group col-lg-12">
-					<label>Senha</label> <input type="password" name="senha" id="senha" class="form-control" 
-						 th:field="*{senha}" required="required">
+					<label>Data de nascimento</label> <input type="date" name="dataNascimento" id="dataNascimento"
+						class="form-control" th:field="*{dataNascimento}"   required="required">
 				</div>
 
-				<h3>Endereço de cobrança</h3>
-                <div class="form-group col-lg-12">
-					<label>Estado</label> <input type="text" name="estado" id="estado" class="form-control"  
-						th:field="*{estado}" required="required">
+				<div class="form-group col-lg-12">
+					<label>Telefone Principal</label> <input type="text" name="telPrincipal" id="telPrincipal"
+						class="form-control"  th:field="*{telPrincipal}"  required="required">
 				</div>
-                <div class="form-group col-lg-12">
-					<label>Cidade</label> <input type="text" name="cidade" id="cidade" class="form-control" 
-						th:field="*{cidade}" required="required">
+				<div class="form-group col-lg-12">
+
+					<label>E-mail</label> <input type="email" name="email" id="email" class="form-control"
+						 th:field="*{email}"  required="required">
+
 				</div>
-                <div class="form-group col-lg-12">
-                    <label>Bairro</label> <input type="text" name="bairro" id="bairro" class="form-control" 
-                       th:field="*{bairro}" required="required">
-                </div>
-			<div class="form-group col-lg-12">
-					<label>CEP</label> <input type="text" name="cep" id="cep" class="form-control"  
-						th:field="*{cep}" required="required">
+				<div class="form-group col-lg-12">
+					<label>Senha</label> <input type="password" name="senha" id="senha" class="form-control"
+						 th:field="*{senha}"  required="required">
+				</div>
+
+
 			</div>
-
-            <div class="form-group col-lg-12">
-                <label>Endereço</label> <input type="text" name="endPrincipal" id="endPrincipal" class="form-control"  
-                   th:field="*{endPrincipal}" required="required">
-            </div>
-
-            <div class="form-group col-lg-12">
-                <label>Número</label> <input type="text" name="numero" id="numero" class="form-control" 
-                    th:field="*{numero}" required="required">
-            </div>
-            <div class="form-group col-lg-12">
-                <label>Complemento</label> <input type="text" name="complemento" id="complemento" class="form-control" 
-                   th:field="*{complemento}" required="required">
-            </div>
-          	</div>
-			<button class="btn btn-primary"  id="btn-salvar" th:href="@{/cliente/editar/{id} (id=${clientes.idCliente})}" 
-			role="button">Salvar cliente</button>
-		</form><BR/>
+			<button class="btn btn-primary" type="submit" id="btn-salvar">Próximo</button>
+			
+		</form><BR />
 		<a href="#" th:href="@{/home}">
 			<button class="btn btn-primary">
 				Voltar
 			</button></a>
 	</div>
-	
+
 </body>
 
 </html>

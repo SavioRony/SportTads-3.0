@@ -27,8 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// acessos públicos liberados
 			.antMatchers( "/webjars/**", "/css/**", "/img/**", "/materialize/**").permitAll()
 			.antMatchers("/").permitAll()
-			.antMatchers("/cliente/**").permitAll() // fernando
-			.antMatchers("cliente/listar/{id}").permitAll()
+			.antMatchers("/clientes/**").permitAll() // fernando
+			
+			
+			
+			
 			
 			//Permissões para imagens dos produtos
 			.antMatchers("/imagem-principal/**").permitAll()
