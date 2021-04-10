@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			// acessos ao usuario
 			.antMatchers("/usuario/listar").hasAnyAuthority(ADMIN,ESTOQUISTA)
-			.antMatchers("/home").hasAnyAuthority(ADMIN,ESTOQUISTA)
 			.antMatchers("/usuario/**").hasAnyAuthority(ADMIN)
 
 			// acessos ao produtos
@@ -56,21 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login")
 			.and()
 				.exceptionHandling()
-				.accessDeniedPage("/acesso-negado")
-
-			//Testar
-			.and()
-				.formLogin()
-				.loginPage("/login-cliente")
-				.defaultSuccessUrl("/index", true)
-				.failureUrl("/login-error-cliente")
-				.permitAll()
-				.and()
-				.logout()
-				.logoutSuccessUrl("/login-cliente")
-				.and()
-				.exceptionHandling()
-				.accessDeniedPage("/acesso-negado-cliente");
+				.accessDeniedPage("/acesso-negado");
 	}
 
 	@Override
