@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"/>
+<body>
+<header th:replace="fragments/header :: cabecalho-cliente">
+</header>
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Sport Tads</h1>
+                <p class="lead text-muted">Especialidade em equipamentos Esportivos</p>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container d-flex justify-content-center">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Seja bem vindo!</h4>
+                    <p>Seu cadastro foi realizado com sucesso.</p>
+                    <hr>
+                    <p class="mb-0">Em breve você receberá um email para confirmação
+                        de sua conta de acesso.</p>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="~{}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript"></script>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sport Tads :: Login</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"/>
+<head>
+    <title>Clínica Spring Security</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="clínica médica com agendamento de consultas online"/>
+    <meta name="author" content="ballem"/>
+
+</head>
+<body>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600"
+       style="border-collapse: collapse; padding: 40px 30px 40px 30px; font-family: Arial, Helvetica, sans-serif;">
+    <tr>
+        <td align="center" style="padding: 20px 0 10px 0;">
+            <p style="margin-bottom: 0;">Especialidades em equipamentos esportivos</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" bgcolor="#6495ED">
+            <h4 class="text-center" th:text="${titulo}"><strong>Bem vindo...</strong></h4>
+            <p th:text="${texto}">Precisamos que confirme seu cadastro...</p>
+            <p th:text="${verificador}"><strong>8050jk</strong></p>
+            <p class="text-center mb-0" th:if="${linkConfirmacao != null}">
+                <a th:href="${linkConfirmacao}">Confirmação</a>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="LightGray" style="padding: 10px 0px 10px 0px; text-align:center;">
+            <p style="margin-bottom: .25rem;">&copy; 2021 Sport Tads. Todos os direitos reservados.</p>
+        </td>
+    </tr>
+</table>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+</html>

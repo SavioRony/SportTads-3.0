@@ -86,6 +86,76 @@
             </div>
         </nav>
     </header>
+
+    <header th:fragment="cabecalho-cliente">
+        <section class="jumbotron text-center pt-3 pb-3 bg-primary">
+            <div class="container">
+                <div class="jumbotron-heading text-white">
+                    <!-- Navbar -->
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a class="navbar-brand" th:href="@{/}">
+                            <img th:src="@{/img/logo/lg.png}" height="50" alt="mdb logo">
+                        </a>
+
+                        <!-- Collapse button -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav13"
+                                aria-controls="basicExampleNav13" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <!-- Links -->
+                        <div class="collapse navbar-collapse" id="basicExampleNav13">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <form class="form-inline mt-2 mt-md-0" sec:authorize="!isAuthenticated()">
+                                        <div class="form-check mb-2 mr-sm-2">
+                                            <a class="btn btn-light my-2 my-sm-0" role="button" th:href="@{/login}">Login</a>
+                                        </div>
+
+                                        <div class="form-check mb-2 mr-sm-2">
+                                            <a class="btn btn-light my-2 my-sm-0" role="button" th:href="@{/usuario/novo/cadastro}">Cadastrar-se</a>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li class="nav-item">
+                                    <form th:action="@{/logout}" sec:authorize="isAuthenticated()" method="post" class="form-inline mt-2 mt-md-0">
+                                        <div class="btn-group mb-2 mr-sm-2">
+                                            <button type="button" class="btn btn-light">
+                                                <i class="fas fa-user"></i> <span class=""
+                                                                                  sec:authentication="name">Bob</span>
+                                            </button>
+                                            <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" >
+                                                <a th:href="@{/home}" class="dropdown-item" sec:authorize="hasAnyAuthority('Estoquista','Administrador')">Acesso Restrito</a>
+                                                <a th:href="@{/clientes/cadastrar}" class="dropdown-item" sec:authorize="hasAuthority('Cliente')">Dados cadastrais</a>
+                                                <a th:href="@{/usuario/editar-senha}" class="dropdown-item" sec:authorize="hasAuthority('Cliente')">Alterar senha</a>
+                                                <button type="submit" class="dropdown-item">Sair</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="row justify-content-center">
+                        <h3>Pesquise as melhores ofertas aqui!</h3>
+                    </div>
+                </div>
+
+                <form th:action="@{/pesquisar-por-nome}" method="get">
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <input id="autocomplete-input" name="nome" type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button id="autocomplete-submit" type="submit" class="btn btn-outline-light">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </header>
 </body>
 
 </html>

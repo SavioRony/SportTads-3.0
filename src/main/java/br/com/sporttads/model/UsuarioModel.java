@@ -3,10 +3,9 @@ package br.com.sporttads.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "usuario_model", indexes = { @Index(name = "idx_usuario_email", columnList = "email") })
+@Table(name = "tb_usuario", indexes = { @Index(name = "idx_usuario_email", columnList = "email") })
 public class UsuarioModel extends EntidadeAbstrata<Long> {
 
-	@Column(nullable = false, unique = true)
 	private String nome;
 
 	@Column(nullable = false, unique = true)
@@ -14,21 +13,44 @@ public class UsuarioModel extends EntidadeAbstrata<Long> {
 
 	private String senha;
 
-	private String tipoDeFuncionario;
+	private String tipo;
 
 	private String status;
+
+	@Column(name = "codigo_verificador", length = 6)
+	private String codigoVerificador;
 
 	public UsuarioModel() {
 		this.status = "Ativo";
 	}
 
-	public UsuarioModel(String nome, String email, String senha, String tipoDeFuncionario, String status) {
+	public UsuarioModel(String email) {
+		this.email = email;
+	}
+
+	public UsuarioModel(String nome, String email, String senha, String tipo, String status) {
 		super();
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
-		this.tipoDeFuncionario = tipoDeFuncionario;
+		this.tipo = tipo;
 		this.status = status;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public String getCodigoVerificador() {
+		return codigoVerificador;
+	}
+
+	public void setCodigoVerificador(String codigoVerificador) {
+		this.codigoVerificador = codigoVerificador;
 	}
 
 	public String getNome() {
@@ -53,14 +75,6 @@ public class UsuarioModel extends EntidadeAbstrata<Long> {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getTipoDeFuncionario() {
-		return tipoDeFuncionario;
-	}
-
-	public void setTipoDeFuncionario(String tipoDeFuncionario) {
-		this.tipoDeFuncionario = tipoDeFuncionario;
 	}
 
 	public String getStatus() {

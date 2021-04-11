@@ -1,6 +1,5 @@
 * {
     margin: 0;
-    margin-bottom: 25px;
     padding: 0;
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
@@ -8,6 +7,9 @@
     -webkit-box-sizing: border-box;
 }
 
+.card-body{
+    margin-top: 85px;
+}
 .clearfix {
     clear: both;
     /* Para limpar as tags flutuando acima ou abaixo*/
@@ -19,6 +21,11 @@ body {
 
 img {
     max-width: 100%;
+}
+
+@media (min-width: 768px)
+.mt-md-0, .my-md-0 {
+    margin-top: 1px !important;
 }
 
 .product_images {
