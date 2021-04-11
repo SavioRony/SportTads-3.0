@@ -3,12 +3,7 @@ package br.com.sporttads.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -30,29 +25,28 @@ public class ClienteModel implements Serializable{
 	private LocalDate dataNascimento;
 	
 	private String telPrincipal;
-	
-	@Column(unique = true)
-	private String email;
-	
-	private String senha;
-	
-	
+
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "id_usuario")
+	private UsuarioModel usuario;
+
 	//private List<enderecos> enderecos;
 	
 	public ClienteModel() {
 		super();
 	}
 
-	public ClienteModel(Long id, String nomeCompleto, String cpf, LocalDate dataNascimento, String telPrincipal,
-			String email, String senha) {
+	public ClienteModel(Long id, String nomeCompleto, String cpf, LocalDate dataNascimento, String telPrincipal) {
 		super();
 		this.id = id;
 		this.nomeCompleto = nomeCompleto;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 		this.telPrincipal = telPrincipal;
-		this.email = email;
-		this.senha = senha;
+	}
+
+	public boolean hasNotId() {
+		return id == null;
 	}
 
 	public Long getId() {
@@ -79,7 +73,6 @@ public class ClienteModel implements Serializable{
 		this.cpf = cpf;
 	}
 
-	
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
@@ -96,24 +89,13 @@ public class ClienteModel implements Serializable{
 		this.telPrincipal = telPrincipal;
 	}
 
-	public String getEmail() {
-		return email;
+	public UsuarioModel getUsuario() {
+		return usuario;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsuario(UsuarioModel usuario) {
+		this.usuario = usuario;
 	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	
-	
 	
 	
 	

@@ -19,28 +19,27 @@
 </head>
 
 <body>
-	<header>
-
+	<header th:replace="fragments/header :: cabecalho-cliente">
 	</header>
 	<div class="container">
-		<h1>Cadastro de Cliente</h1>
-		<br /><br />
-		<h3>Dados pessoais</h3><br />
-		<form th:action="${cliente.id == null} ? @{/clientes/salvar} : @{/clientes/editar}" 
+		<h3 class="mt-5">Dados pessoais</h3><br />
+		<form th:action="@{/clientes/salvar}"
 	                  th:object="${cliente}" method="POST">
 			<div th:replace="fragments/alert :: alerta-sucesso">
 
 			</div>
 			<div class="form-group">
-				<span>
-					<label>Código do cliente:</label> 
-					<input name="id" id="id" th:field="*{id}" />
-				</span>
+				<input type="hidden" name="id" id="id" th:field="*{id}" />
+
 			</div>
 			<div class="row">
 				<div class="form-group col-lg-12">
 					<label>Nome</label> <input type="text" name="nomeCompleto" id="nomeCompleto" class="form-control"
 						th:field="*{nomeCompleto}">
+				</div>
+				<div class="form-group col-lg-12">
+					<label>E-mail</label>
+					<h4 type="text" class="form-control" th:text="${email}" readonly></h4>
 				</div>
 				<div class="form-group  col-lg-12">
 					<label>CPF</label> <input type="text"  name="cpf" id="cpf" class="form-control" 
@@ -55,23 +54,11 @@
 					<label>Telefone Principal</label> <input type="text" name="telPrincipal" id="telPrincipal"
 						class="form-control"  th:field="*{telPrincipal}"  required="required">
 				</div>
-				<div class="form-group col-lg-12">
-
-					<label>E-mail</label> <input type="email" name="email" id="email" class="form-control"
-						 th:field="*{email}"  required="required">
-
-				</div>
-				<div class="form-group col-lg-12">
-					<label>Senha</label> <input type="password" name="senha" id="senha" class="form-control"
-						 th:field="*{senha}"  required="required">
-				</div>
-
-
 			</div>
 			<button class="btn btn-primary" type="submit" id="btn-salvar">Próximo</button>
 			
 		</form><BR />
-		<a href="#" th:href="@{/home}">
+		<a th:href="@{/}">
 			<button class="btn btn-primary">
 				Voltar
 			</button></a>

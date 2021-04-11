@@ -78,6 +78,6 @@ public class indexController {
 
 	@GetMapping({"/home"})
 	public String home() {
-		return "Home2";
+		return "home";
 	}
 }
