@@ -9,9 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("enderecos")
 public class EnderecoController {
 
-	@GetMapping("form")
+	@GetMapping()
 	public ModelAndView formularioCadastro() {
-		ModelAndView mv = new ModelAndView("Endereco/formularioEndereco");
+		ModelAndView mv = new ModelAndView("endereco/formularioEndereco");
 		return mv;
 	}
 
