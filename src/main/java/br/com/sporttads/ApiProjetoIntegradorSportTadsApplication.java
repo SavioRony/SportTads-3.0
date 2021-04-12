@@ -1,5 +1,6 @@
 package br.com.sporttads;
 
+import br.com.sporttads.model.ClienteModel;
 import br.com.sporttads.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,8 +26,8 @@ public class ApiProjetoIntegradorSportTadsApplication implements CommandLineRunn
 		System.out.println("API RODANDO!");
 		//System.out.println("Senha 123456: " + new BCryptPasswordEncoder().encode("123456"));
 
-
-
+	
+			
 	}
 	// -------- Testa se o Email esta funcionando ------
 	@Autowired
