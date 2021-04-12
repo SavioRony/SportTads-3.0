@@ -2,6 +2,8 @@ package br.com.sporttads.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import br.com.sporttads.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -37,12 +39,18 @@ public class ClienteController {
 		ClienteModel c = service.buscaPorEmailUser(user.getUsername());
 
 		model.addAttribute("cliente",c);
-
+		
 		return "cliente/cadastroCliente";
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(ClienteModel cliente, RedirectAttributes attr, @AuthenticationPrincipal User user) {
+	public String salvar(@Valid ClienteModel cliente,BindingResult result, RedirectAttributes attr, @AuthenticationPrincipal User user) {
+		
+		if (result.hasErrors()) {
+			attr.addFlashAttribute("falha", "CPF ESTÁ INVÁLIDO");
+			return "redirect:/clientes/cadastrar";
+		}
+		
 		UsuarioModel usuario = usuarioService.findByEmail(user.getUsername());
 		cliente.setUsuario(usuario);
 		service.salvar(cliente);

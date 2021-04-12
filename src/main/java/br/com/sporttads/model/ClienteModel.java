@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name="tb_cliente")
@@ -18,6 +19,7 @@ public class ClienteModel implements Serializable{
 	private Long id;
 	private String nomeCompleto;
 	
+	@CPF(message = "CPF INVÁLIDO")
 	@Column(unique = true)
 	private String cpf;
 	
@@ -97,6 +99,12 @@ public class ClienteModel implements Serializable{
 		this.usuario = usuario;
 	}
 	
+	public static void teste() {
+	System.out.println("testando");
+	}
+
+	
+
 	
 	
 
