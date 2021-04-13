@@ -20,7 +20,6 @@ import br.com.sporttads.model.UsuarioModel;
 import br.com.sporttads.repository.UsuarioRepository;
 import org.springframework.util.Base64Utils;
 
-
 import javax.mail.MessagingException;
 
 @Service
@@ -52,12 +51,12 @@ public class UsuarioService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UsuarioModel findById(Long id) {
 		return repository.findById(id).get();
-		
+
 	}
 
 	@Transactional(readOnly = true)
 	public List<UsuarioModel> findAll() {
-		
+
 		return repository.findAll();
 	}
 
@@ -69,15 +68,12 @@ public class UsuarioService implements UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UsuarioModel usuario = buscarPorEmailEAtivo(username).orElseThrow(() -> new UsernameNotFoundException("Usuario " + username + " não encontrado."));
-		if(usuario.getStatus().equals("Inativo")){
+		UsuarioModel usuario = buscarPorEmailEAtivo(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario " + username + " não encontrado."));
+		if (usuario.getStatus().equals("Inativo")) {
 			throw new UsernameNotFoundException("Usuario Inativo");
 		}
-		return new User(
-				usuario.getEmail(),
-				usuario.getSenha(),
-				AuthorityUtils.createAuthorityList(usuario.getTipo())
-		);
+		return new User(usuario.getEmail(), usuario.getSenha(), AuthorityUtils.createAuthorityList(usuario.getTipo()));
 	}
 
 	@Transactional(readOnly = false)
@@ -92,7 +88,7 @@ public class UsuarioService implements UserDetailsService {
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<UsuarioModel> buscarPorEmailEAtivo(String email){
+	public Optional<UsuarioModel> buscarPorEmailEAtivo(String email) {
 		return repository.findByEmailEAtivo(email);
 	}
 
@@ -102,10 +98,10 @@ public class UsuarioService implements UserDetailsService {
 	}
 
 	@Transactional(readOnly = false)
-	public void ativarCadastroCliente(String codigo){
+	public void ativarCadastroCliente(String codigo) {
 		String email = new String(Base64Utils.decodeFromString(codigo));
 		UsuarioModel usuario = findByEmail(email);
-		if (usuario.hasNotId()){
+		if (usuario == null) {
 			throw new AcessoNegadoException("Não foi possivel ativar ser cadastro. Entre em contato com o suporte");
 		}
 		usuario.setStatus("Ativo");
@@ -113,7 +109,8 @@ public class UsuarioService implements UserDetailsService {
 
 	@Transactional(readOnly = false)
 	public void pedidoRedefinicaoDeSenha(String email) throws MessagingException {
-		UsuarioModel usuario = buscarPorEmailEAtivo(email).orElseThrow(() -> new UsernameNotFoundException("Usuario "+ email +" não encontrado."));
+		UsuarioModel usuario = buscarPorEmailEAtivo(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario " + email + " não encontrado."));
 
 		String verificador = RandomStringUtils.randomAlphanumeric(6);
 
