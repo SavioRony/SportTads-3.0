@@ -18,6 +18,7 @@ import br.com.sporttads.model.UsuarioModel;
 import br.com.sporttads.service.ClienteService;
 import br.com.sporttads.service.UsuarioService;
 
+
 @Controller
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -30,6 +31,7 @@ public class ClienteController {
 	@GetMapping("/cadastrar")
 	public String cadastro(ModelMap model, @AuthenticationPrincipal User user) {
 		model.addAttribute("email", user.getUsername());
+		
 		ClienteModel c = service.buscaPorEmailUser(user.getUsername());
 
 		model.addAttribute("cliente", c);
@@ -43,6 +45,11 @@ public class ClienteController {
 
 		if (result.hasErrors()) {
 			attr.addFlashAttribute("falha", "CPF ESTÁ INVÁLIDO");
+			return "redirect:/clientes/cadastrar";
+
+		}
+		if (service.findBycpf(cliente.getCpf()).getId() != null) {
+			attr.addFlashAttribute("falha", "Este CPF já está cadastrado!!!");
 			return "redirect:/clientes/cadastrar";
 		}
 
