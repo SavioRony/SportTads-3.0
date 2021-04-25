@@ -23,8 +23,7 @@
 	</header>
 	<div class="container">
 		<h3 class="mt-5">Dados pessoais</h3><br />
-		<form th:action="@{/clientes/salvar}"
-	                  th:object="${cliente}" method="POST">
+		<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="POST">
 			<div th:replace="fragments/alert :: alerta-sucesso">
 
 			</div>

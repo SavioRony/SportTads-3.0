@@ -32,7 +32,7 @@ public class UsuarioController {
 	
 	@GetMapping("/listar")
 	public ModelAndView listar() {
-		List<UsuarioModel> usuarios = service.findAll();
+		List<UsuarioModel> usuarios = service.findByTipoUsuario();
 		return new ModelAndView("Usuario/ListaDeUsuario", "usuarios",usuarios);
 	}
 

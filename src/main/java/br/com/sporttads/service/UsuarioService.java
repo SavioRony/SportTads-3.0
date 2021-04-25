@@ -131,4 +131,8 @@ public class UsuarioService implements UserDetailsService {
 	public static boolean isSenhaCorreta(String senhaDigitada, String senhaArmazenada) {
 		return new BCryptPasswordEncoder().matches(senhaDigitada, senhaArmazenada);
 	}
+
+	public List<UsuarioModel> findByTipoUsuario() {
+		return repository.findByTipoUsuario();
+	}
 }
