@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 import br.com.sporttads.model.ClienteModel;
+import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.model.UsuarioModel;
 import br.com.sporttads.repository.ClienteRepository;
 
@@ -54,5 +55,15 @@ public class ClienteService {
 	public ClienteModel buscaPorEmailUser(String email){
 		return repository.findByIdUsuario(email).orElse(new ClienteModel());
 	}
-
+	
+	public ClienteModel findBycpf(String cpf){
+		return repository.findBycpf(cpf).orElse(new ClienteModel());
+	}
+	
+/*
+	public boolean findByCpf(String cpf) {
+		return repository.findBycpf(cpf); 
+	}*/
+	
+	
 }
