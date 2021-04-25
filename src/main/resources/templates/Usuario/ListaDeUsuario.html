@@ -53,7 +53,7 @@
                                 <td th:text="${usuario.id}"></td>
                                 <td th:text="${usuario.nome}"></td>
                                 <td th:text="${usuario.email}"></td>
-                                <td th:text="${usuario.tipoDeFuncionario}"></td>
+                                <td th:text="${usuario.tipo}"></td>
                                 <td th:text="${usuario.status}"></td>
                                 <span sec:authorize="hasAuthority('Administrador')">
                                         <td><a href="#"th:href="@{/usuario/editar/{id}(id=${usuario.id})}"><div th:replace="fragments/icones :: editar"></div></a></td>

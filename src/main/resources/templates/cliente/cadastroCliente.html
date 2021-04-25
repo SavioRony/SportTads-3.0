@@ -25,10 +25,8 @@
 <body>
 	<header th:replace="fragments/header :: cabecalho-cliente"> </header>
 	<div class="container">
-		<h3 class="mt-5">Dados pessoais</h3>
-		<br />
-		<form th:action="@{/clientes/salvar}" th:object="${cliente}"
-			method="POST">
+		<h3 class="mt-5">Dados pessoais</h3><br />
+		<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="POST">
 			<div th:replace="fragments/alert :: alerta-sucesso"></div>
 			<div class="form-group">
 				<input type="hidden" name="id" id="id" th:field="*{id}" />
