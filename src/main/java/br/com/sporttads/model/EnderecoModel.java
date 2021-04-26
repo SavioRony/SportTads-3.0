@@ -23,6 +23,8 @@ public class EnderecoModel {
 	@Column(name = "id_endereco")
 	private Integer id;
 
+	private String nome;
+
 	private String cep;
 
 	private String numero;
@@ -41,5 +43,17 @@ public class EnderecoModel {
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
+
+	public EnderecoModel(String nome, String cep, String numero, String logradouro, String localidade, String bairro,
+			String uf, String complemento) {
+		this.nome = nome;
+		this.cep = cep;
+		this.numero = numero;
+		this.logradouro = logradouro;
+		this.localidade = localidade;
+		this.bairro = bairro;
+		this.uf = uf;
+		this.complemento = complemento;
+	}
 
 }
