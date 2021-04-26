@@ -27,10 +27,18 @@ public class EnderecoService {
 		return this.enderecoRepository.findById(id).orElseThrow(() -> new RuntimeException("Endereço não localizado!"));
 	}
 
+	public List<EnderecoModel> getByClienteId(Long id) {
+		return this.enderecoRepository.findByClienteId(id);
+	}
+
 	public EnderecoModel create(EnderecoModel endereco, Long id) {
 		ClienteModel cliente = this.clienteRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Cliente não localizado!"));
 		endereco.setCliente(cliente);
+		return this.enderecoRepository.save(endereco);
+	}
+
+	public EnderecoModel createEndereco(EnderecoModel endereco) {
 		return this.enderecoRepository.save(endereco);
 	}
 
