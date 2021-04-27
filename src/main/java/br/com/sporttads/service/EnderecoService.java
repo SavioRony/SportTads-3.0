@@ -19,6 +19,8 @@ public class EnderecoService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 
+	private Long idCliente = 1L;
+
 	public List<EnderecoModel> getAll() {
 		return this.enderecoRepository.findAll();
 	}
@@ -31,8 +33,8 @@ public class EnderecoService {
 		return this.enderecoRepository.findByClienteId(id);
 	}
 
-	public EnderecoModel create(EnderecoModel endereco, Long id) {
-		ClienteModel cliente = this.clienteRepository.findById(id)
+	public EnderecoModel create(EnderecoModel endereco) {
+		ClienteModel cliente = this.clienteRepository.findById(this.idCliente)
 				.orElseThrow(() -> new RuntimeException("Cliente não localizado!"));
 		endereco.setCliente(cliente);
 		return this.enderecoRepository.save(endereco);

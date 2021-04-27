@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,7 @@ import br.com.sporttads.model.EnderecoModel;
 import br.com.sporttads.service.EnderecoService;
 
 @Controller
-@RequestMapping("enderecos")
+@RequestMapping("/enderecos")
 public class EnderecoController {
 
 	@Autowired
@@ -31,10 +30,16 @@ public class EnderecoController {
 //		return mv;
 //	}
 
-	@PostMapping("/save/{idCliente}")
-	public ModelAndView save(@ModelAttribute(name = "endereco") EnderecoModel endereco, Long idCliente) {
-		this.enderecoService.create(endereco, idCliente);
-		ModelAndView mv = new ModelAndView("endereco/listaEnderecos");
+	@GetMapping("/formulario")
+	public ModelAndView getFormulario() {
+		ModelAndView mv = new ModelAndView("endereco/formularioEndereco");
+		return mv;
+	}
+
+	@PostMapping("/save")
+	public ModelAndView save(EnderecoModel endereco) {
+		this.enderecoService.create(endereco);
+		ModelAndView mv = new ModelAndView("endereco/formularioEndereco");
 		return mv;
 	}
 
