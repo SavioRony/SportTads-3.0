@@ -1,7 +1,6 @@
 package br.com.sporttads.controller;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -12,12 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import br.com.sporttads.model.ClienteModel;
 import br.com.sporttads.model.UsuarioModel;
 import br.com.sporttads.service.ClienteService;
 import br.com.sporttads.service.UsuarioService;
-
 
 @Controller
 @RequestMapping("/clientes")
@@ -25,13 +22,14 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteService service;
+
 	@Autowired
 	private UsuarioService usuarioService;
 
 	@GetMapping("/cadastrar")
 	public String cadastro(ModelMap model, @AuthenticationPrincipal User user) {
 		model.addAttribute("email", user.getUsername());
-		
+
 		ClienteModel c = service.buscaPorEmailUser(user.getUsername());
 
 		model.addAttribute("cliente", c);
