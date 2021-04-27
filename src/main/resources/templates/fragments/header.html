@@ -142,7 +142,6 @@
                         <h3>Pesquise as melhores ofertas aqui!</h3>
                     </div>
                 </div>
-
                 <form th:action="@{/pesquisar-por-nome}" method="get">
                     <div class="form-row">
                         <div class="form-group col-md-10">
@@ -150,6 +149,15 @@
                         </div>
                         <div class="form-group col-md-2">
                             <button id="autocomplete-submit" type="submit" class="btn btn-outline-light">Pesquisar</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary">Categorias</button>
+                            <button type="button" class="btn btn-primary">Novidades</button>
+                            <button type="button" class="btn btn-primary">Promoções</button>
+                            <button type="button" class="btn btn-primary">Cartão SportTads</button>
+                            <a class="navbar-brand" th:href="@{/}">
+                                <img th:src="@{/img/produto/credit-card.png}" height="30" alt="mdb logo">
+                            </a>
                         </div>
                     </div>
                 </form>
