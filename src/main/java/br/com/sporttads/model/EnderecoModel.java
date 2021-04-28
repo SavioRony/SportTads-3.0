@@ -12,10 +12,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "tb_endereco")
+@NoArgsConstructor
 public class EnderecoModel {
 
 	@Id
