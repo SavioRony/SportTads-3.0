@@ -65,7 +65,18 @@ public class ClienteService {
 		return repository.findBycpf(cpf); 
 	}*/
 
-
-	
-	
+	public  boolean validaNome(String nome) {
+		boolean valido = false;
+		if (nome.split(" ").length >= 2) {
+			String[] splitNome = nome.split(" ");
+			for (int i = 0; i < splitNome.length; i++) {
+				if (splitNome[i].length() >= 3) {
+					valido = true;
+				} else {
+					valido = false;
+				}
+			}
+		}
+		return valido;
+	}
 }

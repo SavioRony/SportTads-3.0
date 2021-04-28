@@ -44,18 +44,21 @@ public class ClienteController {
 		if (result.hasErrors()) {
 			attr.addFlashAttribute("falha", "CPF ESTÁ INVÁLIDO");
 			return "redirect:/clientes/cadastrar";
-
 		}
-		if (service.findBycpf(cliente.getCpf()).getId() != null) {
+
+		if (service.findBycpf(cliente.getCpf()).getId() != null && cliente.getId() == null) {
 			attr.addFlashAttribute("falha", "Este CPF já está cadastrado!!!");
+			return "redirect:/clientes/cadastrar";
+		}
+		if(service.validaNome(cliente.getNomeCompleto()) == false){
+			attr.addFlashAttribute("falha", "NOME INVÁLIDO");
 			return "redirect:/clientes/cadastrar";
 		}
 
 		UsuarioModel usuario = usuarioService.findByEmail(user.getUsername());
 		cliente.setUsuario(usuario);
 		service.salvar(cliente);
-		attr.addFlashAttribute("sucesso", "Cadastro inserido com sucesso.");
-		return "redirect:/clientes/cadastrar";
+		return "redirect:/enderecos/formulario";
 	}
 
 }
