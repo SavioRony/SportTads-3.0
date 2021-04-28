@@ -37,52 +37,79 @@
 
 <style>
 p {
-	font-weight: 600;
+	font-weight: 700;
 	padding-left: 5px
 }
 
 h5 {
 	text-align: center;
 }
+
+span {
+	font-weight: normal;
+}
+
+#btn-salvar {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 115px;
+}
 </style>
 
 <body>
+	<header th:replace="fragments/header :: cabecalho-cliente"></header>
 	<div class="container">
-		<div class="row">
-			<div class="card m-3" style="width: 18rem;">
+		<div class="row justify-content-center">
+			<div class="card mt-3 mr-3" style="width: 18rem;"
+				th:each="endereco : ${enderecos}">
 				<div class="card-body">
 					<h5 class="card-title mb-3">
-						<span>Casa Hugo</span>
+						<span th:text="${endereco.nome}"></span>
 					</h5>
 					<div class="row">
-						<p>Logradouro:&nbsp</p>
-						<span>Rua Balneário São José</span>
+						<p>
+							Logradouro: <span th:text="${endereco.logradouro}"></span>
+						</p>
+
 					</div>
 					<div class="row">
-						<p>Bairro:&nbsp</p>
-						<span>Balneário São José</span>
-					</div>
-					<!-- 					<div class="row"> -->
-					<!-- 						<p>Complemento:&nbsp</p> -->
-					<!-- 						<span>Casa de esquina</span> -->
-					<!-- 					</div> -->
-					<div class="row">
-						<p>CEP:&nbsp</p>
-						<span>04864000</span>
+						<p>
+							Bairro: <span th:text="${endereco.bairro}"></span>
+						</p>
+
 					</div>
 					<div class="row">
-						<p>Número:&nbsp</p>
-						<span></span>15
+						<p>
+							Complemento: <span th:text="${endereco.complemento}"></span>
+						</p>
+
 					</div>
 					<div class="row">
-						<p>UF:&nbsp</p>
-						<span>SP</span>
+						<p>
+							CEP: <span th:text="${endereco.cep}"></span>
+						</p>
+
+					</div>
+					<div class="row">
+						<p>
+							Número: <span th:text="${endereco.numero}"></span>
+						</p>
+
+					</div>
+					<div class="row">
+						<p>
+							UF: <span th:text="${endereco.uf}"></span>
+						</p>
+
 					</div>
 				</div>
-				<a href="@{enderecos/update/*{id}}" class="btn btn-primary"><i
-					class="bi bi-eye"></i> Visualizar</a>
+				<a th:href="@{/enderecos/update/{id}(id=${endereco.id})}"
+					class="btn btn-primary"><i class="bi bi-eye"></i> Editar</a>
 			</div>
 		</div>
+		<a th:href="@{/enderecos/formulario}"
+			class="btn btn-primary float-right mb-20 mt-20 mr-115"
+			id="btn-salvar">Novo Endereço</a>
 	</div>
 </body>
 </html>

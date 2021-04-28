@@ -37,86 +37,55 @@
 </head>
 
 <body>
+	<header th:replace="fragments/header :: cabecalho-cliente"> </header>
 	<div class="container">
-		<h1>Cadastro de Endereço</h1>
-		<form th:action="@{/enderecos/save}" enctype="text/plain"
+		<h1 th:if="${endereco.id} == null">Cadastro de Endereço</h1>
+		<h1 th:unless="${endereco.id} == null">Editar de Endereço</h1>
+		<div th:replace="fragments/alert :: alerta-sucesso"></div>
+		<form
+			th:action="${endereco.id == null} ? @{/enderecos/save} : @{/enderecos/update}"
 			class="form-group" method="POST" th:object="${endereco}">
 			<div class="row">
+				<input th:field="*{id}" type="hidden" name="id" id="id">
 				<div class="col-lg-12">
-					<label>Nome</label> <input type="text" name="nome" id="nome"
-						class="form-control" required="true">
+					<label>Nome</label> <input th:field="*{nome}" type="text"
+						name="nome" id="nome" class="form-control" required="true">
 				</div>
 				<div class="col-lg-6">
-					<label>CEP</label> <input type="text" name="cep" id="cep"
-						class="form-control" required="true">
+					<label>CEP</label> <input th:field="*{cep}" type="text" name="cep"
+						id="cep" class="form-control" required="true">
 				</div>
 				<div class="col-lg-6">
-					<label>Número</label> <input type="text" name="numero" id="numero"
-						class="form-control" required="true">
+					<label>Número</label> <input th:field="*{numero}" type="text"
+						name="numero" id="numero" class="form-control" required="true">
 				</div>
 				<div class="col-lg-12">
-					<label>Logradouro</label> <input type="text" name="logradouro"
-						id="logradouro" class="form-control" required="true">
+					<label>Logradouro</label> <input th:field="*{logradouro}"
+						type="text" name="logradouro" id="logradouro" class="form-control"
+						required="true">
 				</div>
 				<div class="col-lg-4">
-					<label>Localidade</label> <input type="text" name="localidade"
-						id="localidade" class="form-control" required="true">
+					<label>Localidade</label> <input th:field="*{localidade}"
+						type="text" name="localidade" id="localidade" class="form-control"
+						required="true">
 				</div>
 				<div class="col-lg-6">
-					<label>Bairro</label> <input type="text" name="bairro" id="bairro"
-						class="form-control" required="true">
+					<label>Bairro</label> <input th:field="*{bairro}" type="text"
+						name="bairro" id="bairro" class="form-control" required="true">
 				</div>
 				<div class="col-lg-2">
-					<label>UF</label> <input type="text" name="uf" id="uf"
-						class="form-control" required="true">
+					<label>UF</label> <input th:field="*{uf}" type="text" name="uf"
+						id="uf" class="form-control" required="true">
 				</div>
 				<div class="col-lg-12">
-					<label>Complemento</label> <input type="text" name="complemento"
-						id="complemento" class="form-control">
+					<label>Complemento</label> <input th:field="*{complemento}"
+						type="text" name="complemento" id="complemento"
+						class="form-control">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary" id="btn-salvar">Salvar
-				Endereço</button>
+			<button type="submit" class="btn btn-primary float-right mt-3"
+				id="btn-salvar">Salvar Endereço</button>
 		</form>
-
-		<!-- 		<h1>Cadastro de Endereço</h1> -->
-		<!-- 		<form th:action="@{/enderecos/save}" enctype="text/plain" -->
-		<!-- 			class="form-group" method="POST" th:object="${endereco}"> -->
-		<!-- 			<div class="row"> -->
-		<!-- 				<div class="col-lg-6"> -->
-		<!-- 					<label>CEP</label> <input th:field="*{cep}" type="text" name="cep" -->
-		<!-- 						id="cep" class="form-control" required="true"> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-lg-6"> -->
-		<!-- 					<label>Número</label> <input th:field="*{numero}" type="text" -->
-		<!-- 						name="numero" id="numero" class="form-control" required="true"> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-lg-12"> -->
-		<!-- 					<label>Logradouro</label> <input th:field="*{logradouro}" -->
-		<!-- 						type="text" name="logradouro" id="logradouro" class="form-control" -->
-		<!-- 						required="true"> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-lg-4"> -->
-		<!-- 					<label>Localidade</label> <input type="text" name="localidade" -->
-		<!-- 						id="localidade" class="form-control" required="true"> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-lg-6"> -->
-		<!-- 					<label>Bairro</label> <input type="text" name="bairro" id="bairro" -->
-		<!-- 						class="form-control" required="true"> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-lg-2"> -->
-		<!-- 					<label>UF</label> <input type="text" name="uf" id="uf" -->
-		<!-- 						class="form-control" required="true"> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-lg-12"> -->
-		<!-- 					<label>Complemento</label> <input type="text" name="complemento" -->
-		<!-- 						id="complemento" class="form-control"> -->
-		<!-- 				</div> -->
-		<!-- 			</div> -->
-		<!-- 		</form> -->
-		<!-- 		<button class="btn btn-primary" id="btn-salvar">Salvar -->
-		<!-- 			Endereço</button> -->
-	</div>
 </body>
 <script>
     $("#cep").blur(function () {

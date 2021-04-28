@@ -129,6 +129,7 @@
                                             <div class="dropdown-menu" >
                                                 <a th:href="@{/home}" class="dropdown-item" sec:authorize="hasAnyAuthority('Estoquista','Administrador')">Acesso Restrito</a>
                                                 <a th:href="@{/clientes/cadastrar}" class="dropdown-item" sec:authorize="hasAuthority('Cliente')">Dados cadastrais</a>
+                                                <a th:href="@{/enderecos}" class="dropdown-item" sec:authorize="hasAuthority('Cliente')">Meus endereços</a>
                                                 <a th:href="@{/usuario/editar-senha}" class="dropdown-item" sec:authorize="hasAuthority('Cliente')">Alterar senha</a>
                                                 <button type="submit" class="dropdown-item">Sair</button>
                                             </div>

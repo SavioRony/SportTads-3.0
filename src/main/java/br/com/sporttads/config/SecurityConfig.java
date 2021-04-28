@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/clientes/cadastrar").hasAuthority(CLIENTE)
 
 				// acessos endereço
-				.antMatchers("/enderecos/**", "/enderecos/save").hasAuthority(CLIENTE)
+				.antMatchers("/enderecos/**").hasAuthority(CLIENTE)
 
 				// acessos ao produtos
 
