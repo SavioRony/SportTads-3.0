@@ -50,6 +50,10 @@ public class ClienteController {
 			attr.addFlashAttribute("falha", "Este CPF já está cadastrado!!!");
 			return "redirect:/clientes/cadastrar";
 		}
+		if(service.validaNome(cliente.getNomeCompleto()) == false){
+			attr.addFlashAttribute("falha", "NOME INVÁLIDO");
+			return "redirect:/clientes/cadastrar";
+		}
 
 		UsuarioModel usuario = usuarioService.findByEmail(user.getUsername());
 		cliente.setUsuario(usuario);
