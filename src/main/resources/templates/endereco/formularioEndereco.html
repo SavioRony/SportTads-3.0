@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" lang="PT-BR">
 
 <head>
@@ -35,6 +35,18 @@
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
 </head>
+
+<style>
+h1 {
+	text-align: center;
+	padding: 30px;
+}
+
+label {
+	font-weight: 400;
+	padding-top: 7px;
+}
+</style>
 
 <body>
 	<header th:replace="fragments/header :: cabecalho-cliente"> </header>
@@ -77,10 +89,24 @@
 					<label>UF</label> <input th:field="*{uf}" type="text" name="uf"
 						id="uf" class="form-control" required="true">
 				</div>
-				<div class="col-lg-12">
+				<div class="col-lg-6">
 					<label>Complemento</label> <input th:field="*{complemento}"
 						type="text" name="complemento" id="complemento"
 						class="form-control">
+				</div>
+				<div class="col-lg-4">
+					<label>Tipo de Endereço</label> <select class="form-control"
+						name="tipoEndereco">
+						<option value="1">Entrega</option>
+						<option value="2">Faturamento</option>
+					</select>
+				</div>
+				<div class="col-lg-2">
+					<label>Endereço principal</label> <select class="form-control"
+						name="isPadrao">
+						<option value="false">Não</option>
+						<option value="true">Sim</option>
+					</select>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary float-right mt-3"

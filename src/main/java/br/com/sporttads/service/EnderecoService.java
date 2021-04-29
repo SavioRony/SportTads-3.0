@@ -32,13 +32,19 @@ public class EnderecoService {
 	public List<EnderecoModel> getByClienteId(User user) {
 		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
 		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();
-		return this.enderecoRepository.findByClienteId(cliente.getId());
+		return this.enderecoRepository.findByClienteIdAndStatus(cliente.getId(), "Ativo");
 	}
 
 	public EnderecoModel create(EnderecoModel endereco, User user) {
 		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
 		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();
 		endereco.setCliente(cliente);
+		List<EnderecoModel> enderecos = this.enderecoRepository.findAll();
+		for (EnderecoModel e : enderecos) {
+			if (endereco.getIsPadrao() && e.getId() != endereco.getId()) {
+				e.setIsPadrao(false);
+			}
+		}
 		return this.enderecoRepository.save(endereco);
 	}
 
@@ -50,12 +56,19 @@ public class EnderecoService {
 		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
 		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();
 		edit.setCliente(cliente);
+		List<EnderecoModel> enderecos = this.enderecoRepository.findAll();
+		for (EnderecoModel e : enderecos) {
+			if (edit.getIsPadrao() && e.getId() != edit.getId()) {
+				e.setIsPadrao(false);
+			}
+		}
 		return this.enderecoRepository.save(edit);
 	}
 
 	public void delete(Integer id) {
 		EnderecoModel endereco = getById(id);
-		this.enderecoRepository.delete(endereco);
+		endereco.setStatus("Inativo");
+		this.enderecoRepository.save(endereco);
 	}
 
 }
