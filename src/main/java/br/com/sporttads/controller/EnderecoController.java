@@ -58,4 +58,12 @@ public class EnderecoController {
 		return "redirect:/enderecos";
 	}
 
+	@GetMapping("delete/{id}")
+	public String delete(@PathVariable Integer id) {
+		this.enderecoService.delete(id);
+		ModelAndView mv = new ModelAndView("endereco/formularioEndereco");
+		mv.addObject("sucesso", "Endereço excluído com sucesso!");
+		return "redirect:/enderecos";
+	}
+
 }

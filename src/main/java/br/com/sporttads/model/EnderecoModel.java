@@ -12,12 +12,10 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "tb_endereco")
-@NoArgsConstructor
 public class EnderecoModel {
 
 	@Id
@@ -41,13 +39,23 @@ public class EnderecoModel {
 
 	private String complemento;
 
+	private String status;
+
+	private Integer tipoEndereco;
+
+	private Boolean isPadrao;
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
 
+	public EnderecoModel() {
+		this.status = "Ativo";
+	}
+
 	public EnderecoModel(String nome, String cep, String numero, String logradouro, String localidade, String bairro,
-			String uf, String complemento) {
+			String uf, String complemento, Integer tipoEndereco, Boolean isPadrao) {
 		this.nome = nome;
 		this.cep = cep;
 		this.numero = numero;
@@ -56,6 +64,9 @@ public class EnderecoModel {
 		this.bairro = bairro;
 		this.uf = uf;
 		this.complemento = complemento;
+		this.status = "Ativo";
+		this.tipoEndereco = tipoEndereco;
+		this.isPadrao = isPadrao;
 	}
 
 }

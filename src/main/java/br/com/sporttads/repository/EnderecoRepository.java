@@ -10,6 +10,6 @@ import br.com.sporttads.model.EnderecoModel;
 @Repository
 public interface EnderecoRepository extends JpaRepository<EnderecoModel, Integer> {
 
-	List<EnderecoModel> findByClienteId(Long id);
+	List<EnderecoModel> findByClienteIdAndStatus(Long id, String status);
 
 }

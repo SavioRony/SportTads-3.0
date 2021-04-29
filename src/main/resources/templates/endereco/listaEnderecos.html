@@ -35,27 +35,6 @@
 	crossorigin="anonymous"></script>
 </head>
 
-<style>
-p {
-	font-weight: 700;
-	padding-left: 5px
-}
-
-h5 {
-	text-align: center;
-}
-
-span {
-	font-weight: normal;
-}
-
-#btn-salvar {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-right: 115px;
-}
-</style>
-
 <body>
 	<header th:replace="fragments/header :: cabecalho-cliente"></header>
 	<div class="container">
@@ -63,48 +42,57 @@ span {
 			<div class="card mt-3 mr-3" style="width: 18rem;"
 				th:each="endereco : ${enderecos}">
 				<div class="card-body">
-					<h5 class="card-title mb-3">
-						<span th:text="${endereco.nome}"></span>
-					</h5>
+					<span th:if="${endereco.isPadrao} == true"
+						class="badge badge-pill badge-primary float-right">Principal</span>
+					<h5 class="card-title mb-3" th:text="${endereco.nome}"></h5>
 					<div class="row">
 						<p>
 							Logradouro: <span th:text="${endereco.logradouro}"></span>
 						</p>
-
 					</div>
 					<div class="row">
 						<p>
 							Bairro: <span th:text="${endereco.bairro}"></span>
 						</p>
-
 					</div>
 					<div class="row">
 						<p>
 							Complemento: <span th:text="${endereco.complemento}"></span>
 						</p>
-
+					</div>
+					<div class="row">
+						<p>
+							Tipo de Endereço: <span class="badge badge-pill badge-dark"
+								th:if="${endereco.tipoEndereco} == 1"
+								th:text="${endereco.tipoEndereco} == 1 ? 'Entrega' : 'Faturamento'"></span>
+							<span class="badge badge-pill badge-warning"
+								th:unless="${endereco.tipoEndereco} == 1"
+								th:text="${endereco.tipoEndereco} == 1 ? 'Entrega' : 'Faturamento'"></span>
+						</p>
 					</div>
 					<div class="row">
 						<p>
 							CEP: <span th:text="${endereco.cep}"></span>
 						</p>
-
 					</div>
 					<div class="row">
 						<p>
 							Número: <span th:text="${endereco.numero}"></span>
 						</p>
-
 					</div>
 					<div class="row">
 						<p>
 							UF: <span th:text="${endereco.uf}"></span>
 						</p>
-
+					</div>
+					<div class="row justify-content-center">
+						<a th:href="@{/enderecos/update/{id}(id=${endereco.id})}"
+							class="btn btn-light mr-3"> <i class="bi bi-pencil-square"></i>
+						</a> <a th:href="@{/enderecos/delete/{id}(id=${endereco.id})}"
+							class="btn btn-light"> <i class="bi bi-trash-fill"></i>
+						</a>
 					</div>
 				</div>
-				<a th:href="@{/enderecos/update/{id}(id=${endereco.id})}"
-					class="btn btn-primary"><i class="bi bi-eye"></i> Editar</a>
 			</div>
 		</div>
 		<a th:href="@{/enderecos/formulario}"
