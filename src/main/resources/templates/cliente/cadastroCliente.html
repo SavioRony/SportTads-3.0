@@ -70,8 +70,8 @@
 						th:field="*{telPrincipal}" required="required">
 				</div>
 			</div>
-			<button class="btn btn-primary float-right" type="submit"
-				id="btn-salvar">Avançar</button>
+			<button th:text="*{id} == null ? 'Avançar' : 'Salvar'" class="btn btn-primary float-right" type="submit"
+				id="btn-salvar"></button>
 		</form>
 	</div>
 
