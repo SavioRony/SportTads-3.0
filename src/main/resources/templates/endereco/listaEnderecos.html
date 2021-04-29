@@ -63,11 +63,12 @@
 					<div class="row">
 						<p>
 							Tipo de Endereço: <span class="badge badge-pill badge-dark"
-								th:if="${endereco.tipoEndereco} == 1"
-								th:text="${endereco.tipoEndereco} == 1 ? 'Entrega' : 'Faturamento'"></span>
-							<span class="badge badge-pill badge-warning"
-								th:unless="${endereco.tipoEndereco} == 1"
-								th:text="${endereco.tipoEndereco} == 1 ? 'Entrega' : 'Faturamento'"></span>
+								th:if="${endereco.tipoEndereco} == 1" th:text="'Entrega'"></span>
+							<span class="badge badge-pill badge-info"
+								th:if="${endereco.tipoEndereco} == 2" th:text="'Faturamento'"></span>
+							<span class="badge badge-pill badge-success"
+								th:if="${endereco.tipoEndereco} == 3"
+								th:text="'Entrega e Faturamento'"></span>
 						</p>
 					</div>
 					<div class="row">
