@@ -48,6 +48,9 @@ public class ClienteModel implements Serializable {
 	@OneToMany(mappedBy = "id")
 	private List<EnderecoModel> enderecos;
 
+	@OneToOne(mappedBy = "cliente")
+	private CarrinhoModel carrinho;
+
 	public ClienteModel() {
 		super();
 	}

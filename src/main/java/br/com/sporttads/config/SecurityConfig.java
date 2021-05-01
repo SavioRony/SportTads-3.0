@@ -29,8 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll().antMatchers("/pesquisar-por-nome").permitAll()
 				.antMatchers("/pesquisar-por-categotia").permitAll()
 				.antMatchers("/usuario/novo/cadastro", "/usuario/cadastro/realizado", "/usuario/cliente/salvar")
-				.permitAll().antMatchers("/usuario/confirmacao/cadastro").permitAll().antMatchers("/usuario/c/**")
-				.permitAll()
+				.permitAll().antMatchers("/usuario/confirmacao/cadastro").permitAll()
+				.antMatchers("/usuario/c/**").permitAll()
+				.antMatchers( "/carrinho").permitAll()
+				.antMatchers( "/carrinho/**").permitAll()
 
 				// Permissões para imagens dos produtos
 				.antMatchers("/imagem-principal/**").permitAll().antMatchers("/imagens-produto/**").permitAll()

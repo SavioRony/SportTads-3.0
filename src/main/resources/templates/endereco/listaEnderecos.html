@@ -39,6 +39,7 @@
 	<header th:replace="fragments/header :: cabecalho-cliente"></header>
 	<div class="container">
 		<div class="row justify-content-center">
+			<div th:replace="fragments/alert :: alerta-sucesso"></div>
 			<div class="card mt-3 mr-3" style="width: 18rem;"
 				th:each="endereco : ${enderecos}">
 				<div class="card-body">

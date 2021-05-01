@@ -1,6 +1,8 @@
 package br.com.sporttads.controller;
 
 import javax.validation.Valid;
+
+import br.com.sporttads.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -24,6 +26,9 @@ public class ClienteController {
 	private ClienteService service;
 
 	@Autowired
+	private EnderecoService enderecoService;
+
+	@Autowired
 	private UsuarioService usuarioService;
 
 	@GetMapping("/cadastrar")
@@ -42,7 +47,7 @@ public class ClienteController {
 			@AuthenticationPrincipal User user) {
 
 		if (result.hasErrors()) {
-			attr.addFlashAttribute("falha", "CPF ESTÁ INVÁLIDO");
+			attr.addFlashAttribute("falha", "CPF esta inválido");
 			return "redirect:/clientes/cadastrar";
 		}
 
@@ -51,13 +56,19 @@ public class ClienteController {
 			return "redirect:/clientes/cadastrar";
 		}
 		if (service.validaNome(cliente.getNomeCompleto()) == false) {
-			attr.addFlashAttribute("falha", "NOME INVÁLIDO");
+			attr.addFlashAttribute("falha", "Nome invalido necessário pelo menos duas palavras!");
 			return "redirect:/clientes/cadastrar";
 		}
 
 		UsuarioModel usuario = usuarioService.findByEmail(user.getUsername());
 		cliente.setUsuario(usuario);
 		service.salvar(cliente);
+
+		if(enderecoService.hasEnderecoPrincipal(user)){
+			attr.addFlashAttribute("sucesso", "Alterado com sucesso!");
+			return "redirect:/clientes/cadastrar";
+		}
+		attr.addAttribute("Primeiro", "Sim");
 		return "redirect:/enderecos/formulario";
 	}
 

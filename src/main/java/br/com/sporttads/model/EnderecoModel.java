@@ -45,7 +45,6 @@ public class EnderecoModel {
 
 	private Boolean isPadrao;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
