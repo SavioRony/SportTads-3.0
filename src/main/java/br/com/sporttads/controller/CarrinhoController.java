@@ -4,6 +4,7 @@ import br.com.sporttads.model.CarrinhoModel;
 import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.model.ItemCarrinhoModel;
 import br.com.sporttads.service.CarrinhoService;
+import br.com.sporttads.service.ItemCarrinhoService;
 import br.com.sporttads.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -29,24 +30,47 @@ public class CarrinhoController {
 	@Autowired
 	private CarrinhoService carrinhoService;
 
+	@Autowired
+	private ItemCarrinhoService itemService;
+
 	private CarrinhoModel carrinho = new CarrinhoModel();
 
 	private List<ItemCarrinhoModel> itens = new ArrayList<>();
 
 	@GetMapping()
 	public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
-		this.carrinho = this.carrinhoService.populaCarrinho(user);
-		this.itens = this.carrinho.getItens();
-		carrinhoService.salvaCarrinho(user, carrinho);
+		if(user != null){
+			CarrinhoModel car = this.carrinhoService.populaCarrinho(user);
+			if(car != null){
+				for (ItemCarrinhoModel item : itens){
+					item.setCarrinho(car);
+					itemService.save(item);
+				}
+				carrinho = this.carrinhoService.populaCarrinho(user);
+				carrinho.calcularTotal();
+			}
+			carrinhoService.salvaCarrinho(user, carrinho);
+		}
 		return new ModelAndView("carrinho");
 	}
 
 	@GetMapping("/adicionar/{idProduto}")
 	public String addProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
-		this.carrinho = this.carrinhoService.populaCarrinho(user);
-		this.itens = this.carrinho.getItens();
-		alterarLista(idProduto, true);
-		carrinhoService.salvaCarrinho(user, carrinho);
+		if(user != null){
+			CarrinhoModel car = this.carrinhoService.populaCarrinho(user);
+			if(car != null){
+				for (ItemCarrinhoModel item : itens){
+					item.setCarrinho(car);
+					itemService.save(item);
+				}
+				carrinho = this.carrinhoService.populaCarrinho(user);
+				carrinho.calcularTotal();
+			}
+			alterarLista(idProduto, true);
+			carrinhoService.salvaCarrinho(user, carrinho);
+		}else{
+			alterarLista(idProduto, true);
+		}
 		return "redirect:/carrinho";
 	}
 
@@ -54,15 +78,16 @@ public class CarrinhoController {
 	public String removerProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
 		int index = getIndex(idProduto);
 		if (index >= 0) {
+			ItemCarrinhoModel itemCarrinhoModel = itens.get(index);
 			this.itens.remove(index);
 			this.carrinho.setItens(this.itens);
 			this.carrinho.calcularTotal();
 			this.carrinhoService.salvaCarrinho(user, carrinho);
+			if(user != null) {
+				carrinhoService.delete(itemCarrinhoModel.getId());
+			}
 		}
 
-		if (this.carrinhoService.findAll().size() > 0) {
-
-		}
 
 		return "redirect:/carrinho";
 	}

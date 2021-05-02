@@ -45,4 +45,7 @@ public class CarrinhoModel {
         quantidadeTotal = this.itens.size();
     }
 
+    public void setItens(List<ItemCarrinhoModel> itens) {
+        this.itens = itens;
+    }
 }
