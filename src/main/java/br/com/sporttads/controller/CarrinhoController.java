@@ -23,107 +23,114 @@ import java.util.List;
 @Scope("session")
 public class CarrinhoController {
 
-    @Autowired
-    private ProdutoService produtoService;
+	@Autowired
+	private ProdutoService produtoService;
 
-    @Autowired
-    private CarrinhoService carrinhoService;
+	@Autowired
+	private CarrinhoService carrinhoService;
 
-    private CarrinhoModel carrinho = new CarrinhoModel();
-    private List<ItemCarrinhoModel> itens = new ArrayList<>();
+	private CarrinhoModel carrinho = new CarrinhoModel();
 
-    @GetMapping()
-    public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
-        carrinhoService.salvaCarrinho(user, carrinho);
-        return new ModelAndView("carrinho");
-    }
+	private List<ItemCarrinhoModel> itens = new ArrayList<>();
 
-    @GetMapping("/adicionar/{idProduto}")
-    public String addProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user){
-        alterarLista(idProduto, true);
-        carrinhoService.salvaCarrinho(user, carrinho);
-        return "redirect:/carrinho";
-    }
+	@GetMapping()
+	public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
+		this.carrinho = this.carrinhoService.populaCarrinho(user);
+		this.itens = this.carrinho.getItens();
+		carrinhoService.salvaCarrinho(user, carrinho);
+		return new ModelAndView("carrinho");
+	}
 
-    @GetMapping("/remover/{idProduto}")
-    public String removerProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user){
-        int index = getIndex(idProduto);
-        if(index >= 0){
-            this.itens.remove(index);
-            this.carrinho.setItens(this.itens);
-            carrinho.calcularTotal();
-            carrinhoService.salvaCarrinho(user, carrinho);
-        }
+	@GetMapping("/adicionar/{idProduto}")
+	public String addProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
+		this.carrinho = this.carrinhoService.populaCarrinho(user);
+		this.itens = this.carrinho.getItens();
+		alterarLista(idProduto, true);
+		carrinhoService.salvaCarrinho(user, carrinho);
+		return "redirect:/carrinho";
+	}
 
-        return "redirect:/carrinho";
-    }
+	@GetMapping("/remover/{idProduto}")
+	public String removerProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
+		int index = getIndex(idProduto);
+		if (index >= 0) {
+			this.itens.remove(index);
+			this.carrinho.setItens(this.itens);
+			this.carrinho.calcularTotal();
+			this.carrinhoService.salvaCarrinho(user, carrinho);
+		}
 
-    @GetMapping("/somarQuant/{idProduto}")
-    public String somarProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user){
-        alterarLista(idProduto, true);
-        carrinhoService.salvaCarrinho(user, carrinho);
-        return "redirect:/carrinho";
-    }
+		if (this.carrinhoService.findAll().size() > 0) {
 
-    @GetMapping("/SubQuant/{idProduto}")
-    public String subtrairProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user){
-        alterarLista(idProduto, false);
-        carrinhoService.salvaCarrinho(user, carrinho);
-        return "redirect:/carrinho";
-    }
+		}
 
-    public List<ItemCarrinhoModel> getItens(){
-        return this.itens;
-    }
+		return "redirect:/carrinho";
+	}
 
-    public CarrinhoModel getCarrinho(){
-        return this.carrinho;
-    }
+	@GetMapping("/somarQuant/{idProduto}")
+	public String somarProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
+		alterarLista(idProduto, true);
+		carrinhoService.salvaCarrinho(user, carrinho);
+		return "redirect:/carrinho";
+	}
 
-    public int getIndex(int idProduto){
-        int index = -1;
-        for (ItemCarrinhoModel item :this.itens){
-            if(item.getProduto().getId() == idProduto){
-                return itens.indexOf(item);
-            }
-        }
-        return index;
-    }
+	@GetMapping("/SubQuant/{idProduto}")
+	public String subtrairProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
+		alterarLista(idProduto, false);
+		carrinhoService.salvaCarrinho(user, carrinho);
+		return "redirect:/carrinho";
+	}
 
-    public void alterarLista(int idProduto, boolean somar){
-        ProdutoModel produto = produtoService.getById(idProduto);
-        ItemCarrinhoModel item = new ItemCarrinhoModel();
-        boolean flag = false;
-        if(produto.getId() != null){
-            for (ItemCarrinhoModel itemCarrinho : this.itens){
-                if(itemCarrinho.getProduto().getId() == produto.getId() && somar){
-                    itemCarrinho.setQuantidade(itemCarrinho.getQuantidade() + 1);
-                    itemCarrinho.calcularSubtotal();
-                    flag = true;
-                    break;
-                }
+	public List<ItemCarrinhoModel> getItens() {
+		return this.itens;
+	}
 
-                if(itemCarrinho.getProduto().getId() == produto.getId() && !somar){
-                    if(itemCarrinho.getQuantidade() != 1) {
-                        itemCarrinho.setQuantidade(itemCarrinho.getQuantidade() - 1);
-                        itemCarrinho.calcularSubtotal();
-                    }
-                    flag = true;
-                    break;
-                }
+	public CarrinhoModel getCarrinho() {
+		return this.carrinho;
+	}
 
-            }
-            if(flag == false){
-                item.setProduto(produto);
-                item.setQuantidade(1);
-                item.calcularSubtotal();
-                this.itens.add(item);
-            }
-            this.carrinho.setItens(this.itens);
-            this.carrinho.calcularTotal();
-        }
-    }
+	public int getIndex(int idProduto) {
+		int index = -1;
+		for (ItemCarrinhoModel item : this.itens) {
+			if (item.getProduto().getId() == idProduto) {
+				return itens.indexOf(item);
+			}
+		}
+		return index;
+	}
 
+	public void alterarLista(int idProduto, boolean somar) {
+		ProdutoModel produto = produtoService.getById(idProduto);
+		ItemCarrinhoModel item = new ItemCarrinhoModel();
+		boolean flag = false;
+		if (produto.getId() != null) {
+			for (ItemCarrinhoModel itemCarrinho : this.itens) {
+				if (itemCarrinho.getProduto().getId() == produto.getId() && somar) {
+					itemCarrinho.setQuantidade(itemCarrinho.getQuantidade() + 1);
+					itemCarrinho.calcularSubtotal();
+					flag = true;
+					break;
+				}
 
+				if (itemCarrinho.getProduto().getId() == produto.getId() && !somar) {
+					if (itemCarrinho.getQuantidade() != 1) {
+						itemCarrinho.setQuantidade(itemCarrinho.getQuantidade() - 1);
+						itemCarrinho.calcularSubtotal();
+					}
+					flag = true;
+					break;
+				}
+
+			}
+			if (flag == false) {
+				item.setProduto(produto);
+				item.setQuantidade(1);
+				item.calcularSubtotal();
+				this.itens.add(item);
+			}
+			this.carrinho.setItens(this.itens);
+			this.carrinho.calcularTotal();
+		}
+	}
 
 }
