@@ -1,6 +1,6 @@
 package br.com.sporttads.service;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -24,22 +24,22 @@ public class CarrinhoService {
 	@Autowired
 	private ClienteService clienteService;
 
-	public void salvaCarrinho(User user, CarrinhoModel carrinhoModel) {
-		if (user != null) {
+	public CarrinhoModel salvaCarrinho(User user, CarrinhoModel carrinho) {
+		if(carrinho.getCliente() == null) {
 			ClienteModel clienteModel = clienteService.buscaPorEmailUser(user.getUsername());
-			carrinhoModel.setCliente(clienteModel);
-			CarrinhoModel carrinho = carrinhoRepository.save(carrinhoModel);
-
-			for (ItemCarrinhoModel item : carrinhoModel.getItens()) {
-				item.setCarrinho(carrinho);
-				itemRepository.save(item);
-			}
+			carrinho.setCliente(clienteModel);
 		}
+		return carrinhoRepository.save(carrinho);
 	}
 
 	public CarrinhoModel populaCarrinho(User user) {
 		ClienteModel cliente = this.clienteService.buscaPorEmailUser(user.getUsername());
-		return this.carrinhoRepository.findByClienteId(cliente.getId());
+		CarrinhoModel carrinho = carrinhoRepository.findByClienteId(cliente.getId());
+		List<ItemCarrinhoModel> itens = itemRepository.findByCarrinho(carrinho).orElse(new ArrayList<>());
+		if(carrinho != null && itens != null){
+			carrinho.setItens(itens);
+		}
+		return carrinho;
 	}
 
 	public void delete(Integer id) {
