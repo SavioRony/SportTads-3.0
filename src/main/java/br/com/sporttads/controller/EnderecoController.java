@@ -29,6 +29,7 @@ public class EnderecoController {
 		return new ModelAndView("endereco/formularioEndereco", "endereco", new EnderecoModel());
 	}
 
+	
 	@PostMapping("/save")
 	public ModelAndView save(@ModelAttribute("endereco") EnderecoModel endereco, RedirectAttributes attr,
 			@AuthenticationPrincipal User user) {
@@ -36,6 +37,12 @@ public class EnderecoController {
 		ModelAndView mv = new ModelAndView("endereco/formularioEndereco", "endereco", new EnderecoModel());
 		mv.addObject("sucesso", "Endereço cadastrado com sucesso!");
 		return mv;
+	}
+	
+	@GetMapping("/enderecosentrega")
+	public ModelAndView getEnderecoEntrega(@AuthenticationPrincipal User user) {
+		List<EnderecoModel> enderecos = this.enderecoService. getByClienteId(user);
+		return new ModelAndView("Pedido/EnderecoEntregaPedido", "enderecos", enderecos);
 	}
 
 	@GetMapping
