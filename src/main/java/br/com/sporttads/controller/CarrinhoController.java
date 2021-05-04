@@ -71,8 +71,10 @@ public class CarrinhoController {
 					}
 				}
 			}
+			if(carrinho.getItens() != null){
+				carrinho.calcularTotal();
+			}
 
-			carrinho.calcularTotal();
 			this.carrinho = carrinhoService.salvaCarrinho(user, carrinho);
 		}
 		return new ModelAndView("carrinho");
@@ -97,9 +99,6 @@ public class CarrinhoController {
 				CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
 				ItemCarrinhoModel itemCarrinhoModel = carrinho.getItens().get(index);
 				itemService.delete(itemCarrinhoModel.getId());
-				if(carrinho.getItens().size() == 0){
-					carrinhoService.delete(carrinho.getId());
-				}
 			}else{
 				this.itens.remove(index);
 				this.carrinho.setItens(this.itens);
@@ -140,11 +139,13 @@ public class CarrinhoController {
 	}
 
 	public boolean verificarSeExiste(ItemCarrinhoModel item, CarrinhoModel car){
-		for(ItemCarrinhoModel item1 : car.getItens()){
-			if(item.getProduto().getId() == item1.getProduto().getId()){
-				item1.setQuantidade(item1.getQuantidade() + item.getQuantidade());
-				item1.calcularSubtotal();
-				return true;
+		if(car.getItens() != null){
+			for(ItemCarrinhoModel item1 : car.getItens()){
+				if(item.getProduto().getId() == item1.getProduto().getId()){
+					item1.setQuantidade(item1.getQuantidade() + item.getQuantidade());
+					item1.calcularSubtotal();
+					return true;
+				}
 			}
 		}
 		return false;
@@ -220,6 +221,7 @@ public class CarrinhoController {
 					}
 
 				}
+				carrinho.calcularTotal();
 			}
 			if (flag == false) {
 				item.setProduto(produto);
@@ -228,7 +230,7 @@ public class CarrinhoController {
 				item.setCarrinho(carrinho);
 				itemService.save(item);
 			}
-			carrinho.calcularTotal();
+
 		}
 		return carrinho;
 	}

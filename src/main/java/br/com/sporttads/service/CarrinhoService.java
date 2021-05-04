@@ -34,10 +34,15 @@ public class CarrinhoService {
 
 	public CarrinhoModel populaCarrinho(User user) {
 		ClienteModel cliente = this.clienteService.buscaPorEmailUser(user.getUsername());
-		CarrinhoModel carrinho = carrinhoRepository.findByClienteId(cliente.getId());
-		List<ItemCarrinhoModel> itens = itemRepository.findByCarrinho(carrinho).orElse(new ArrayList<>());
-		if(carrinho != null && itens != null){
-			carrinho.setItens(itens);
+		CarrinhoModel carrinho = carrinhoRepository.findByClienteId(cliente.getId()).orElse(new CarrinhoModel());
+		if(carrinho.getId() == 0){
+			carrinho.setCliente(cliente);
+			carrinho = carrinhoRepository.save(carrinho);
+		}else{
+			List<ItemCarrinhoModel> itens = itemRepository.findByCarrinho(carrinho).orElse(new ArrayList<>());
+			if (itens != null) {
+				carrinho.setItens(itens);
+			}
 		}
 		return carrinho;
 	}
