@@ -42,7 +42,7 @@
                                             <span th:text="${item.quantidade}"></span>
                                             <a class="btn btn-default" th:href="@{/carrinho/somarQuant/{idproduto}(idproduto=${item.produto.id})}">+</a>
                                         </td>
-                                        <td th:text="${item.subtotal}">R$ 1.599,00</td>
+                                        <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span></td>
                                         <td>
                                             <a class="btn btn-default" th:href="@{/carrinho/remover/{idproduto}(idproduto=${item.produto.id})}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -78,7 +78,7 @@
                     <div class="card-body">
                         <h5>Resumo do pedido</h5>
                         <div class="resumo">
-                            <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span> produto(s) </span><span class="dados" th:text="${@carrinhoController.carrinho.total}">R$ 11.097,00</span>
+                            <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span> produto(s) </span> <span>R$ <span class="dados" th:text="${#numbers.formatDecimal(@carrinhoController.carrinho.total,0,2)}">R$ 11.097,00</span></span>
                         </div>
                         <div class="resumo">
                             <span>frete</span>
@@ -86,8 +86,8 @@
                         </div>
                         <hr>
                         <div class="resumo">
-                            <span><b>total</b></span>
-                            <span class="dados"><b th:text="${@carrinhoController.carrinho.total}">R$ 1.999,00</b></span>
+                            <span><b>Total</b></span>
+                            <b>R$ <span class="dados" th:text="${#numbers.formatDecimal(@carrinhoController.carrinho.total,0,2)}">R$ 1.999,00</span></b>
                         </div>
                         <div class="opcao-pagamento">
                             em até 12x sem juros
