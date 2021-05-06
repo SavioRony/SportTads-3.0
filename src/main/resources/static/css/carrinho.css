@@ -1,0 +1,23 @@
+h1 {
+    text-align: center;
+    padding: 50px;
+}
+table{
+    text-align: center;
+}
+#frete{
+    display: inline-flex;
+    align-items: center;
+}
+.dados{
+    float: right;
+}
+.resumo {
+    padding: 10px;
+}
+.opcao-pagamento{
+    text-align: right;
+}
+#btn-comprar{
+    margin-top: 10px;
+}

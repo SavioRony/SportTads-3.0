@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
 @Data
@@ -45,7 +43,6 @@ public class EnderecoModel {
 
 	private Boolean isPadrao;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;

@@ -1,5 +1,6 @@
 package br.com.sporttads.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,14 @@ public class EnderecoService {
 
 	public List<EnderecoModel> getByClienteId(User user) {
 		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
-		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();
+		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).orElse(new ClienteModel());
+		if(cliente.hasNotId()){
+			return new ArrayList<EnderecoModel>();
+		}
 		return this.enderecoRepository.findByClienteIdAndStatus(cliente.getId(), "Ativo");
 	}
 
+		
 	public EnderecoModel create(EnderecoModel endereco, User user) {
 		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
 		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();
@@ -69,6 +74,12 @@ public class EnderecoService {
 		EnderecoModel endereco = getById(id);
 		endereco.setStatus("Inativo");
 		this.enderecoRepository.save(endereco);
+	}
+
+	public boolean hasEnderecoPrincipal(User user){
+		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
+		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();
+		return enderecoRepository.findByClienteId(cliente.getId()).size() > 0;
 	}
 
 }

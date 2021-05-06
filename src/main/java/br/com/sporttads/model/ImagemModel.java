@@ -60,7 +60,6 @@ public class ImagemModel {
 	public String getImagemPath01() {
 		if (img01 == null || idProduto == null)
 			return null;
-		System.out.println("/imagens-produtos/" + idProduto + "/" + img01);
 		return "/imagens-produto/" + idProduto + "/" + img01;
 	}
 

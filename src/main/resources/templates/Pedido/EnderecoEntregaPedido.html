@@ -45,64 +45,59 @@
 				<div class="card-body">
 					<span th:if="${endereco.isPadrao} == true"
 						class="badge badge-pill badge-primary float-right">Principal</span>
+                    <span th:if="${endereco.isPadrao} == true"
+						class="badge badge-pill badge-dark badge-primary float-right">Entrega</span>
 					<h5 class="card-title mb-3" th:text="${endereco.nome}"></h5>
 					<hr>
-					<div class="row">
+                    <div class="row">
 						<p>
-							Logradouro: <span th:text="${endereco.logradouro}"></span>
+							CEP: <span th:text="${endereco.cep}"></span>
 						</p>
 					</div>
-					<div class="row">
+                    <div class="row">
 						<p>
 							Bairro: <span th:text="${endereco.bairro}"></span>
 						</p>
 					</div>
 					<div class="row">
 						<p>
-							Complemento: <span th:text="${endereco.complemento}"></span>
+							Logradouro: <span th:text="${endereco.logradouro}"></span>
 						</p>
 					</div>
+					
+					
 					<div class="row">
-						<p>
-							Tipo de Endereço: <span class="badge badge-pill badge-dark"
-								th:if="${endereco.tipoEndereco} == 1" th:text="'Entrega'"></span>
-							<span class="badge badge-pill badge-info"
-								th:if="${endereco.tipoEndereco} == 2" th:text="'Faturamento'"></span>
-							<span class="badge badge-pill badge-success"
-								th:if="${endereco.tipoEndereco} == 3"
-								th:text="'Entrega e Faturamento'"></span>
-						</p>
+						
 					</div>
-					<div class="row">
-						<p>
-							CEP: <span th:text="${endereco.cep}"></span>
-						</p>
-					</div>
+					
 					<div class="row">
 						<p>
 							Número: <span th:text="${endereco.numero}"></span>
 						</p>
 					</div>
+                  <!--  <div class="row">
+						<p>
+							Cidade: <span th:text="${endereco.cidade}"></span>
+						</p>
+					</div>-->
 					<div class="row">
 						<p>
 							UF: <span th:text="${endereco.uf}"></span>
 						</p>
 					</div>
+                    <div class="row">
+						<p>
+							Complemento: <span th:text="${endereco.complemento}"></span>
+						</p>
+					</div>
 					<div class="row justify-content-center">
-						<a th:href="@{/enderecos/update/{id}(id=${endereco.id})}"
-							class="btn btn-light rounded-circle mr-3"> <i
-							class="bi bi-pencil-square"></i>
-						</a> <a th:href="@{/enderecos/delete/{id}(id=${endereco.id})}"
-							class="btn btn-light rounded-circle"> <i
-							class="bi bi-trash-fill"></i>
-						</a>
+						
+                        <a th:href="@{/enderecos/formulario}" class="btn btn-primary float-right mb-20 mt-20 mr-115" id="btn-salvar">Selecionar este endereço</a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<a th:href="@{/enderecos/formulario}"
-			class="btn btn-primary float-right mb-20 mt-20 mr-115"
-			id="btn-salvar">Novo Endereço</a>
+		
 	</div>
 </body>
 </html>
