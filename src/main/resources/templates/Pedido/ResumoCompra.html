@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+    xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Resumo da Compra</title>
+    <link rel="stylesheet" th:href="@{resumoCompra.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+</head>
+
+<body>
+    <header th:replace="fragments/header :: cabecalho-cliente"></header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mt-5">
+                <div class="card bg-light">
+                    <h3>Dados da entrega</h3>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Selecione o endereço</h5>
+                                    <select class="form-control col-sm">
+                                        <option>Carregar o endereço escolhido aqui</option>
+                                        <option>Casa</option>
+                                        <option>Comercial</option>
+                                    </select><br /><br />
+                                    <a href="#" class="btn btn-primary">Cadastrar novo endereço</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nome do destinatário: </h5>
+                                    <h4 class="card-title">Nome do destinatário: </h4>
+                                    <p class="text">Logradouro: Rua teste da silva , 123</p>
+                                    <p class="text">Cep: , Bairro: , Cidade: , Estado:</p>
+                                    <p class="text">Observação: Próximo a padaria xyz</p>
+
+                                    <a> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mt-5">
+                <div class="card bg-light">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio1"> Retira - Grátis</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio2">Transportadora Alfa - R$120,00</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio3">Frete Aéreo - R$230,00</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm mt-5">
+                    <div class="card bg-light ">
+                        <div class="card-body">
+                            <h5>Resumo da compra</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Subtotal</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${@carrinhoController.carrinho.itens}">
+                                            <td th:text="${item.produto.id}">3</td>
+                                            <td th:text="${item.produto.nome}">Chuteira Nike</td>
+                                            <!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
+                                            <td>
+                                                <a class="btn btn-default"
+                                                    th:href="@{/carrinho/SubQuant/{idproduto}(idproduto=${item.produto.id})}">-</a>
+                                                <span th:text="${item.quantidade}"></span>
+                                                <a class="btn btn-default"
+                                                    th:href="@{/carrinho/somarQuant/{idproduto}(idproduto=${item.produto.id})}">+</a>
+                                            </td>
+                                            <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-default"
+                                                    th:href="@{/carrinho/remover/{idproduto}(idproduto=${item.produto.id})}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-lg-4 mt-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5>Resumo do pagamento</h5>
+                            <div class="resumo">
+                                <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
+                                    produto(s)
+                                </span> <span>R$ <span class="dados"
+                                        th:text="${#numbers.formatDecimal(@carrinhoController.carrinho.total,0,2)}">R$
+                                        11.097,00</span></span>
+                            </div>
+                            <div class="resumo">
+                                <span>Frete</span>
+
+                            </div>
+                            <hr>
+                            <div class="resumo">
+                                <span><b>Total</b></span>
+                                <b>R$ <span class="dados"
+                                        th:text="${#numbers.formatDecimal(@carrinhoController.carrinho.total,0,2)}">R$
+                                        1.999,00</span></b>
+                            </div>
+                            <div class="opcao-pagamento">
+                                em até 12x sem juros no cartão de crédito
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm mt-2">
+                    <div class="card bg-light">
+                        <h3>Dados do pagamento</h3>
+                        <div class="row">
+                        <div class="col-sm">
+                            
+                            <div class="custom-control custom-radio">
+                             
+                                <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
+                                 <label class="custom-control-label" for="customRadio4"> Cartão de crédito</label>
+                                
+                                </div>
+                            
+                        </div>
+                        <div class="col-sm">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio5"> Pix</label>
+                            </div>
+                           
+                        </div>
+                        <div class="col-sm">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio6"> Boleto</label>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+
+</html>

@@ -21,9 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "tb_cliente")
+@Data
 public class ClienteModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 

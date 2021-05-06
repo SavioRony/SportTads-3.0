@@ -39,6 +39,7 @@ public class EnderecoService {
 		return this.enderecoRepository.findByClienteIdAndStatus(cliente.getId(), "Ativo");
 	}
 
+		
 	public EnderecoModel create(EnderecoModel endereco, User user) {
 		UsuarioModel usuario = this.usuarioRepository.findByEmail(user.getUsername());
 		ClienteModel cliente = this.clienteRepository.findByUsuarioId(usuario.getId()).get();

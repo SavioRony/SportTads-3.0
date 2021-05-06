@@ -13,4 +13,7 @@ public interface EnderecoRepository extends JpaRepository<EnderecoModel, Integer
 	List<EnderecoModel> findByClienteIdAndStatus(Long id, String status);
 
 	List<EnderecoModel> findByClienteId(Long id);
+	
+	List<EnderecoModel> findByClienteIdAndTipoEndereco(Integer id,Integer tipoEndereco);
+	
 }
