@@ -21,31 +21,56 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarrinhoModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrinho")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_carrinho")
+	private int id;
 
-    @OneToMany(mappedBy = "carrinho")
-    private List<ItemCarrinhoModel> itens;
+	@OneToMany(mappedBy = "carrinho")
+	private List<ItemCarrinhoModel> itens;
 
-    @OneToOne
-    @JoinColumn(name = "id_cliente")
-    private ClienteModel cliente;
+	@OneToOne
+	@JoinColumn(name = "id_cliente")
+	private ClienteModel cliente;
 
-    private double total = 0;
+	private double total = 0;
 
-    private int quantidadeTotal = 0;
+	private int quantidadeTotal = 0;
 
-    public void calcularTotal(){
-        this.total = 0;
-        for (ItemCarrinhoModel itemCarrinho: this.itens) {
-            this.total += itemCarrinho.getSubtotal();
-        }
-        quantidadeTotal = this.itens.size();
-    }
+	private double valorFrete = 0;
 
-    public void setItens(List<ItemCarrinhoModel> itens) {
-        this.itens = itens;
-    }
+	@OneToOne
+	@JoinColumn(name = "id_frete")
+	private FreteModel frete;
+
+	public void calcularTotal() {
+		this.total = 0;
+		for (ItemCarrinhoModel itemCarrinho : this.itens) {
+			this.total += itemCarrinho.getSubtotal();
+		}
+		quantidadeTotal = this.itens.size();
+		// this.calcularFrete();
+		// this.total += this.frete;
+	}
+
+	public void setItens(List<ItemCarrinhoModel> itens) {
+		this.itens = itens;
+	}
+
+//	public void calcularFrete() {
+//		Random random = new Random();
+//		double taxa = 0;
+//		if (this.total > 0 && this.total <= 100) {
+//			taxa = (random.nextDouble()) / 10;
+//			this.frete = this.total * taxa;
+//			return;
+//		} else if (this.total > 100 && this.total <= 999) {
+//			taxa = (random.nextDouble()) / 100;
+//			this.frete = this.total * taxa;
+//			return;
+//		} else {
+//			this.frete = 0;
+//			return;
+//		}
+//	}
 }
