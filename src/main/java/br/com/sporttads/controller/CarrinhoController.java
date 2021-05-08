@@ -45,8 +45,13 @@ public class CarrinhoController {
 
 	private List<ItemCarrinhoModel> itens = new ArrayList<>();
 
+	public List<FreteModel> fretes = new ArrayList<>();
+
 	@GetMapping()
 	public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
+		if (this.carrinho.getCep() != null && !("".equals(this.carrinho.getCep()))) {
+			this.opcoesFrete(this.carrinho.getCep());
+		}
 		if (user != null) {
 			CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
 			if (carrinho == null) {
@@ -243,7 +248,7 @@ public class CarrinhoController {
 	@GetMapping("frete/all/{cep}")
 	public ModelAndView opcoesFrete(@PathVariable String cep) {
 		this.carrinho.setCep(cep);
-		List<FreteModel> fretes = this.freteService.findAll();
+		this.fretes = this.freteService.findAll();
 		for (FreteModel frete : fretes) {
 			frete.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
 		}
@@ -255,6 +260,7 @@ public class CarrinhoController {
 		FreteModel frete = this.freteService.findOne(idFrete);
 		this.carrinho.setFrete(frete);
 		this.carrinho.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
+		this.carrinho.calcularCarrinho();
 		return new ModelAndView("carrinho");
 	}
 

@@ -43,6 +43,8 @@ public class CarrinhoModel {
 	@Transient
 	private String cep = "";
 
+	private double totalCarrinho;
+
 	@OneToOne
 	@JoinColumn(name = "id_frete")
 	private FreteModel frete;
@@ -57,6 +59,10 @@ public class CarrinhoModel {
 
 	public void setItens(List<ItemCarrinhoModel> itens) {
 		this.itens = itens;
+	}
+
+	public void calcularCarrinho() {
+		this.totalCarrinho = this.total + this.valorFrete;
 	}
 
 }

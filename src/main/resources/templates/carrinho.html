@@ -107,10 +107,12 @@ table {
 							</div>
 						</div>
 					</div>
-					<div class="form-group col-lg-12">
+					<div class="form-group col-lg-12"
+						th:if="${@carrinhoController.fretes.size()} > 0">
 						<label for="select-frete">Opções de Frete</label> <select
 							id="select-frete" class="form-control">
-							<option th:each="frete : ${fretes}" th:value="${frete.id}"><span
+							<option th:each="frete : ${@carrinhoController.fretes}"
+								th:value="${frete.id}"><span
 									th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"
 									selected="${@carrinhoController.carrinho.frete.id} == ${frete.id} ? 'true' : 'false'">
 								</span></option>
@@ -135,7 +137,7 @@ table {
 						<hr>
 						<div class="resumo">
 							<span><b>Total</b></span><b><span class="dados"
-								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">R$
+								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.totalCarrinho)}">R$
 									1.999,00</span></b>
 						</div>
 						<div class="opcao-pagamento">em até 12x sem juros</div>
