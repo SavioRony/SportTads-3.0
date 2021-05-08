@@ -77,8 +77,8 @@ table {
 											class="btn btn-default"
 											th:href="@{/carrinho/somarQuant/{idproduto}(idproduto=${item.produto.id})}">+</a>
 										</td>
-										<td>R$ <span
-											th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span></td>
+										<td><span
+											th:text="${#numbers.formatCurrency(item.subtotal)}"></span></td>
 										<td><a class="btn btn-default"
 											th:href="@{/carrinho/remover/{idproduto}(idproduto=${item.produto.id})}">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -100,25 +100,23 @@ table {
 							<div class="col-lg-4">Calcular frete</div>
 							<div class="col-lg-4">
 								<input class="form-control" type="text" id="cep"
-									placeholder="00000-000" maxlength="8" minlength="8"
-									required="true">
+									placeholder="00000-000" maxlength="8" minlength="8" required>
 							</div>
 							<div class="col-lg-4">
-								<a th:href="@{/carrinho/frete/all}" id="btn-buscar"
-									class="btn btn-primary">Buscar</a>
+								<button id="btn-buscar" class="btn btn-primary">Buscar</button>
 							</div>
 						</div>
 					</div>
+					<div class="form-group col-lg-12">
+						<label for="select-frete">Opções de Frete</label> <select
+							id="select-frete" class="form-control">
+							<option th:each="frete : ${fretes}" th:value="${frete.id}"><span
+									th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"
+									selected="${@carrinhoController.carrinho.frete.id} == ${frete.id} ? 'true' : 'false'">
+								</span></option>
+						</select>
+					</div>
 				</div>
-
-				<div class="form-group col-lg-8">
-					<label for="frete">Opções de Frete</label> <select id="frete"
-						class="form-control">
-						<option th:each="frete : ${fretes}">
-						<span th:text="${frete.descricao} + ' - ' + ${#numbers.formatDecimal(frete.valorFrete,1,2)}"></span></option>
-					</select>
-				</div>
-
 			</div>
 			<div class="col-lg-4 mt-5">
 				<div class="card bg-light">
@@ -126,18 +124,18 @@ table {
 						<h5>Resumo do pedido</h5>
 						<div class="resumo">
 							<span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
-								produto(s) </span> <span>R$ <span class="dados"
-								th:text="'R$ ' + ${#numbers.formatDecimal(@carrinhoController.carrinho.total,0,2)}">
+								produto(s) </span> <span><span class="dados"
+								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
 									11.097,00</span></span>
 						</div>
 						<div class="resumo">
 							<span>frete</span> <span class="dados"
-								th:text="${@carrinhoController.carrinho.frete} == 0? 'a calcular' : ${#numbers.formatDecimal(@carrinhoController.carrinho.frete,0,2)}">grátis</span>
+								th:text="${@carrinhoController.carrinho.valorFrete} == 0? 'a calcular' : ${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">grátis</span>
 						</div>
 						<hr>
 						<div class="resumo">
-							<span><b>Total</b></span> <b>R$ <span class="dados"
-								th:text="'R$ ' + ${#numbers.formatDecimal(@carrinhoController.carrinho.total,0,2)}">R$
+							<span><b>Total</b></span><b><span class="dados"
+								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">R$
 									1.999,00</span></b>
 						</div>
 						<div class="opcao-pagamento">em até 12x sem juros</div>
@@ -155,20 +153,19 @@ table {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </body>
+
 <script type="text/javascript">
-	$("#cep").(function() {
-
-		if ($("#cep").val() == null || $("#cep").val() == "") {
-			console.log("vazio");
-			$("#btn-buscar").attr('disabled', 'disabled');
-		}
-
+	$("#select-frete").change(function() {
+		let valor = $(this).val();
+		location.href = "http://localhost:8081/carrinho/frete/" + valor
 	})
-	
-// 	$("#frete").change(function(){
-// 		var valor = $("#frete").val();
-// 		alert(valor);
-// 	})
+
+	$("#btn-buscar").click(function() {
+		let cep = $("#cep").val()
+		if (!(cep == null && cep == "")) {
+			location.href = "http://localhost:8081/carrinho/frete/all/" + cep
+		}
+	})
 </script>
 
 </html>

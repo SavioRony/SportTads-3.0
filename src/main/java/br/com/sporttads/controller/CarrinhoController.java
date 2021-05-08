@@ -240,8 +240,9 @@ public class CarrinhoController {
 		return carrinho;
 	}
 
-	@GetMapping("frete/all")
-	public ModelAndView opcoesFrete() {
+	@GetMapping("frete/all/{cep}")
+	public ModelAndView opcoesFrete(@PathVariable String cep) {
+		this.carrinho.setCep(cep);
 		List<FreteModel> fretes = this.freteService.findAll();
 		for (FreteModel frete : fretes) {
 			frete.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
@@ -251,9 +252,10 @@ public class CarrinhoController {
 
 	@GetMapping("/frete/{idFrete}")
 	public ModelAndView frete(@PathVariable int idFrete) {
-		ModelAndView mv = new ModelAndView("carrinho");
-
-		return mv;
+		FreteModel frete = this.freteService.findOne(idFrete);
+		this.carrinho.setFrete(frete);
+		this.carrinho.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
+		return new ModelAndView("carrinho");
 	}
 
 }

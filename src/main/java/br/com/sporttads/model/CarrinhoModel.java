@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,10 @@ public class CarrinhoModel {
 
 	private int quantidadeTotal = 0;
 
-	private double valorFrete = 0;
+	private double valorFrete;
+
+	@Transient
+	private String cep = "";
 
 	@OneToOne
 	@JoinColumn(name = "id_frete")
@@ -49,28 +53,10 @@ public class CarrinhoModel {
 			this.total += itemCarrinho.getSubtotal();
 		}
 		quantidadeTotal = this.itens.size();
-		// this.calcularFrete();
-		// this.total += this.frete;
 	}
 
 	public void setItens(List<ItemCarrinhoModel> itens) {
 		this.itens = itens;
 	}
 
-//	public void calcularFrete() {
-//		Random random = new Random();
-//		double taxa = 0;
-//		if (this.total > 0 && this.total <= 100) {
-//			taxa = (random.nextDouble()) / 10;
-//			this.frete = this.total * taxa;
-//			return;
-//		} else if (this.total > 100 && this.total <= 999) {
-//			taxa = (random.nextDouble()) / 100;
-//			this.frete = this.total * taxa;
-//			return;
-//		} else {
-//			this.frete = 0;
-//			return;
-//		}
-//	}
 }
