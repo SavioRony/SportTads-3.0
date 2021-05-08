@@ -1,12 +1,8 @@
 package br.com.sporttads.controller;
 
-import br.com.sporttads.model.CarrinhoModel;
-import br.com.sporttads.model.ClienteModel;
-import br.com.sporttads.model.ProdutoModel;
-import br.com.sporttads.model.ItemCarrinhoModel;
-import br.com.sporttads.service.CarrinhoService;
-import br.com.sporttads.service.ItemCarrinhoService;
-import br.com.sporttads.service.ProdutoService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,8 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
+import br.com.sporttads.model.CarrinhoModel;
+import br.com.sporttads.model.FreteModel;
+import br.com.sporttads.model.ItemCarrinhoModel;
+import br.com.sporttads.model.ProdutoModel;
+import br.com.sporttads.service.CarrinhoService;
+import br.com.sporttads.service.FreteService;
+import br.com.sporttads.service.ItemCarrinhoService;
+import br.com.sporttads.service.ProdutoService;
 
 @Controller
 @RequestMapping("/carrinho")
@@ -34,32 +36,40 @@ public class CarrinhoController {
 	@Autowired
 	private ItemCarrinhoService itemService;
 
+	@Autowired
+	private FreteService freteService;
+
 	private boolean primeiroAcesso = true;
 
 	private CarrinhoModel carrinho = new CarrinhoModel();
 
 	private List<ItemCarrinhoModel> itens = new ArrayList<>();
 
+	public List<FreteModel> fretes = new ArrayList<>();
+
 	@GetMapping()
 	public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
-		if(user != null){
+		if (this.carrinho.getCep() != null && !("".equals(this.carrinho.getCep()))) {
+			this.opcoesFrete(this.carrinho.getCep());
+		}
+		if (user != null) {
 			CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
-			if(carrinho == null){
-				if(this.carrinho.getItens() == null){
+			if (carrinho == null) {
+				if (this.carrinho.getItens() == null) {
 					this.carrinho.setItens(itens);
 				}
 				carrinhoService.salvaCarrinho(user, this.carrinho);
 			}
-			if(primeiroAcesso == true){
+			if (primeiroAcesso == true) {
 				primeiroAcesso = false;
-				if(this.carrinho != null && this.carrinho.getItens() != null){
-					if(this.carrinho.getItens().size() != 0){
-						for (ItemCarrinhoModel item : this.carrinho.getItens()){
-							if(!verificarSeExiste(item, carrinho)){
+				if (this.carrinho != null && this.carrinho.getItens() != null) {
+					if (this.carrinho.getItens().size() != 0) {
+						for (ItemCarrinhoModel item : this.carrinho.getItens()) {
+							if (!verificarSeExiste(item, carrinho)) {
 								item.setCarrinho(carrinho);
 								item.calcularSubtotal();
 								itemService.save(item);
-							}else{
+							} else {
 
 								carrinhoService.salvaCarrinho(user, carrinho);
 							}
@@ -71,7 +81,7 @@ public class CarrinhoController {
 					}
 				}
 			}
-			if(carrinho.getItens() != null){
+			if (carrinho.getItens() != null) {
 				carrinho.calcularTotal();
 			}
 
@@ -82,10 +92,10 @@ public class CarrinhoController {
 
 	@GetMapping("/adicionar/{idProduto}")
 	public String addProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
-		if(user != null){
+		if (user != null) {
 			CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
 			alterarListaBanco(idProduto, carrinho, true);
-		}else{
+		} else {
 			alterarListaSessao(idProduto, true);
 		}
 		return "redirect:/carrinho";
@@ -95,11 +105,11 @@ public class CarrinhoController {
 	public String removerProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
 		int index = getIndex(idProduto);
 		if (index >= 0) {
-			if(user != null) {
+			if (user != null) {
 				CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
 				ItemCarrinhoModel itemCarrinhoModel = carrinho.getItens().get(index);
 				itemService.delete(itemCarrinhoModel.getId());
-			}else{
+			} else {
 				this.itens.remove(index);
 				this.carrinho.setItens(this.itens);
 				this.carrinho.calcularTotal();
@@ -110,10 +120,10 @@ public class CarrinhoController {
 
 	@GetMapping("/somarQuant/{idProduto}")
 	public String somarProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
-		if(user != null){
+		if (user != null) {
 			CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
-			alterarListaBanco(idProduto,carrinho, true);
-		}else{
+			alterarListaBanco(idProduto, carrinho, true);
+		} else {
 			alterarListaSessao(idProduto, true);
 		}
 		return "redirect:/carrinho";
@@ -121,10 +131,10 @@ public class CarrinhoController {
 
 	@GetMapping("/SubQuant/{idProduto}")
 	public String subtrairProduto(@PathVariable int idProduto, @AuthenticationPrincipal User user) {
-		if(user != null){
+		if (user != null) {
 			CarrinhoModel carrinho = carrinhoService.populaCarrinho(user);
-			alterarListaBanco(idProduto,carrinho, false);
-		}else{
+			alterarListaBanco(idProduto, carrinho, false);
+		} else {
 			alterarListaSessao(idProduto, false);
 		}
 		return "redirect:/carrinho";
@@ -138,10 +148,10 @@ public class CarrinhoController {
 		return this.carrinho;
 	}
 
-	public boolean verificarSeExiste(ItemCarrinhoModel item, CarrinhoModel car){
-		if(car.getItens() != null){
-			for(ItemCarrinhoModel item1 : car.getItens()){
-				if(item.getProduto().getId() == item1.getProduto().getId()){
+	public boolean verificarSeExiste(ItemCarrinhoModel item, CarrinhoModel car) {
+		if (car.getItens() != null) {
+			for (ItemCarrinhoModel item1 : car.getItens()) {
+				if (item.getProduto().getId() == item1.getProduto().getId()) {
 					item1.setQuantidade(item1.getQuantidade() + item.getQuantidade());
 					item1.calcularSubtotal();
 					return true;
@@ -195,12 +205,12 @@ public class CarrinhoController {
 		}
 	}
 
-	public CarrinhoModel alterarListaBanco(int idProduto,CarrinhoModel carrinho, boolean somar) {
+	public CarrinhoModel alterarListaBanco(int idProduto, CarrinhoModel carrinho, boolean somar) {
 		ProdutoModel produto = produtoService.getById(idProduto);
 		ItemCarrinhoModel item = new ItemCarrinhoModel();
 		boolean flag = false;
 		if (produto.getId() != null) {
-			if(carrinho != null && carrinho.getItens() != null) {
+			if (carrinho != null && carrinho.getItens() != null) {
 				for (ItemCarrinhoModel itemCarrinho : carrinho.getItens()) {
 					if (itemCarrinho.getProduto().getId() == produto.getId() && somar) {
 						itemCarrinho.setQuantidade(itemCarrinho.getQuantidade() + 1);
@@ -233,6 +243,25 @@ public class CarrinhoController {
 
 		}
 		return carrinho;
+	}
+
+	@GetMapping("frete/all/{cep}")
+	public ModelAndView opcoesFrete(@PathVariable String cep) {
+		this.carrinho.setCep(cep);
+		this.fretes = this.freteService.findAll();
+		for (FreteModel frete : fretes) {
+			frete.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
+		}
+		return new ModelAndView("carrinho", "fretes", fretes);
+	}
+
+	@GetMapping("/frete/{idFrete}")
+	public ModelAndView frete(@PathVariable int idFrete) {
+		FreteModel frete = this.freteService.findOne(idFrete);
+		this.carrinho.setFrete(frete);
+		this.carrinho.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
+		this.carrinho.calcularCarrinho();
+		return new ModelAndView("carrinho");
 	}
 
 }
