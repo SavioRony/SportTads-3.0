@@ -139,39 +139,168 @@
             <div class="row">
                 <div class="col-sm mt-2">
                     <div class="card bg-light p-3 mb-5">
-                        <h5>Dados do pagamento</h5>
+                        <h3>Pagamento</h3><br />
+
+
+                        <div class="custom-control custom-radio ">
+
+                            <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input"
+                                data-toggle="collapse" data-target="#collapseExample">
+                            <label class="custom-control-label" for="customRadio4"> Cartão de crédito</label>
+                        </div><br />
+
+                        <div class="custom-control custom-radio ">
+                            <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input"
+                                data-toggle="collapse" data-target="#collapseExample2">
+                            <label class="custom-control-label" for="customRadio5"> Pix</label>
+                        </div><br />
+
+
+                        <div class="custom-control custom-radio ">
+                            <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio6" data-toggle="collapse"
+                                data-target="#collapseExample6"> Boleto</label>
+                        </div><br />
+
+                    </div>
+                    <div class="container">
                         <div class="row">
-                        <div class="col-sm">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-                                 <label class="custom-control-label" for="customRadio4"> Cartão de crédito</label>
+                            <div class="col-sm mt-2">
+                                <div class="card-body">
+                                    <div class="collapse" id="collapseExample">
+                                        <h5>Dados do cartão de crédito:</h5><br />
+                                        <div class="row">
+                                            <div class="col-sm">
+
+                                                <label>Número do cartão</label>
+                                                <input type="number" name="numero" id="numero" class="form-control"
+                                                    required="true">
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <label>Nome impresso no cartão</label>
+                                                <input type="text" name="nome" id="nome" class="form-control"
+                                                    required="true">
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label>Validade</label>
+                                                <input type="text" name="nome" id="nome" class="form-control"
+                                                    required="true">
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label>CVV</label>
+                                                <input type="text" name="nome" id="nome" class="form-control"
+                                                    required="true">
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label>Número de parcelas</label>
+                                                <select class="form-control col-sm">
+                                                    <option>Selecione o número de parcelas</option>
+                                                    <option>1 x sem juros</option>
+                                                    <option>2 x sem juros</option>
+                                                    <option>3 x sem juros</option>
+                                                    <option>4 x sem juros</option>
+                                                    <option>5 x sem juros</option>
+                                                    <option>6 x sem juros</option>
+                                                    <option>7 x sem juros</option>
+                                                    <option>8 x sem juros</option>
+                                                    <option>9 x sem juros</option>
+                                                    <option>10 x sem juros</option>
+                                                    <option>11 x sem juros</option>
+                                                    <option>12 x sem juros</option>
+                                                </select><br /><br />
+                                            </div>
+                                            <div class="container mt-5">
+                                                <button type="button" class="btn btn-danger btn-lg btn-block"
+                                                    data-toggle="modal" data-target="#exampleModal10">Finalizar
+                                                    Pedido</button><br />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio5"> Pix</label>
                             </div>
-                           
-                        </div>
-                        <div class="col-sm">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio6"> Boleto</label>
-                            </div>
-                           
                         </div>
                     </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="card-body collapse" id="collapseExample2">
+                                <h5>Pagar com Pix:</h5><br />
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p>Pague com Pix ! É rápido , prático e seguro.</p>
+                                        <div>
+                                            <p> 1. Abra o app do seu banco e acesse a opção de pagamento com
+                                                Pix.</p>
+                                            <p> 2. Escolha a opção pagar com qr code e escaneie o código.</p>
+                                            <p>3. Confirme as informações e finalize a compra. </p>
+                                            <img th:src="Pedido/ResumoCompra/QRCODE.jpg" alt="Pagamento com Pix">
+                                        </div>
+                                    </div>
+
+                                    <div class="  container mt-5">
+                                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                            data-toggle="modal" data-target="#exampleModal10">Finalizar
+                                            Pedido</button><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm mt-2">
+                            <div class="card-body collapse" id="collapseExample6">
+
+                                <h5>Pagar com Boleto:</h5><br />
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p>Pague com boleto.</p>
+                                        <div>
+                                            <p> 1. O prazo de validade do boleto é de 5 dias.</p>
+
+                                            <p>3. O boleto será enviado para o seu e-mail em até 1 hora. </p>
+                                        </div>
+                                    </div>
+                                    <div class="  container mt-5">
+                                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                            data-toggle="modal" data-target="#exampleModal10">Finalizar
+                                            Pedido</button><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Compra finalizada!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p> O número do seu pedido é : </p>
+                </div>
+                <div class="modal-body">
+                    <p>Acompanhe o seu pedido acessando a área do cliente. </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">FECHAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </body>
 <script>
     $("#selectEndereco").change(function(){
