@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Pedidos</title>
-    <link rel="stylesheet" th:href="@{/css/pedido.css}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 
@@ -19,20 +18,40 @@
 
 <body>
     <header th:replace="fragments/header :: cabecalho-cliente"></header>
-    <p></p>
+
     <div class="container">
         <div class="card w-90">
             <h5 class="card-header text-white bg-primary mb-3">Pedido x</h5>
             <div class="card-body">
+                <p class="card-text">Quantidade de Produto(s): </p>
                 <p class="card-text">Valor do pedido: </p>
-                <p class="card-text">Forma de pagamento: </p>
-                <p class="card-text">Endereco de Entrega:</p>
-                <a href="#" class="btn btn-primary">Mais detalhes</a>
+                <p class="card-text">Data da Compra: </p>
+                <p class="card-text">Valor do Frete: </p>
+                <a href="#" class="btn btn-primary">Voltar</a>
+                <a href="#" class="btn btn-primary">Concluir Compra</a>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Mais detalhes
+                </button>
+                <div class="card-body">
+                    <div class="collapse" id="collapseExample">
+                        <p class="card-text">Produto: </p>
+                        <p class="card-text">Valor Unitário: </p>
+                        <p class="card-text">Valor Total: </p>
+                        <p class="card-text">Total Geral: </p>
+                        <p class="card-text">Forma de Pagamento: </p>
+                        <p class="card-text">Endereço de Entrega:</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
     <p></p>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
 </body>
 
