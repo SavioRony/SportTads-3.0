@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Carrinho de Compras</title>
-<link rel="stylesheet" th:href="@{carrinho.css}">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" th:href="@{carrinho.css}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 </head>
 <style>
 h1 {
@@ -47,126 +47,143 @@ table {
 }
 </style>
 <body>
-	<header th:replace="fragments/header :: cabecalho-cliente"></header>
+<header th:replace="fragments/header :: cabecalho-cliente"></header>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 mt-2">
-				<div class="card bg-light">
-					<div class="card-body">
-						<h5>Meu carrinho</h5>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>Código</th>
-										<th>Produto</th>
-										<th>Quantidade</th>
-										<th>Subtotal</th>
-										<th>Ações</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="item : ${@carrinhoController.carrinho.itens}">
-										<td th:text="${item.produto.id}">3</td>
-										<td th:text="${item.produto.nome}">Chuteira Nike</td>
-										<!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
-										<td><a class="btn btn-default"
-											th:href="@{/carrinho/SubQuant/{idproduto}(idproduto=${item.produto.id})}">-</a>
-											<span th:text="${item.quantidade}"></span> <a
-											class="btn btn-default"
-											th:href="@{/carrinho/somarQuant/{idproduto}(idproduto=${item.produto.id})}">+</a>
-										</td>
-										<td><span
-											th:text="${#numbers.formatCurrency(item.subtotal)}"></span></td>
-										<td><a class="btn btn-default"
-											th:href="@{/carrinho/remover/{idproduto}(idproduto=${item.produto.id})}">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16"
-													height="16" fill="currentColor" class="bi bi-trash"
-													viewBox="0 0 16 16">
-                                                    <path
-														d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                    <path
-														fill-rule="evenodd"
-														d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                </svg>
-										</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<hr>
-						<div id="frete">
-							<div class="col-lg-4">Calcular frete</div>
-							<div class="col-lg-4">
-								<input class="form-control" type="text" id="cep"
-									placeholder="00000-000" maxlength="8" minlength="8" required>
-							</div>
-							<div class="col-lg-4">
-								<button id="btn-buscar" class="btn btn-primary">Buscar</button>
-							</div>
-						</div>
-					</div>
-					<div class="form-group col-lg-12"
-						th:if="${@carrinhoController.fretes.size()} > 0">
-						<label for="select-frete">Opções de Frete</label> <select
-							id="select-frete" class="form-control">
-							<option th:each="frete : ${@carrinhoController.fretes}"
-								th:value="${frete.id}"><span
-									th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"
-									selected="${@carrinhoController.carrinho.frete.id} == ${frete.id} ? 'true' : 'false'">
-								</span></option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 mt-5">
-				<div class="card bg-light">
-					<div class="card-body">
-						<h5>Resumo do pedido</h5>
-						<div class="resumo">
-							<span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mt-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5>Meu carrinho</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Subtotal</th>
+                                <th>Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${@carrinhoController.carrinho.itens} != null" th:each="item : ${@carrinhoController.carrinho.itens}">
+                                <td th:text="${item.produto.id}">3</td>
+                                <td th:text="${item.produto.nome}">Chuteira Nike</td>
+                                <!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
+                                <td><a class="btn btn-default"
+                                       th:href="@{/carrinho/SubQuant/{idproduto}(idproduto=${item.produto.id})}">-</a>
+                                    <span th:text="${item.quantidade}"></span> <a
+                                            class="btn btn-default"
+                                            th:href="@{/carrinho/somarQuant/{idproduto}(idproduto=${item.produto.id})}">+</a>
+                                </td>
+                                <td><span
+                                        th:text="${#numbers.formatCurrency(item.subtotal)}"></span></td>
+                                <td><a class="btn btn-default"
+                                       th:href="@{/carrinho/remover/{idproduto}(idproduto=${item.produto.id})}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                         height="16" fill="currentColor" class="bi bi-trash"
+                                         viewBox="0 0 16 16">
+                                        <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </a></td>
+                            </tr>
+                            <tr th:unless="${@carrinhoController.carrinho.itens} != null">
+                                <td colspan="5" align="center">Não há itens</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <div id="frete">
+                        <div class="col-lg-4">Calcular frete</div>
+                        <div class="col-lg-4">
+                            <input class="form-control" type="text" id="cep"
+                                   placeholder="00000-000" maxlength="8" minlength="8" required>
+                        </div>
+                        <div class="col-lg-4">
+                            <button id="btn-buscar" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12"
+                     th:if="${@carrinhoController.fretes.size()} > 0">
+                    <div class="custom-control custom-radio"  th:each="frete : ${@carrinhoController.fretes}">
+                        <span th:if="${@carrinhoController.carrinho.frete} != null">
+                            <span th:if="${@carrinhoController.carrinho.frete.id} == ${frete.id}">
+                                <input type="radio" th:id="${frete.id}" th:value="${frete.id}" name="custom" class="custom-control-input" checked>
+                                <label class="custom-control-label" th:for="${frete.id}" th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
+                            </span>
+                            <span th:unless="${@carrinhoController.carrinho.frete.id} == ${frete.id}">
+                                    <input type="radio" th:id="${frete.id}" th:value="${frete.id}"name="custom" class="custom-control-input">
+                                    <label class="custom-control-label" th:for="${frete.id}" th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
+                            </span>
+                        </span>
+                        <span th:unless="${@carrinhoController.carrinho.frete} != null">
+                            <span>
+                                <input type="radio" th:id="${frete.id}" th:value="${frete.id}" name="custom" class="custom-control-input">
+                                <label class="custom-control-label" th:for="${frete.id}" th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mt-5">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5>Resumo do pedido</h5>
+                    <div class="resumo">
+                        <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
 								produto(s) </span> <span><span class="dados"
-								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
+                                                               th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
 									11.097,00</span></span>
-						</div>
-						<div class="resumo">
-							<span>frete</span> <span class="dados"
-								th:text="${@carrinhoController.carrinho.valorFrete} == 0? 'a calcular' : ${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">grátis</span>
-						</div>
-						<hr>
-						<div class="resumo">
-							<span><b>Total</b></span><b><span class="dados"
-								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.totalCarrinho)}">R$
+                    </div>
+                    <div class="resumo">
+                        <span>frete</span> <span class="dados"
+                                                 th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">grátis</span>
+                    </div>
+                    <hr>
+                    <div class="resumo">
+                        <span><b>Total</b></span><b><span class="dados"
+                                                          th:text="${#numbers.formatCurrency(@carrinhoController.total)}">R$
 									1.999,00</span></b>
-						</div>
-						<div class="opcao-pagamento">em até 12x sem juros</div>
-						<button id="btn-comprar" class="form-control btn-primary">Comprar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+                    </div>
+                    <div class="opcao-pagamento">em até 12x sem juros</div>
+                    <a id="btn-comprar" class="btn btn-primary" th:href="@{/pedido}">Comprar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </body>
 
 <script type="text/javascript">
-	$("#select-frete").change(function() {
-		let valor = $(this).val();
-		location.href = "http://localhost:8081/carrinho/frete/" + valor
-	})
+    $('input[name = "custom"]').click(function(){
+        let id = $(this).val()
+        location.href = "carrinho/frete/"+id
+    })
 
 	$("#btn-buscar").click(function() {
 		let cep = $("#cep").val()
-		if (!(cep == null && cep == "")) {
-			location.href = "http://localhost:8081/carrinho/frete/all/" + cep
-		}
+		if(cep.length === 8){
+			location.href = "http://localhost:8080/carrinho/frete/all/" + cep
+			$('#cep').css('border', '1px solid green')
+        }else{
+            $('#cep').css('border', '1px solid red')
+        }
 	})
 </script>
 

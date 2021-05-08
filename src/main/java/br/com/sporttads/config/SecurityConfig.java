@@ -33,30 +33,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/usuario/c/**").permitAll()
 				.antMatchers( "/carrinho").permitAll()
 				.antMatchers( "/carrinho/**").permitAll()
+				.antMatchers("/clientes/cadastrar").permitAll()
+				.antMatchers("/logout").permitAll()
 
 				// Permissões para imagens dos produtos
 				.antMatchers("/imagem-principal/**").permitAll().antMatchers("/imagens-produto/**").permitAll()
 				.antMatchers("/Dashboard/**").permitAll()
 
-				// acessos ao usuario
-				.antMatchers("/usuario/editar-senha", "/usuario/confirmar-senha").hasAuthority(CLIENTE)
+				// Acessos ao usuario
 				.antMatchers("/usuario/listar").hasAnyAuthority(ADMIN, ESTOQUISTA).antMatchers("/usuario/**")
 				.hasAuthority(ADMIN)
-
-				//.antMatchers("/clientes/cadastrar").hasAuthority(CLIENTE)
-
-				.antMatchers("/clientes/cadastrar").permitAll()
 				
-				// acessos endereço
+				// Acessos cliente
+				.antMatchers("/usuario/editar-senha", "/usuario/confirmar-senha").hasAuthority(CLIENTE)
 				.antMatchers("/enderecos/**").hasAuthority(CLIENTE)
+				.antMatchers("/pedido/**").hasAuthority(CLIENTE)
 
-				// acessos ao produtos
-
+				// Acessos ao produtos
 				.antMatchers("/produtos/comprar-produto/*").permitAll().antMatchers("/produtos/**")
 				.hasAnyAuthority(ADMIN, ESTOQUISTA)
 
+				// Login
 				.anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/", true)
-				.failureUrl("/login-error").permitAll().and().logout().logoutSuccessUrl("/").and().exceptionHandling()
+				.failureUrl("/login-error").permitAll().and().logout().logoutSuccessUrl("/logout").and().exceptionHandling()
 				.accessDeniedPage("/acesso-negado").and().rememberMe();
 
 	}

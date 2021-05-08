@@ -41,11 +41,13 @@ public class CarrinhoController {
 
 	private boolean primeiroAcesso = true;
 
-	private CarrinhoModel carrinho = new CarrinhoModel();
+	private static CarrinhoModel carrinho = new CarrinhoModel();
 
-	private List<ItemCarrinhoModel> itens = new ArrayList<>();
+	private static List<ItemCarrinhoModel> itens = new ArrayList<>();
 
-	public List<FreteModel> fretes = new ArrayList<>();
+	private static List<FreteModel> fretes = new ArrayList<>();
+
+	private static double total;
 
 	@GetMapping()
 	public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
@@ -70,13 +72,15 @@ public class CarrinhoController {
 								item.calcularSubtotal();
 								itemService.save(item);
 							} else {
-
 								carrinhoService.salvaCarrinho(user, carrinho);
 							}
 						}
 						carrinho = carrinhoService.populaCarrinho(user);
 						carrinho.calcularTotal();
 						this.carrinho = carrinho;
+
+						this.carrinho.setValorFrete(this.carrinho.getTotal() * this.carrinho.getFrete().getTaxa());
+						this.total = this.carrinho.getTotal() + this.carrinho.getValorFrete();
 						return new ModelAndView("carrinho");
 					}
 				}
@@ -84,9 +88,15 @@ public class CarrinhoController {
 			if (carrinho.getItens() != null) {
 				carrinho.calcularTotal();
 			}
-
 			this.carrinho = carrinhoService.salvaCarrinho(user, carrinho);
 		}
+		if(this.carrinho.getFrete() != null){
+			this.carrinho.setValorFrete(this.carrinho.getTotal() * this.carrinho.getFrete().getTaxa());
+			for (FreteModel frete : fretes){
+				frete.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
+			}
+		}
+		this.total = this.carrinho.getTotal() + this.carrinho.getValorFrete();
 		return new ModelAndView("carrinho");
 	}
 
@@ -138,14 +148,6 @@ public class CarrinhoController {
 			alterarListaSessao(idProduto, false);
 		}
 		return "redirect:/carrinho";
-	}
-
-	public List<ItemCarrinhoModel> getItens() {
-		return this.itens;
-	}
-
-	public CarrinhoModel getCarrinho() {
-		return this.carrinho;
 	}
 
 	public boolean verificarSeExiste(ItemCarrinhoModel item, CarrinhoModel car) {
@@ -246,22 +248,57 @@ public class CarrinhoController {
 	}
 
 	@GetMapping("frete/all/{cep}")
-	public ModelAndView opcoesFrete(@PathVariable String cep) {
+	public String opcoesFrete(@PathVariable String cep) {
 		this.carrinho.setCep(cep);
 		this.fretes = this.freteService.findAll();
 		for (FreteModel frete : fretes) {
 			frete.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
 		}
-		return new ModelAndView("carrinho", "fretes", fretes);
+		return "redirect:/carrinho";
 	}
 
 	@GetMapping("/frete/{idFrete}")
-	public ModelAndView frete(@PathVariable int idFrete) {
+	public String frete(@PathVariable int idFrete, @AuthenticationPrincipal User user) {
 		FreteModel frete = this.freteService.findOne(idFrete);
 		this.carrinho.setFrete(frete);
 		this.carrinho.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
 		this.carrinho.calcularCarrinho();
-		return new ModelAndView("carrinho");
+		if(user != null){
+			carrinhoService.salvaCarrinho(user, carrinho);
+		}
+		return "redirect:/carrinho";
 	}
 
+	public static List<FreteModel> getFretes() {
+		return fretes;
+	}
+
+	public static void setFretes(List<FreteModel> fretes) {
+		CarrinhoController.fretes = fretes;
+	}
+
+	public static double getTotal() {
+		return total;
+	}
+
+	public static void setTotal(double total) {
+		CarrinhoController.total = total;
+	}
+
+
+	public List<ItemCarrinhoModel> getItens() {
+		return this.itens;
+	}
+
+	public static void setItens(List<ItemCarrinhoModel> itens) {
+		CarrinhoController.itens = itens;
+	}
+
+	public static CarrinhoModel getCarrinho() {
+		return carrinho;
+	}
+
+	public static void setCarrinho(CarrinhoModel carrinho) {
+		CarrinhoController.carrinho = carrinho;
+	}
 }
