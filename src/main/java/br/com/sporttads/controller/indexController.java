@@ -1,7 +1,9 @@
 package br.com.sporttads.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.sporttads.model.CarrinhoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -79,5 +81,15 @@ public class indexController {
 	@GetMapping({"/home"})
 	public String home() {
 		return "home";
+	}
+
+	// abrir pagina login
+	@GetMapping({"/logout"})
+	public String logout() {
+		CarrinhoController.setCarrinho(new CarrinhoModel());
+		CarrinhoController.setTotal(0);
+		CarrinhoController.setFretes(new ArrayList<>());
+		CarrinhoController.setItens(new ArrayList<>());
+		return "redirect:/";
 	}
 }
