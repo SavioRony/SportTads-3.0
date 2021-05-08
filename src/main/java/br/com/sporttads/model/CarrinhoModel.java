@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,31 +22,47 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarrinhoModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrinho")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_carrinho")
+	private int id;
 
-    @OneToMany(mappedBy = "carrinho")
-    private List<ItemCarrinhoModel> itens;
+	@OneToMany(mappedBy = "carrinho")
+	private List<ItemCarrinhoModel> itens;
 
-    @OneToOne
-    @JoinColumn(name = "id_cliente")
-    private ClienteModel cliente;
+	@OneToOne
+	@JoinColumn(name = "id_cliente")
+	private ClienteModel cliente;
 
-    private double total = 0;
+	private double total = 0;
 
-    private int quantidadeTotal = 0;
+	private int quantidadeTotal = 0;
 
-    public void calcularTotal(){
-        this.total = 0;
-        for (ItemCarrinhoModel itemCarrinho: this.itens) {
-            this.total += itemCarrinho.getSubtotal();
-        }
-        quantidadeTotal = this.itens.size();
-    }
+	private double valorFrete;
 
-    public void setItens(List<ItemCarrinhoModel> itens) {
-        this.itens = itens;
-    }
+	@Transient
+	private String cep = "";
+
+	private double totalCarrinho;
+
+	@OneToOne
+	@JoinColumn(name = "id_frete")
+	private FreteModel frete;
+
+	public void calcularTotal() {
+		this.total = 0;
+		for (ItemCarrinhoModel itemCarrinho : this.itens) {
+			this.total += itemCarrinho.getSubtotal();
+		}
+		quantidadeTotal = this.itens.size();
+	}
+
+	public void setItens(List<ItemCarrinhoModel> itens) {
+		this.itens = itens;
+	}
+
+	public void calcularCarrinho() {
+		this.totalCarrinho = this.total + this.valorFrete;
+	}
+
 }
