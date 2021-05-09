@@ -1,257 +1,270 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
-    xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="text/html; charset=UTF-8">
     <title>Resumo da Compra</title>
     <link rel="stylesheet" th:href="@{resumoCompra.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"/>
 </head>
 
 <body>
-    <header th:replace="fragments/header :: cabecalho-cliente"></header>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm mt-5">
-                <div class="card bg-light p-3">
-                    <h5>Dados da entrega</h5>
-                    <div class="row">
-                        <div class="col-sm">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Selecione o endereço</h5>
-                                    <select id="selectEndereco" class="form-control col-sm">
-                                        <option  th:each="endereco : ${@pedidoController.enderecos}" th:value="${endereco.id}" th:text="${endereco.nome}" selected="selected">Carregar o endereço escolhido aqui</option >
-                                    </select><br/><br/>
-                                    <a th:href="@{/enderecos/formulario}" class="btn btn-primary">Cadastrar novo endereço</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${@pedidoController.endereco.nome}"></h5>
-                                    <p class="text">Logradouro: <span th:text="${@pedidoController.endereco.logradouro}"></span> , <span th:text="${@pedidoController.endereco.numero}"></span></p>
-                                    <p class="text">Cep: <span th:text="${@pedidoController.endereco.cep}"></span> , Bairro: <span th:text="${@pedidoController.endereco.bairro}"></span></p>
-                                    <p><span th:text="${@pedidoController.endereco.localidade}"></span> - <span th:text="${@pedidoController.endereco.uf}"></span></p>
-                                    <p class="text" >Observação:<span th:text="${@pedidoController.endereco.complemento}"></span></p>
-                                </div>
+<header th:replace="fragments/header :: cabecalho-cliente"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-sm mt-5">
+            <div class="card bg-light p-3">
+                <h5>Dados da entrega</h5>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Selecione o endereço</h5>
+                                <select id="selectEndereco" class="form-control col-sm">
+                                    <option th:each="endereco : ${@pedidoController.enderecos}"
+                                            th:value="${endereco.id}" th:text="${endereco.nome}" selected="selected">
+                                        Carregar o endereço escolhido aqui
+                                    </option>
+                                </select><br/><br/>
+                                <a th:href="@{/enderecos/formulario}" class="btn btn-primary">Cadastrar novo
+                                    endereço</a>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${@pedidoController.endereco.nome}"></h5>
+                                <p class="text">Logradouro: <span
+                                        th:text="${@pedidoController.endereco.logradouro}"></span> , <span
+                                        th:text="${@pedidoController.endereco.numero}"></span></p>
+                                <p class="text">Cep: <span th:text="${@pedidoController.endereco.cep}"></span> , Bairro:
+                                    <span th:text="${@pedidoController.endereco.bairro}"></span></p>
+                                <p><span th:text="${@pedidoController.endereco.localidade}"></span> - <span
+                                        th:text="${@pedidoController.endereco.uf}"></span></p>
+                                <p class="text">Observação:<span
+                                        th:text="${@pedidoController.endereco.complemento}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm mt-5">
+            <div class="card bg-light p-3">
+                <h5>Frete</h5>
+                <div class="custom-control custom-radio" th:each="frete : ${@carrinhoController.fretes}">
+                            <span th:if="${@carrinhoController.carrinho.frete.id} == ${frete.id}">
+                                <input type="radio" th:id="${frete.id}" th:value="${frete.id}" name="custom"
+                                       class="custom-control-input" checked>
+                                <label class="custom-control-label" th:for="${frete.id}"
+                                       th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
+                            </span>
+                    <span th:unless="${@carrinhoController.carrinho.frete.id} == ${frete.id}">
+                                <input type="radio" th:id="${frete.id}" th:value="${frete.id}" name="custom"
+                                       class="custom-control-input">
+                                <label class="custom-control-label" th:for="${frete.id}"
+                                       th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
+                            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mt-5">
+                <div class="card bg-light ">
+                    <div class="card-body">
+                        <h5>Resumo da compra</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item : ${@carrinhoController.carrinho.itens}">
+                                    <td th:text="${item.produto.id}">3</td>
+                                    <td th:text="${item.produto.nome}">Chuteira Nike</td>
+                                    <!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
+                                    <td>
+                                        <span th:text="${item.quantidade}"></span>
+                                    </td>
+                                    <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a th:href="@{/carrinho}" class="float-right">alterar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-lg-4 mt-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5>Resumo do pagamento</h5>
+                        <div class="resumo">
+                            <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
+                                    produto(s)
+                                </span><span class="dados"
+                                             th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
+                                        11.097,00</span>
+                        </div>
+                        <div class="resumo">
+                            <span>Frete</span>
+                            <span class="dados"
+                                  th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">
+                                        11.097,00</span>
+
+                        </div>
+                        <hr>
+                        <div class="resumo">
+                            <span><b>Total</b></span>
+                            <b><span class="dados"
+                                     th:text="${#numbers.formatCurrency(@carrinhoController.total)}">R$
+                                        1.999,00</span></b>
+                        </div>
+                        <div class="opcao-pagamento">
+                            em até 12x sem juros no cartão de crédito
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm mt-5">
-                <div class="card bg-light p-3">
-                    <h5>Frete</h5>
-                        <div class="custom-control custom-radio"  th:each="frete : ${@carrinhoController.fretes}">
-                            <span th:if="${@carrinhoController.carrinho.frete.id} == ${frete.id}">
-                                <input type="radio" th:id="${frete.id}" th:value="${frete.id}" name="custom" class="custom-control-input" checked>
-                                <label class="custom-control-label" th:for="${frete.id}" th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
-                            </span>
-                            <span th:unless="${@carrinhoController.carrinho.frete.id} == ${frete.id}">
-                                <input type="radio" th:id="${frete.id}" th:value="${frete.id}"name="custom" class="custom-control-input">
-                                <label class="custom-control-label" th:for="${frete.id}" th:text="${frete.descricao} + ' - ' + ${#numbers.formatCurrency(frete.valorFrete)}"> Retira - Grátis</label>
-                            </span>
-                        </div>
+        <div class="row" id="pagamentos">
+            <div class="col-sm mt-2">
+                <div class="card bg-light p-3 mb-5">
+                    <h3>Pagamento</h3><br/>
+                    <div class="custom-control custom-radio ">
+                        <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input"
+                               data-toggle="collapse" data-target="#cartao-credito">
+                        <label class="custom-control-label" for="customRadio4"> Cartão de crédito</label>
+                    </div>
+                    <br/>
+
+                    <div class="custom-control custom-radio ">
+                        <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input"
+                               data-toggle="collapse" data-target="#pix">
+                        <label class="custom-control-label" for="customRadio5"> Pix</label>
+                    </div>
+                    <br/>
+
+                    <div class="custom-control custom-radio ">
+                        <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio6" data-toggle="collapse"
+                               data-target="#boleto"> Boleto</label>
+                    </div>
+                    <br/>
+
                 </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm mt-5">
-                    <div class="card bg-light ">
-                        <div class="card-body">
-                            <h5>Resumo da compra</h5>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Código</th>
-                                            <th>Produto</th>
-                                            <th>Quantidade</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="item : ${@carrinhoController.carrinho.itens}">
-                                            <td th:text="${item.produto.id}">3</td>
-                                            <td th:text="${item.produto.nome}">Chuteira Nike</td>
-                                            <!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
-                                            <td>
-                                                <span th:text="${item.quantidade}"></span>
-                                            </td>
-                                            <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <a th:href="@{/carrinho}" class="float-right">alterar</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-lg-4 mt-5">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5>Resumo do pagamento</h5>
-                            <div class="resumo">
-                                <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
-                                    produto(s)
-                                </span><span class="dados"
-                                        th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
-                                        11.097,00</span>
-                            </div>
-                            <div class="resumo">
-                                <span>Frete</span>
-                                <span class="dados"
-                                      th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">
-                                        11.097,00</span>
-
-                            </div>
-                            <hr>
-                            <div class="resumo">
-                                <span><b>Total</b></span>
-                                <b><span class="dados"
-                                        th:text="${#numbers.formatCurrency(@carrinhoController.total)}">R$
-                                        1.999,00</span></b>
-                            </div>
-                            <div class="opcao-pagamento">
-                                em até 12x sem juros no cartão de crédito
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm mt-2">
-                    <div class="card bg-light p-3 mb-5">
-                        <h3>Pagamento</h3><br />
-
-
-                        <div class="custom-control custom-radio ">
-
-                            <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input"
-                                data-toggle="collapse" data-target="#collapseExample">
-                            <label class="custom-control-label" for="customRadio4"> Cartão de crédito</label>
-                        </div><br />
-
-                        <div class="custom-control custom-radio ">
-                            <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input"
-                                data-toggle="collapse" data-target="#collapseExample2">
-                            <label class="custom-control-label" for="customRadio5"> Pix</label>
-                        </div><br />
-
-
-                        <div class="custom-control custom-radio ">
-                            <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio6" data-toggle="collapse"
-                                data-target="#collapseExample6"> Boleto</label>
-                        </div><br />
-
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm mt-2">
-                                <div class="card-body">
-                                    <div class="collapse" id="collapseExample">
-                                        <h5>Dados do cartão de crédito:</h5><br />
-                                        <div class="row">
-                                            <div class="col-sm">
-
-                                                <label>Número do cartão</label>
-                                                <input type="number" name="numero" id="numero" class="form-control"
-                                                    required="true">
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <label>Nome impresso no cartão</label>
-                                                <input type="text" name="nome" id="nome" class="form-control"
-                                                    required="true">
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label>Validade</label>
-                                                <input type="text" name="nome" id="nome" class="form-control"
-                                                    required="true">
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <label>CVV</label>
-                                                <input type="text" name="nome" id="nome" class="form-control"
-                                                    required="true">
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label>Número de parcelas</label>
-                                                <select class="form-control col-sm">
-                                                    <option>Selecione o número de parcelas</option>
-                                                    <option>1 x sem juros</option>
-                                                    <option>2 x sem juros</option>
-                                                    <option>3 x sem juros</option>
-                                                    <option>4 x sem juros</option>
-                                                    <option>5 x sem juros</option>
-                                                    <option>6 x sem juros</option>
-                                                    <option>7 x sem juros</option>
-                                                    <option>8 x sem juros</option>
-                                                    <option>9 x sem juros</option>
-                                                    <option>10 x sem juros</option>
-                                                    <option>11 x sem juros</option>
-                                                    <option>12 x sem juros</option>
-                                                </select><br /><br />
-                                            </div>
-                                            <div class="container mt-5">
-                                                <button type="button" class="btn btn-danger btn-lg btn-block"
-                                                    data-toggle="modal" data-target="#exampleModal10">Finalizar
-                                                    Pedido</button><br />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="card-body collapse" id="collapseExample2">
-                                <h5>Pagar com Pix:</h5><br />
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <p>Pague com Pix ! É rápido , prático e seguro.</p>
-                                        <div>
-                                            <p> 1. Abra o app do seu banco e acesse a opção de pagamento com
-                                                Pix.</p>
-                                            <p> 2. Escolha a opção pagar com qr code e escaneie o código.</p>
-                                            <p>3. Confirme as informações e finalize a compra. </p>
-                                            <img th:src="Pedido/ResumoCompra/QRCODE.jpg" alt="Pagamento com Pix">
-                                        </div>
-                                    </div>
-
-                                    <div class="  container mt-5">
-                                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                            data-toggle="modal" data-target="#exampleModal10">Finalizar
-                                            Pedido</button><br />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
+                <div class="collapse" id="cartao-credito" data-parent="#pagamentos">
                     <div class="row">
                         <div class="col-sm mt-2">
-                            <div class="card-body collapse" id="collapseExample6">
+                            <div class="card-body">
+                                <form th:action="@{/pedido/pag-cartao}" th:method="post">
+                                    <h5>Dados do cartão de crédito:</h5>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <label>Número do cartão</label>
+                                            <input type="text" name="numero" class="form-control"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                   required="true">
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <label>Nome impresso no cartão</label>
+                                            <input type="text" name="nome" class="form-control"
+                                                   required="true">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Validade</label>
+                                            <input type="text" name="validade" class="form-control"
+                                                   onkeypress="return event.charCode >= 47 && event.charCode <= 57"
+                                                   required="true">
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label>CVV</label>
+                                            <input type="text" name="cvv" class="form-control"
+                                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                   required="true">
+                                        </div>
+                                        <div class="col-lg-4 mb-3">
+                                            <label>Número de parcelas</label>
+                                            <select class="form-control col-sm" name="parcelas">
+                                                <option>Selecione o número de parcelas</option>
+                                                <option value="1">1 x sem juros</option>
+                                                <option value="2">2 x sem juros</option>
+                                                <option value="3">3 x sem juros</option>
+                                                <option value="4">4 x sem juros</option>
+                                                <option value="5">5 x sem juros</option>
+                                                <option value="6">6 x sem juros</option>
+                                                <option value="7">7 x sem juros</option>
+                                                <option value="8">8 x sem juros</option>
+                                                <option value="9">9 x sem juros</option>
+                                                <option value="10">10 x sem juros</option>
+                                                <option value="11">11 x sem juros</option>
+                                                <option value="12">12 x sem juros</option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="formaPagamento" value="Cartão de Crédito">
+                                        <div class="mt-3 mb-3">
+                                            <button type="submit" class="btn btn-danger btn-lg btn-block"
+                                            >Finalizar Pedido
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse" id="pix" data-parent="#pagamentos">
+                    <div class="row">
+                        <div class="card-body">
+                            <h5>Pagar com Pix:</h5><br/>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p>Pague com Pix ! É rápido , prático e seguro.</p>
+                                    <div>
+                                        <p> 1. Abra o app do seu banco e acesse a opção de pagamento com
+                                            Pix.</p>
+                                        <p> 2. Escolha a opção pagar com qr code e escaneie o código.</p>
+                                        <p>3. Confirme as informações e finalize a compra. </p>
+                                        <img th:src="@{/img/ResumoCompra/QRCODE.jpg}" alt="Pagamento com Pix">
+                                    </div>
+                                </div>
 
-                                <h5>Pagar com Boleto:</h5><br />
+                                <div class="  container mt-5">
+                                    <input type="hidden" name="formaPagamento" value="PIX">
+                                    <button type="button" class="btn btn-danger btn-lg btn-block"
+                                            data-toggle="modal" data-target="#exampleModal10">Finalizar
+                                        Pedido
+                                    </button>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse" id="boleto" data-parent="#pagamentos">
+                    <div class="row">
+                        <div class="col-sm mt-2">
+                            <div class="card-body">
+                                <h5>Pagar com Boleto:</h5><br/>
                                 <div class="row">
                                     <div class="col-sm">
                                         <p>Pague com boleto.</p>
@@ -262,9 +275,12 @@
                                         </div>
                                     </div>
                                     <div class="  container mt-5">
+                                        <input type="hidden" name="formaPagamento" value="Boleto">
                                         <button type="button" class="btn btn-danger btn-lg btn-block"
-                                            data-toggle="modal" data-target="#exampleModal10">Finalizar
-                                            Pedido</button><br />
+                                                data-toggle="modal" data-target="#exampleModal10">Finalizar
+                                            Pedido
+                                        </button>
+                                        <br/>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +291,7 @@
         </div>
     </div>
     <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -296,6 +312,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -313,5 +330,8 @@
         location.href = "pedido/frete/"+id
 
     })
+
+
+
 </script>
 </html>

@@ -1,5 +1,6 @@
 package br.com.sporttads.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Entity
@@ -31,7 +33,15 @@ public class PedidoModel {
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
 
+	@OneToOne(mappedBy = "pedido")
+	private CartaoModel cartao;
+
 	private double total = 0;
+
+	private String formaPagamento;
+
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	private LocalDateTime dataHora = LocalDateTime.now();
 
 	private int quantidadeTotal = 0;
 
