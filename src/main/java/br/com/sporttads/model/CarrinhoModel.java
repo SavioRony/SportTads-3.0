@@ -16,10 +16,10 @@ public class CarrinhoModel {
 	@Column(name = "id_carrinho")
 	private int id;
 
-	@OneToMany(mappedBy = "carrinho", fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
 	private List<ItemCarrinhoModel> itens;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
 

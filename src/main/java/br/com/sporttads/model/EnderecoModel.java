@@ -36,7 +36,7 @@ public class EnderecoModel {
 
 	private Boolean isPadrao;
 
-	@OneToOne(mappedBy = "endereco")
+	@ManyToOne
 	private PedidoModel pedido;
 
 	@ManyToOne
