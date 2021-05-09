@@ -70,7 +70,6 @@ table {
                             <tr th:if="${@carrinhoController.carrinho.itens} != null" th:each="item : ${@carrinhoController.carrinho.itens}">
                                 <td th:text="${item.produto.id}">3</td>
                                 <td th:text="${item.produto.nome}">Chuteira Nike</td>
-                                <!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
                                 <td><a class="btn btn-default"
                                        th:href="@{/carrinho/SubQuant/{idproduto}(idproduto=${item.produto.id})}">-</a>
                                     <span th:text="${item.quantidade}"></span> <a
@@ -103,7 +102,7 @@ table {
                         <div class="col-lg-4">Calcular frete</div>
                         <div class="col-lg-4">
                             <input class="form-control" type="text" id="cep"
-                                   placeholder="00000-000" maxlength="8" minlength="8" required>
+                                   placeholder="00000-000" maxlength="8" minlength="8" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                         <div class="col-lg-4">
                             <button id="btn-buscar" class="btn btn-primary">Buscar</button>

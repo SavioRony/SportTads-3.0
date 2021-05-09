@@ -1,19 +1,13 @@
 package br.com.sporttads.controller;
 
-import br.com.sporttads.model.CarrinhoModel;
-import br.com.sporttads.model.EnderecoModel;
-import br.com.sporttads.model.FreteModel;
-import br.com.sporttads.service.CarrinhoService;
-import br.com.sporttads.service.EnderecoService;
-import br.com.sporttads.service.FreteService;
+import br.com.sporttads.model.*;
+import br.com.sporttads.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -39,6 +33,18 @@ public class PedidoController {
     @Autowired
     private FreteService freteService;
 
+    @Autowired
+    private PedidoService pedidoService;
+
+    @Autowired
+    private ItemPedidoService itemPedidoService;
+
+    @Autowired
+    private CartaoService cartaoService;
+
+    @Autowired
+    private ClienteService clienteService;
+
     @GetMapping()
     public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
         getEndereco(user);
@@ -61,6 +67,35 @@ public class PedidoController {
         return "redirect:/pedido";
     }
 
+    @PostMapping("/pag-cartao")
+    public ModelAndView finalizarCartao(CartaoModel cartao,  @AuthenticationPrincipal User user){
+        ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
+        PedidoModel pedido = getPedido();
+        pedido.setCliente(cliente);
+        cartao.setPedido(pedido);
+        cartaoService.save(cartao);
+        pedido.setFormaPagamento(cartao.getFormaPagamento());
+        pedidoService.save(pedido);
+        carrinhoService.deleteAll();
+        return new ModelAndView("Pedido/FinalizarPedido", "pedido", pedido);
+    }
+
+    @PostMapping("/pag-pix-boleto")
+    public ModelAndView finalizarPixBoleto(String formaPagamento, @AuthenticationPrincipal User user){
+        ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
+        PedidoModel pedido = getPedido();
+        pedido.setCliente(cliente);
+        pedido.setFormaPagamento(formaPagamento);
+        pedidoService.save(pedido);
+        carrinhoService.deleteAll();
+        return new ModelAndView("Pedido/FinalizarPedido", "pedido", pedido);
+    }
+
+    @GetMapping("/meus-pedidos")
+    public ModelAndView meusPedidos(){
+        return new ModelAndView("Pedido/PedidoCompra");
+    }
+
     public void getEndereco(User user){
         if(endereco == null || endereco.getId() == null){
             this.enderecos = enderecoService.getByClienteId(user);
@@ -79,6 +114,28 @@ public class PedidoController {
             end.setNome("Selecione um endereço");
             this.enderecos.add(end);
         }
+    }
+
+    public PedidoModel getPedido(){
+        CarrinhoModel carrinho = CarrinhoController.getCarrinho();
+        PedidoModel pedido = new PedidoModel();
+        pedido.setTotal(carrinho.getTotal());
+        pedido.setQuantidadeTotal(carrinho.getQuantidadeTotal());
+        pedido.setEndereco(endereco);
+        pedido = pedidoService.save(pedido);
+        List<ItemPedidoModel> itensPedido = new ArrayList<>();
+        for(ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
+            ItemPedidoModel itemPedido = new ItemPedidoModel();
+            itemPedido.setProduto(itemCarrinho.getProduto());
+            itemPedido.setQuantidade(itemCarrinho.getQuantidade());
+            itemPedido.setSubtotal(itemCarrinho.getSubtotal());
+            itemPedido.setPedido(pedido);
+            itensPedido.add(itemPedido);
+        }
+        itensPedido = itemPedidoService.saveAll(itensPedido);
+        pedido.setItens(itensPedido);
+        pedido.calcularTotal();
+        return pedido;
     }
 
 }

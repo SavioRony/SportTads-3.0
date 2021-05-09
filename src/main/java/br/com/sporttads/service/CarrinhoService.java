@@ -54,4 +54,8 @@ public class CarrinhoService {
 	public List<CarrinhoModel> findAll() {
 		return this.carrinhoRepository.findAll();
 	}
+
+	public void deleteAll(){
+		this.carrinhoRepository.deleteAll();
+	}
 }

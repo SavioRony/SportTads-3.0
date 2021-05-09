@@ -23,7 +23,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "tb_cliente")
-@Data
 public class ClienteModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +50,9 @@ public class ClienteModel implements Serializable {
 	@OneToOne(mappedBy = "cliente")
 	private CarrinhoModel carrinho;
 
+	@OneToOne(mappedBy = "cliente")
+	private PedidoModel pedido;
+
 	public ClienteModel() {
 		super();
 	}
@@ -72,4 +74,79 @@ public class ClienteModel implements Serializable {
 		System.out.println("testando");
 	}
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getTelPrincipal() {
+		return telPrincipal;
+	}
+
+	public void setTelPrincipal(String telPrincipal) {
+		this.telPrincipal = telPrincipal;
+	}
+
+	public UsuarioModel getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioModel usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<EnderecoModel> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<EnderecoModel> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public CarrinhoModel getCarrinho() {
+		return carrinho;
+	}
+
+	public void setCarrinho(CarrinhoModel carrinho) {
+		this.carrinho = carrinho;
+	}
+
+	public PedidoModel getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(PedidoModel pedido) {
+		this.pedido = pedido;
+	}
 }
