@@ -24,13 +24,12 @@
 <body>
     <header th:replace="fragments/header :: cabecalho-cliente"></header>
     <div class="container">
-        <div class="jumbotron bg-success">
-            <h1 class="display-4">Pedido Finalizado com sucesso: <span th:text="${pedido.id}"></span></h1>
-            <hr class="my-4">
-            <p>Acesse a tela de pedidos.</p>
-            <p class="lead">
+        <div class="container d-flex justify-content-center">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Pedido Finalizado com sucesso: <span th:text="${pedido.id}"></span></h4>
+                <p>Acesse a tela de pedidos.</p><hr>
                 <a class="btn btn-primary btn-lg" th:href="@{/pedido/meus-pedidos}" role="button">Meus Pedidos</a>
-            </p>
+            </div>
         </div>
     </div>
 </body>

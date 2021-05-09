@@ -17,9 +17,9 @@ public class CartaoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int numero;
+    private String numero;
     private String nome;
-    private int cvv;
+    private String cvv;
     private int parcelas;
     private String validade;
     private String formaPagamento;

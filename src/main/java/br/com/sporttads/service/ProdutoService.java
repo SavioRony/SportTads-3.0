@@ -34,7 +34,7 @@ public class ProdutoService {
 		return repository.findAll();
 	}
 	public List<ProdutoModel> getAllAtivo() {
-		return repository.findByStatus("Ativo");
+			return repository.findByStatus("Ativo");
 	}
 
 	public ProdutoModel edit(Integer id, ProdutoModel editProduto) {

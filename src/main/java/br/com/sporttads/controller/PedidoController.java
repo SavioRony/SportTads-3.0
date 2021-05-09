@@ -42,6 +42,9 @@ public class PedidoController {
     @Autowired
     private CartaoService cartaoService;
 
+    @Autowired
+    private ClienteService clienteService;
+
     @GetMapping()
     public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
         getEndereco(user);
@@ -65,12 +68,26 @@ public class PedidoController {
     }
 
     @PostMapping("/pag-cartao")
-    public ModelAndView finalizarCartao(@RequestBody CartaoModel cartao){
+    public ModelAndView finalizarCartao(CartaoModel cartao,  @AuthenticationPrincipal User user){
+        ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
         PedidoModel pedido = getPedido();
+        pedido.setCliente(cliente);
         cartao.setPedido(pedido);
         cartaoService.save(cartao);
         pedido.setFormaPagamento(cartao.getFormaPagamento());
-        pedido = pedidoService.save(pedido);
+        pedidoService.save(pedido);
+        carrinhoService.deleteAll();
+        return new ModelAndView("Pedido/FinalizarPedido", "pedido", pedido);
+    }
+
+    @PostMapping("/pag-pix-boleto")
+    public ModelAndView finalizarPixBoleto(String formaPagamento, @AuthenticationPrincipal User user){
+        ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
+        PedidoModel pedido = getPedido();
+        pedido.setCliente(cliente);
+        pedido.setFormaPagamento(formaPagamento);
+        pedidoService.save(pedido);
+        carrinhoService.deleteAll();
         return new ModelAndView("Pedido/FinalizarPedido", "pedido", pedido);
     }
 
@@ -103,8 +120,8 @@ public class PedidoController {
         CarrinhoModel carrinho = CarrinhoController.getCarrinho();
         PedidoModel pedido = new PedidoModel();
         pedido.setTotal(carrinho.getTotal());
-        pedido.setCliente(carrinho.getCliente());
         pedido.setQuantidadeTotal(carrinho.getQuantidadeTotal());
+        pedido.setEndereco(endereco);
         pedido = pedidoService.save(pedido);
         List<ItemPedidoModel> itensPedido = new ArrayList<>();
         for(ItemCarrinhoModel itemCarrinho : carrinho.getItens()){

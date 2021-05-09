@@ -15,10 +15,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
 @Entity
 @Table(name = "tb_pedido")
-@NoArgsConstructor
 public class PedidoModel {
 
 	@Id
@@ -32,6 +30,10 @@ public class PedidoModel {
 	@OneToOne
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
+
+	@OneToOne
+	@JoinColumn(name = "id_endereco")
+	private EnderecoModel endereco;
 
 	@OneToOne(mappedBy = "pedido")
 	private CartaoModel cartao;
@@ -55,5 +57,73 @@ public class PedidoModel {
 
 	public void setItens(List<ItemPedidoModel> itens) {
 		this.itens = itens;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<ItemPedidoModel> getItens() {
+		return itens;
+	}
+
+	public ClienteModel getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteModel cliente) {
+		this.cliente = cliente;
+	}
+
+	public EnderecoModel getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoModel endereco) {
+		this.endereco = endereco;
+	}
+
+	public CartaoModel getCartao() {
+		return cartao;
+	}
+
+	public void setCartao(CartaoModel cartao) {
+		this.cartao = cartao;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	public String getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
+	public LocalDateTime getDataHora() {
+		return dataHora;
+	}
+
+	public void setDataHora(LocalDateTime dataHora) {
+		this.dataHora = dataHora;
+	}
+
+	public int getQuantidadeTotal() {
+		return quantidadeTotal;
+	}
+
+	public void setQuantidadeTotal(int quantidadeTotal) {
+		this.quantidadeTotal = quantidadeTotal;
 	}
 }
