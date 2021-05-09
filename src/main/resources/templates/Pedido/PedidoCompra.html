@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+    xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Pedidos</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Meus Pedidos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 
     <style type="text/css">
@@ -20,26 +23,82 @@
     <header th:replace="fragments/header :: cabecalho-cliente"></header>
 
     <div class="container">
+        <h5 mt-5>Meus Pedidos</h5>
         <div class="card w-90">
-            <h5 class="card-header text-white bg-primary mb-3">Pedido x</h5>
+            <h5 class="card-header text-white bg-primary mb-3">Pedido: x </h5>
             <div class="card-body">
-                <p class="card-text">Quantidade de Produto(s): </p>
-                <p class="card-text">Valor do pedido: </p>
-                <p class="card-text">Data da Compra: </p>
-                <p class="card-text">Valor do Frete: </p>
-                <a href="#" class="btn btn-primary">Voltar</a>
-                <a href="#" class="btn btn-primary">Concluir Compra</a>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                  Mais detalhes
+                <p class="text">Data da compra: </p>
+                <p class="text">Status: " Aguardando pagamento " </p>
+
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    Mais detalhes
                 </button>
+                <HR>
                 <div class="card-body">
                     <div class="collapse" id="collapseExample">
-                        <p class="card-text">Produto: </p>
-                        <p class="card-text">Valor Unitário: </p>
-                        <p class="card-text">Valor Total: </p>
-                        <p class="card-text">Total Geral: </p>
-                        <p class="card-text">Forma de Pagamento: </p>
-                        <p class="card-text">Endereço de Entrega:</p>
+                        <div>
+                            <h5>Lista de produtos comprados</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${@carrinhoController.carrinho.itens}">
+                                            <td th:text="${item.produto.id}">3</td>
+                                            <td th:text="${item.produto.nome}">Chuteira Nike</td>
+
+                                            <td>
+                                                <span th:text="${item.quantidade}"></span>
+                                            </td>
+                                            <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h5>Dados do pagamento</h5>
+                            <div class="resumo">
+                                <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
+                                    Produto(s):
+                                </span><span class="dados"
+                                    th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
+                                    11.097,00</span>
+                            </div>
+                            <div class="resumo">
+                                <span>Frete:</span>
+                                <span class="dados"
+                                    th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">
+                                    11.097,00</span>
+
+                            </div>
+
+                            <div class="resumo">
+                                <span><b>Total Geral:</b></span>
+                                <b><span class="dados"
+                                        th:text="${#numbers.formatCurrency(@carrinhoController.total)}">R$
+                                        1.999,00</span></b>
+                            </div>
+                            <hr>
+
+                            <h5>Dados da entrega:</h5><br/>
+                            <p>Modalidade do frete:<span th:text="${endereco.nome}"> Retira , entrega normal ou express</span></p>
+                            <p>Nome:<span th:text="${endereco.nome}"></span></p>
+                            <p>Logradouro:<span th:text="${endereco.logradouro}"></span></p>
+                            <p>Número: <span th:text="${endereco.numero}"></span> </p>
+                            <p>Bairro: <span th:text="${endereco.bairro}"></span></p>
+                            <p>CEP: <span th:text="${endereco.cep}"></span></p>
+
+                        </div> <!-- Fim COLLAPSE-->
+
+
                     </div>
                 </div>
 
