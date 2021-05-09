@@ -26,8 +26,11 @@ public class ProdutoModel {
 	@Column(length = 45, nullable = true)
 	private String logo;
 
-	@OneToOne(mappedBy = "produto")
+	@ManyToOne
 	private ItemCarrinhoModel itemCarrinhoModel;
+
+	@ManyToOne
+	private ItemPedidoModel itemPedidoModel;
 
 	public ProdutoModel(Integer id, String nome, String descricao, Double preco, Integer quantidade, Integer estrelas,
 			String categoria, String status) {

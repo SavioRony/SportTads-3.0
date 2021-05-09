@@ -50,14 +50,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="item : ${@carrinhoController.carrinho.itens}">
-                                            <td th:text="${item.produto.id}">3</td>
-                                            <td th:text="${item.produto.nome}">Chuteira Nike</td>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Chuteira Nike</td>
 
                                             <td>
-                                                <span th:text="${item.quantidade}"></span>
+                                                <span></span>
                                             </td>
-                                            <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span>
+                                            <td>R$ <span></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -66,35 +66,28 @@
                             <hr>
                             <h5>Dados do pagamento</h5>
                             <div class="resumo">
-                                <span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
+                                <span></span><span>
                                     Produto(s):
-                                </span><span class="dados"
-                                    th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
-                                    11.097,00</span>
+                                </span><span class="dados">11.097,00</span>
                             </div>
                             <div class="resumo">
                                 <span>Frete:</span>
-                                <span class="dados"
-                                    th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">
-                                    11.097,00</span>
-
+                                <span class="dados">11.097,00</span>
                             </div>
 
                             <div class="resumo">
                                 <span><b>Total Geral:</b></span>
-                                <b><span class="dados"
-                                        th:text="${#numbers.formatCurrency(@carrinhoController.total)}">R$
-                                        1.999,00</span></b>
+                                <b><span class="dados">R$ 1.999,00</span></b>
                             </div>
                             <hr>
 
                             <h5>Dados da entrega:</h5><br/>
-                            <p>Modalidade do frete:<span th:text="${endereco.nome}"> Retira , entrega normal ou express</span></p>
-                            <p>Nome:<span th:text="${endereco.nome}"></span></p>
-                            <p>Logradouro:<span th:text="${endereco.logradouro}"></span></p>
-                            <p>Número: <span th:text="${endereco.numero}"></span> </p>
-                            <p>Bairro: <span th:text="${endereco.bairro}"></span></p>
-                            <p>CEP: <span th:text="${endereco.cep}"></span></p>
+                            <p>Modalidade do frete:<span> Retira , entrega normal ou express</span></p>
+                            <p>Nome:<span></span></p>
+                            <p>Logradouro:<span></span></p>
+                            <p>Número: <span></span> </p>
+                            <p>Bairro: <span></span></p>
+                            <p>CEP: <span></span></p>
 
                         </div> <!-- Fim COLLAPSE-->
 

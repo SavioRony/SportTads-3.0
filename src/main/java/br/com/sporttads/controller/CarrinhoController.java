@@ -78,9 +78,11 @@ public class CarrinhoController {
 						carrinho = carrinhoService.populaCarrinho(user);
 						carrinho.calcularTotal();
 						this.carrinho = carrinho;
-
-						this.carrinho.setValorFrete(this.carrinho.getTotal() * this.carrinho.getFrete().getTaxa());
+						if(this.carrinho.getFrete() != null) {
+							this.carrinho.setValorFrete(this.carrinho.getTotal() * this.carrinho.getFrete().getTaxa());
+						}
 						this.total = this.carrinho.getTotal() + this.carrinho.getValorFrete();
+
 						return new ModelAndView("carrinho");
 					}
 				}
