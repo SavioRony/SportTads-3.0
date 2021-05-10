@@ -92,9 +92,15 @@ public class PedidoController {
     }
 
     @GetMapping("/meus-pedidos")
-    public ModelAndView meusPedidos(){
-        return new ModelAndView("Pedido/PedidoCompra");
+    public ModelAndView meusPedidos(@AuthenticationPrincipal User user){
+        List<PedidoModel> pedidos = pedidoService.getAll(user);
+        for (PedidoModel pedido : pedidos){
+            List<ItemPedidoModel> itens = itemPedidoService.getPedido(pedido);
+            pedido.setItens(itens);
+        }
+        return new ModelAndView("Pedido/PedidoCompra", "pedidos", pedidos);
     }
+
 
     public void getEndereco(User user){
         if(endereco == null || endereco.getId() == null){
@@ -122,6 +128,7 @@ public class PedidoController {
         pedido.setTotal(carrinho.getTotal());
         pedido.setQuantidadeTotal(carrinho.getQuantidadeTotal());
         pedido.setEndereco(endereco);
+        pedido.setFrete(carrinho.getValorFrete());
         pedido = pedidoService.save(pedido);
         List<ItemPedidoModel> itensPedido = new ArrayList<>();
         for(ItemCarrinhoModel itemCarrinho : carrinho.getItens()){

@@ -33,6 +33,8 @@ public class PedidoModel {
 
 	private double total = 0;
 
+	private double frete = 0;
+
 	private String formaPagamento;
 
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -118,5 +120,13 @@ public class PedidoModel {
 
 	public void setQuantidadeTotal(int quantidadeTotal) {
 		this.quantidadeTotal = quantidadeTotal;
+	}
+
+	public double getFrete() {
+		return frete;
+	}
+
+	public void setFrete(double frete) {
+		this.frete = frete;
 	}
 }
