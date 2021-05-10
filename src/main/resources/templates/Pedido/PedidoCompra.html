@@ -1,109 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
-    xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Meus Pedidos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"/>
 
     <style type="text/css">
         .container {
             margin: 0 auto;
             width: 50%;
         }
+
     </style>
 </head>
 
 <body>
-    <header th:replace="fragments/header :: cabecalho-cliente"></header>
+<header th:replace="fragments/header :: cabecalho-cliente"></header>
 
-    <div class="container">
-        <h5 >Meus Pedidos</h5>
-        <div class="card w-90">
-            <h5 class="card-header text-white bg-primary mb-3">Pedido: x </h5>
-            <div class="card-body">
-                <p class="text">Data da compra: </p>
-                <p class="text">Status: " Aguardando pagamento " </p>
-
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+<div class="container">
+    <h5>Meus Pedidos</h5>
+    <div class="card w-90 mb-3" th:each="pedido : ${pedidos}">
+        <h5 class="card-header text-white bg-primary mb-3">Pedido: <span th:text="${pedido.id}"></span></h5>
+        <div class="card-body">
+            <b>Data da compra: </b><span th:text="${#temporals.format(pedido.dataHora, 'dd-MM-yyyy HH:mm')}"></span>
+            <button class="btn btn-primary float-right mr-2" type="button" data-toggle="collapse" th:data-target="${'#'+pedido.id}"
                     aria-expanded="false" aria-controls="collapseExample">
-                    Mais detalhes
-                </button>
-                <HR>
-                <div class="card-body">
-                    <div class="collapse" id="collapseExample">
-                        <div>
-                            <h5>Lista de produtos comprados</h5>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Código</th>
-                                            <th>Produto</th>
-                                            <th>Quantidade</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Chuteira Nike</td>
-
-                                            <td>
-                                                <span></span>
-                                            </td>
-                                            <td>R$ <span></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <hr>
-                            <h5>Dados do pagamento</h5>
-                            <div class="resumo">
-                                <span></span><span>
-                                    Produto(s):
-                                </span><span class="dados">11.097,00</span>
-                            </div>
-                            <div class="resumo">
-                                <span>Frete:</span>
-                                <span class="dados">11.097,00</span>
-                            </div>
-
-                            <div class="resumo">
-                                <span><b>Total Geral:</b></span>
-                                <b><span class="dados">R$ 1.999,00</span></b>
-                            </div>
-                            <hr>
-
-                            <h5>Dados da entrega:</h5><br/>
-                            <p>Modalidade do frete:<span> Retira , entrega normal ou express</span></p>
-                            <p>Nome:<span></span></p>
-                            <p>Logradouro:<span></span></p>
-                            <p>Número: <span></span> </p>
-                            <p>Bairro: <span></span></p>
-                            <p>CEP: <span></span></p>
-
-                        </div> <!-- Fim COLLAPSE-->
-
-
-                    </div>
+                Mais detalhes
+            </button>
+            <div class="collapse mt-4"  th:id="${pedido.id}">
+                <hr>
+            <div class="card-body bg-light">
+                <h5>Lista de produtos comprados</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${pedido.itens}">
+                            <td th:text="${item.id}">3</td>
+                            <td th:text="${item.produto.nome}">Chuteira Nike</td>
+                            <td th:text="${item.quantidade}"></td>
+                            <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-
+                <hr>
+                <h5>Dados do pagamento</h5>
+                <div class="resumo">
+                    <b>Forma de pagamento: </b><span th:text="${pedido.formaPagamento}"></span><br>
+                </div>
+                <div class="resumo">
+                    <span><b>Produto(s): </b></span><span class="dados"th:text="${#numbers.formatCurrency(pedido.total)}">11.097,00</span>
+                </div>
+                <div class="resumo">
+                    <span><b>Frete: </b></span>
+                    <span class="dados" th:text="${#numbers.formatCurrency(pedido.frete)}">11.097,00</span>
+                </div>
+                <hr>
+                <h5>Dados da entrega:</h5>
+                <b>Nome: </b><span th:text="${pedido.endereco.nome}"></span><br>
+                <b>Logradouro: </b><span th:text="${pedido.endereco.logradouro}"></span><br>
+                <b>Número: </b><span th:text="${pedido.endereco.numero}"></span><br>
+                <b>Bairro: </b><span th:text="${pedido.endereco.bairro}"></span><br>
+                <b>CEP: </b><span th:text="${pedido.endereco.cep}"></span><br>
+            </div>
             </div>
         </div>
     </div>
-    <p></p>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
 </body>
 
