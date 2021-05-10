@@ -28,7 +28,7 @@
     <div class="card w-90 mb-3" th:each="pedido : ${pedidos}">
         <h5 class="card-header text-white bg-primary mb-3">Pedido: <span th:text="${pedido.id}"></span></h5>
         <div class="card-body">
-            <b>Data da compra: </b><span th:text="${#temporals.format(pedido.dataHora, 'dd-MM-yyyy HH:mm')}"></span>
+            <b>Data e Hora da compra: </b><span th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span>
             <button class="btn btn-primary float-right mr-2" type="button" data-toggle="collapse" th:data-target="${'#'+pedido.id}"
                     aria-expanded="false" aria-controls="collapseExample">
                 Mais detalhes
@@ -68,6 +68,10 @@
                 <div class="resumo">
                     <span><b>Frete: </b></span>
                     <span class="dados" th:text="${#numbers.formatCurrency(pedido.frete)}">11.097,00</span>
+                </div>
+                <div class="resumo">
+                    <span><b>Total: </b></span>
+                    <span class="dados" th:text="${#numbers.formatCurrency(pedido.total)}"></span>
                 </div>
                 <hr>
                 <h5>Dados da entrega:</h5>
