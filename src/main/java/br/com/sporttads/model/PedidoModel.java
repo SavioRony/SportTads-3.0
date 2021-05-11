@@ -3,6 +3,7 @@ package br.com.sporttads.model;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class PedidoModel {
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedidoModel> itens;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
 
@@ -32,6 +33,9 @@ public class PedidoModel {
 	private CartaoModel cartao;
 
 	private double total = 0;
+
+	@NotNull
+	private double totalFinal = 0;
 
 	private double frete = 0;
 
@@ -48,6 +52,7 @@ public class PedidoModel {
 			this.total += item.getSubtotal();
 		}
 		quantidadeTotal = this.itens.size();
+		this.totalFinal = this.total + this.frete;
 	}
 
 	public void setItens(List<ItemPedidoModel> itens) {
@@ -128,5 +133,13 @@ public class PedidoModel {
 
 	public void setFrete(double frete) {
 		this.frete = frete;
+	}
+
+	public double getTotalFinal() {
+		return totalFinal;
+	}
+
+	public void setTotalFinal(double totalFinal) {
+		this.totalFinal = totalFinal;
 	}
 }

@@ -26,11 +26,6 @@ public class ProdutoModel {
 	@Column(length = 45, nullable = true)
 	private String logo;
 
-	@ManyToOne
-	private ItemCarrinhoModel itemCarrinhoModel;
-
-	@ManyToOne
-	private ItemPedidoModel itemPedidoModel;
 
 	public ProdutoModel(Integer id, String nome, String descricao, Double preco, Integer quantidade, Integer estrelas,
 			String categoria, String status) {
@@ -129,11 +124,5 @@ public class ProdutoModel {
 		this.logo = logo;
 	}
 
-	public ItemCarrinhoModel getItemCarrinhoModel() {
-		return itemCarrinhoModel;
-	}
 
-	public void setItemCarrinhoModel(ItemCarrinhoModel itemCarrinhoModel) {
-		this.itemCarrinhoModel = itemCarrinhoModel;
-	}
 }

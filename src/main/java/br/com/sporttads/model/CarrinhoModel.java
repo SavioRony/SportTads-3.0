@@ -19,7 +19,7 @@ public class CarrinhoModel {
 	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
 	private List<ItemCarrinhoModel> itens;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
 
