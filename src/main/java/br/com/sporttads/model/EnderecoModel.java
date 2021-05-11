@@ -37,9 +37,6 @@ public class EnderecoModel {
 	private Boolean isPadrao;
 
 	@ManyToOne
-	private PedidoModel pedido;
-
-	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private ClienteModel cliente;
 

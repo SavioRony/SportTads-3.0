@@ -12,7 +12,7 @@ public class ItemCarrinhoModel {
     @Column(name = "id_item_carrinho")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_carrinho")
     private CarrinhoModel carrinho;
 

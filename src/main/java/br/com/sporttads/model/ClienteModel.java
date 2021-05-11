@@ -31,18 +31,12 @@ public class ClienteModel implements Serializable {
 
 	private String telPrincipal;
 
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_usuario")
 	private UsuarioModel usuario;
 
 	@OneToMany(mappedBy = "id")
 	private List<EnderecoModel> enderecos;
-
-	@ManyToOne
-	private CarrinhoModel carrinho;
-
-	@ManyToOne
-	private PedidoModel pedido;
 
 	public ClienteModel() {
 		super();
@@ -125,19 +119,4 @@ public class ClienteModel implements Serializable {
 		this.enderecos = enderecos;
 	}
 
-	public CarrinhoModel getCarrinho() {
-		return carrinho;
-	}
-
-	public void setCarrinho(CarrinhoModel carrinho) {
-		this.carrinho = carrinho;
-	}
-
-	public PedidoModel getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(PedidoModel pedido) {
-		this.pedido = pedido;
-	}
 }

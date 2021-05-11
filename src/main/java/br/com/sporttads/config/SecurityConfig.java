@@ -40,14 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/imagem-principal/**").permitAll().antMatchers("/imagens-produto/**").permitAll()
 				.antMatchers("/Dashboard/**").permitAll()
 
-				// Acessos ao usuario
-				.antMatchers("/usuario/listar").hasAnyAuthority(ADMIN, ESTOQUISTA).antMatchers("/usuario/**")
-				.hasAuthority(ADMIN)
-				
 				// Acessos cliente
 				.antMatchers("/usuario/editar-senha", "/usuario/confirmar-senha").hasAuthority(CLIENTE)
 				.antMatchers("/enderecos/**").hasAuthority(CLIENTE)
 				.antMatchers("/pedido/**").hasAuthority(CLIENTE)
+
+				// Acessos ao usuario
+				.antMatchers("/usuario/listar").hasAnyAuthority(ADMIN, ESTOQUISTA).antMatchers("/usuario/**")
+				.hasAuthority(ADMIN)
 
 				// Acessos ao produtos
 				.antMatchers("/produtos/comprar-produto/*").permitAll().antMatchers("/produtos/**")
