@@ -55,7 +55,6 @@
                             <td><a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}" class="font-weight-normal" role="button" aria-pressed="true" target="new" th:text="${item.produto.nome}"></a></td>
                             <td th:text="${item.quantidade}"></td>
                             <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
-                            </td>
                         </tr>
                         </tbody>
                     </table>
