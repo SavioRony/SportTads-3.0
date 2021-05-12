@@ -180,7 +180,7 @@ table {
 	$("#btn-buscar").click(function() {
 		let cep = $("#cep").val()
 		if(cep.length === 8){
-			location.href = "http://localhost:8080/carrinho/frete/all/" + cep
+			location.href = "carrinho/frete/all/" + cep
 			$('#cep').css('border', '1px solid green')
         }else{
             $('#cep').css('border', '1px solid red')
