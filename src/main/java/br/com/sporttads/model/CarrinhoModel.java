@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_carrinho")
 @NoArgsConstructor
+@Data
 public class CarrinhoModel {
 
 	@Id
