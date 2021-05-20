@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
+//@Table(name = "tb_usuario", indexes = { @Index(name = "idx_usuario_email", columnList = "email") })
 @Table(name = "tb_usuario")
 public class UsuarioModel {
 
