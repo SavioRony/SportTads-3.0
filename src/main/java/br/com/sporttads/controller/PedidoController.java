@@ -1,5 +1,6 @@
 package br.com.sporttads.controller;
 
+import br.com.sporttads.enumeration.StatusEnumeration;
 import br.com.sporttads.model.*;
 import br.com.sporttads.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PedidoController {
 
     public EnderecoModel endereco = new EnderecoModel();
 
-    public  CarrinhoModel carrinho = CarrinhoController.getCarrinho();
+    public CarrinhoModel carrinho = CarrinhoController.getCarrinho();
 
     @Autowired
     private CarrinhoService carrinhoService;
@@ -52,13 +53,13 @@ public class PedidoController {
     }
 
     @GetMapping("/endereco/{id}")
-    public String endereco(@PathVariable int id){
+    public String endereco(@PathVariable int id) {
         this.endereco = enderecoService.getById(id);
         return "redirect:/pedido";
     }
 
     @GetMapping("/frete/{id}")
-    public String frete(@PathVariable int id, @AuthenticationPrincipal User user){
+    public String frete(@PathVariable int id, @AuthenticationPrincipal User user) {
         FreteModel frete = freteService.findOne(id);
         this.carrinho.setFrete(frete);
         this.carrinho.setValorFrete(this.carrinho.getTotal() * this.carrinho.getFrete().getTaxa());
@@ -68,7 +69,7 @@ public class PedidoController {
     }
 
     @PostMapping("/pag-cartao")
-    public ModelAndView finalizarCartao(CartaoModel cartao,  @AuthenticationPrincipal User user){
+    public ModelAndView finalizarCartao(CartaoModel cartao, @AuthenticationPrincipal User user) {
         ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
         PedidoModel pedido = getPedido();
         pedido.setCliente(cliente);
@@ -81,7 +82,7 @@ public class PedidoController {
     }
 
     @PostMapping("/pag-pix-boleto")
-    public ModelAndView finalizarPixBoleto(String formaPagamento, @AuthenticationPrincipal User user){
+    public ModelAndView finalizarPixBoleto(String formaPagamento, @AuthenticationPrincipal User user) {
         ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
         PedidoModel pedido = getPedido();
         pedido.setCliente(cliente);
@@ -92,14 +93,37 @@ public class PedidoController {
     }
 
     @GetMapping("/meus-pedidos")
-    public ModelAndView meusPedidos(@AuthenticationPrincipal User user){
-        List<PedidoModel> pedidos = pedidoService.getAll(user);
+    public ModelAndView meusPedidos(@AuthenticationPrincipal User user) {
+        List<PedidoModel> pedidos = pedidoService.getAllUser(user);
+        for (PedidoModel pedido : pedidos) {
+            List<ItemPedidoModel> itens = itemPedidoService.getPedido(pedido);
+            pedido.setItens(itens);
+        }
         return new ModelAndView("Pedido/PedidoCompra", "pedidos", pedidos);
     }
 
+    @GetMapping("estoquista/gerenciar-pedidos")
+    public ModelAndView gerenciarPedidos() {
+        List<PedidoModel> pedidos = this.pedidoService.getAllPedidos();
+        return new ModelAndView("Pedido/GerenciarPedidos", "pedidos", pedidos);
+    }
 
-    public void getEndereco(User user){
-        if(endereco == null || endereco.getId() == null){
+    @GetMapping("estoquista/{idPedido}/alterar-status/{statusId}")
+    public String gerenciarPedidos(@PathVariable int idPedido, @PathVariable int statusId) {
+        PedidoModel pedido = this.pedidoService.getById(idPedido).get();
+        pedido.setStatus(StatusEnumeration.getDescricao(statusId));
+        this.pedidoService.save(pedido);
+        return "redirect:/pedido/estoquista/gerenciar-pedidos";
+    }
+
+    @GetMapping("estoquista/{idPedido}")
+    public ModelAndView gerenciarPedidos(@PathVariable int idPedido) {
+        PedidoModel pedido = this.pedidoService.getById(idPedido).get();
+        return new ModelAndView("Pedido/AlterarStatus", "pedido", pedido);
+    }
+
+    public void getEndereco(User user) {
+        if (endereco == null || endereco.getId() == null) {
             this.enderecos = enderecoService.getByClienteId(user);
             this.endereco = enderecos.get(0);
             EnderecoModel end = new EnderecoModel();
@@ -109,7 +133,7 @@ public class PedidoController {
         }
 
         //Novo endereço
-        if(enderecoService.getByClienteId(user).size() >= enderecos.size()){
+        if (enderecoService.getByClienteId(user).size() >= enderecos.size()) {
             this.enderecos = enderecoService.getByClienteId(user);
             EnderecoModel end = new EnderecoModel();
             end.setId(0);
@@ -118,7 +142,7 @@ public class PedidoController {
         }
     }
 
-    public PedidoModel getPedido(){
+    public PedidoModel getPedido() {
         CarrinhoModel carrinho = CarrinhoController.getCarrinho();
         PedidoModel pedido = new PedidoModel();
         pedido.setTotal(carrinho.getTotal());
@@ -127,7 +151,7 @@ public class PedidoController {
         pedido.setFrete(carrinho.getValorFrete());
         pedido = pedidoService.save(pedido);
         List<ItemPedidoModel> itensPedido = new ArrayList<>();
-        for(ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
+        for (ItemCarrinhoModel itemCarrinho : carrinho.getItens()) {
             ItemPedidoModel itemPedido = new ItemPedidoModel();
             itemPedido.setProduto(itemCarrinho.getProduto());
             itemPedido.setQuantidade(itemCarrinho.getQuantidade());
