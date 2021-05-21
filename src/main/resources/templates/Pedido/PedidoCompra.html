@@ -29,11 +29,12 @@
         <h5 class="card-header text-white bg-primary mb-3">Pedido: <span th:text="${pedido.id}"></span></h5>
         <div class="card-body">
             <b>Data e Hora da compra: </b><span th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span>
+            <p><b>Status:</b> Aguardando Pagamento&nbsp;&nbsp;|&nbsp;&nbsp;<b>Valor Total:</b> <span th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span></p>
             <button class="btn btn-primary float-right mr-2" type="button" data-toggle="collapse" th:data-target="${'#'+pedido.id}"
                     aria-expanded="false" aria-controls="collapseExample">
                 Mais detalhes
             </button>
-            <div class="collapse mt-4"  th:id="${pedido.id}">
+            <div class="collapse mt-5"  th:id="${pedido.id}">
                 <hr>
             <div class="card-body bg-light">
                 <h5>Lista de produtos comprados</h5>
@@ -44,6 +45,7 @@
                             <th>Código</th>
                             <th>Foto</th>
                             <th>Produto</th>
+                            <th>Preço</th>
                             <th>Quantidade</th>
                             <th>Subtotal</th>
                         </tr>
@@ -51,8 +53,9 @@
                         <tbody>
                         <tr th:each="item : ${pedido.itens}">
                             <td th:text="${item.id}"></td>
-                            <td><img style="width: 50px" th:src="@{${item.produto.ImagemPath}}"></img></td>
+                            <td><img style="width: 50px" th:src="@{${item.produto.ImagemPath}}"></td>
                             <td><a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}" class="font-weight-normal" role="button" aria-pressed="true" target="new" th:text="${item.produto.nome}"></a></td>
+                            <td th:text="${item.valorUnitario}"></td>
                             <td th:text="${item.quantidade}"></td>
                             <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
                         </tr>

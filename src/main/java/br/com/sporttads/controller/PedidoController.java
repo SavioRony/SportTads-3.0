@@ -94,10 +94,6 @@ public class PedidoController {
     @GetMapping("/meus-pedidos")
     public ModelAndView meusPedidos(@AuthenticationPrincipal User user){
         List<PedidoModel> pedidos = pedidoService.getAll(user);
-        for (PedidoModel pedido : pedidos){
-            List<ItemPedidoModel> itens = itemPedidoService.getPedido(pedido);
-            pedido.setItens(itens);
-        }
         return new ModelAndView("Pedido/PedidoCompra", "pedidos", pedidos);
     }
 
@@ -137,6 +133,7 @@ public class PedidoController {
             itemPedido.setQuantidade(itemCarrinho.getQuantidade());
             itemPedido.setSubtotal(itemCarrinho.getSubtotal());
             itemPedido.setPedido(pedido);
+            itemPedido.setValorUnitario(itemCarrinho.getProduto().getPreco());
             itensPedido.add(itemPedido);
         }
         itensPedido = itemPedidoService.saveAll(itensPedido);
@@ -144,5 +141,4 @@ public class PedidoController {
         pedido.calcularTotal();
         return pedido;
     }
-
 }
