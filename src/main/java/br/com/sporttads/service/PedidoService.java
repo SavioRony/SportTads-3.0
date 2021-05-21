@@ -1,5 +1,6 @@
 package br.com.sporttads.service;
 
+import br.com.sporttads.enumeration.StatusEnumeration;
 import br.com.sporttads.model.ClienteModel;
 import br.com.sporttads.model.PedidoModel;
 import br.com.sporttads.repository.ClienteRepository;
@@ -32,6 +33,11 @@ public class PedidoService {
 
     public List<PedidoModel> getAllPedidos() {
         return this.pedidoRepository.findAll();
+    }
+
+    public List<PedidoModel> getPedidosByStatus(int codigo) {
+        String status = StatusEnumeration.getDescricao(codigo);
+        return this.pedidoRepository.findByStatus(status);
     }
 
     public Optional<PedidoModel> getById(int id) {
