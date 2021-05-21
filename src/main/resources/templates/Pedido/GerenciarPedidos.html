@@ -42,7 +42,18 @@
 <header th:replace="fragments/header :: cabecalho"></header>
 <div class="container-fluid">
     <h1>Pedidos</h1>
-    <div class="card w-90 mb-3" th:each="pedido : ${pedidos}">
+    <div class="card-text mb-5">
+        <label>Filtro | Status</label>
+        <select class="form-control" id="selectStatus">
+            <option value="0" selected>Selecione um Status</option>
+            <option value="1">Aguardando Confirmação do Pagamento</option>
+            <option value="2">Pagamento Aprovado</option>
+            <option value="3">Em Separação</option>
+            <option value="4">Em Transporte</option>
+            <option value="5">Entregue</option>
+        </select>
+    </div>
+    <div class="card w-90 mb-3" th:if="${!pedidos.isEmpty()}" th:each="pedido : ${pedidos}">
         <h5 class="card-header text-white bg-primary mb-3">Pedido: <span
                 th:text="${pedido.id} + ' | Status: '+ ${pedido.status}"></span></h5>
         <div class="card-body">
@@ -114,6 +125,16 @@
             </div>
         </div>
     </div>
+    <div class="card w-90 mb-3" th:unless="${!pedidos.isEmpty()}">
+        Não há pedidos para o Status Selecionado!
+    </div>
 </div>
 </body>
+<script>
+    $("#selectStatus").change(function(){
+        let statusId = $(this).val()
+        console.log(statusId)
+        location.href = "/pedido/estoquista/gerenciar-pedidos/"+statusId
+    })
+</script>
 </html>

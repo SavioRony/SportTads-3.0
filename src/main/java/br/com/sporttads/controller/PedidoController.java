@@ -116,6 +116,12 @@ public class PedidoController {
         return new ModelAndView("Pedido/GerenciarPedidos", "pedidos", pedidos);
     }
 
+    @GetMapping("estoquista/gerenciar-pedidos/{statusId}")
+    public ModelAndView gerenciarPedidosPorCategoria(@PathVariable int statusId) {
+        List<PedidoModel> pedidos = this.pedidoService.getPedidosByStatus(statusId);
+        return new ModelAndView("Pedido/GerenciarPedidos", "pedidos", pedidos);
+    }
+
     @GetMapping("estoquista/{idPedido}/alterar-status/{statusId}")
     public String gerenciarPedidos(@PathVariable int idPedido, @PathVariable int statusId) {
         PedidoModel pedido = this.pedidoService.getById(idPedido).get();
