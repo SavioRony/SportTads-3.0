@@ -25,6 +25,11 @@ public class indexController {
 	@RequestMapping("/")
 	public ModelAndView getAllAtivos() {
 		List<ProdutoModel> produtos = produtoService.getAllAtivo();
+		for (int i = 0; i < produtos.size(); i++){
+			if(produtos.get(i).getQuantidade() <= 0){
+				produtos.remove(i);
+			}
+		}
 		ModelAndView andView = new ModelAndView("index");
 		andView.addObject("produtos",produtos);
 		return andView;
