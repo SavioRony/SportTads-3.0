@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import br.com.sporttads.enumeration.StatusEnumeration;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,7 +48,7 @@ public class PedidoModel {
 
     private int quantidadeTotal = 0;
 
-    private String status = "Aguardando Confirmação do Pagamento";
+    private String status = StatusEnumeration.getDescricao(1);
 
     public void calcularTotal() {
         this.total = 0;
