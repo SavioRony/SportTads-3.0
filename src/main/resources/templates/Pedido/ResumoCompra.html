@@ -41,20 +41,20 @@
 									<h5 class="card-title"
 										th:text="${@pedidoController.endereco.nome}"></h5>
 									<p class="text">
-										Logradouro: <span
+										<b>Logradouro: </b><span
 											th:text="${@pedidoController.endereco.logradouro}"></span> ,
 										<span th:text="${@pedidoController.endereco.numero}"></span>
 									</p>
 									<p class="text">
-										Cep: <span th:text="${@pedidoController.endereco.cep}"></span>
-										, Bairro: <span th:text="${@pedidoController.endereco.bairro}"></span>
+										<b>Cep: </b><span th:text="${@pedidoController.endereco.cep}"></span>
+										, <b>Bairro: </b><span th:text="${@pedidoController.endereco.bairro}"></span>
 									</p>
 									<p>
-										<span th:text="${@pedidoController.endereco.localidade}"></span>
+										<b>Cidade: </b><span th:text="${@pedidoController.endereco.localidade}"></span>
 										- <span th:text="${@pedidoController.endereco.uf}"></span>
 									</p>
 									<p class="text">
-										Observação:<span
+										<b>Observação: </b><span
 											th:text="${@pedidoController.endereco.complemento}"></span>
 									</p>
 								</div>
@@ -67,7 +67,7 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm mt-5">
+			<div class="col-sm mt-3">
 				<div class="card bg-light p-3">
 					<h5>Frete</h5>
 					<hr>
@@ -95,7 +95,7 @@
 	</div>
 	<div class="container">
 		<div class="row" style="margin-right: 0px">
-			<div class="col-sm mt-5">
+			<div class="col-sm mt-3">
 				<div class="card bg-light p-3">
 					<h5>Resumo da compra</h5>
 					<div class="table-responsive">
@@ -104,6 +104,7 @@
 								<tr>
 									<th>Código</th>
 									<th>Produto</th>
+									<th>Valor</th>
 									<th>Quantidade</th>
 									<th>Subtotal</th>
 								</tr>
@@ -112,7 +113,7 @@
 								<tr th:each="item : ${@carrinhoController.carrinho.itens}">
 									<td th:text="${item.produto.id}">3</td>
 									<td th:text="${item.produto.nome}">Chuteira Nike</td>
-									<!--<td><input class="form-control" type="number" min="1" max="100" th:field="${produto.quantidadeCarrinho}"></td>-->
+									<td th:text="${#numbers.formatDecimal(item.produto.preco,0,2)}"></td>
 									<td><span th:text="${item.quantidade}"></span></td>
 									<td>R$ <span
 										th:text="${#numbers.formatDecimal(item.subtotal,0,2)}"></span>
@@ -124,7 +125,7 @@
 					<a th:href="@{/carrinho}" class="float-right">alterar</a>
 				</div>
 			</div>
-			<div class="col-sm-lg-4 mt-5">
+			<div class="col-sm-lg-4 mt-3">
 				<div class="card bg-light">
 					<div class="card-body">
 						<h5>Resumo do pagamento</h5>
@@ -151,154 +152,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container">
-		<div class="row" id="pagamentos">
-			<div class="col-sm mt-5">
-				<div class="card bg-light p-3">
-					<h5>Pagamento</h5>
-					<hr>
-					<div class="custom-control custom-radio ">
-						<input type="radio" id="customRadio4" name="customRadio"
-							class="custom-control-input" data-toggle="collapse"
-							data-target="#cartao-credito"> <label
-							class="custom-control-label" for="customRadio4"> Cartão
-							de crédito</label>
-					</div>
-					<div class="custom-control custom-radio ">
-						<input type="radio" id="customRadio5" name="customRadio"
-							class="custom-control-input" data-toggle="collapse"
-							data-target="#pix"> <label class="custom-control-label"
-							for="customRadio5"> Pix</label>
-					</div>
-					<div class="custom-control custom-radio ">
-						<input type="radio" id="customRadio6" name="customRadio"
-							class="custom-control-input"> <label
-							class="custom-control-label" for="customRadio6"
-							data-toggle="collapse" data-target="#boleto"> Boleto</label>
-					</div>
-				</div>
-				<div class="collapse" id="cartao-credito" data-parent="#pagamentos">
-					<div class="row">
-						<div class="col-sm mt-2">
-							<div class="card-body">
-								<form th:action="@{/pedido/pag-cartao}" th:method="post">
-									<h5>Dados do cartão de crédito:</h5>
-									<div class="row">
-										<div class="col-sm">
-											<label>Número do cartão</label> <input type="text"
-												name="numero" class="form-control"
-												onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-												required="true">
-										</div>
-										<div class="col-lg-8">
-											<label>Nome impresso no cartão</label> <input type="text"
-												name="nome" class="form-control" required="true">
-										</div>
-										<div class="col-lg-4">
-											<label>Validade</label> <input type="text" name="validade"
-												class="form-control"
-												onkeypress="return event.charCode >= 47 && event.charCode <= 57"
-												required="true">
-										</div>
-										<div class="col-lg-2">
-											<label>CVV</label> <input type="text" name="cvv"
-												class="form-control"
-												onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-												required="true">
-										</div>
-										<div class="col-lg-4 mb-3">
-											<label>Número de parcelas</label> <select
-												class="form-control col-sm" name="parcelas">
-												<option>Selecione o número de parcelas</option>
-												<option value="1">1 x sem juros</option>
-												<option value="2">2 x sem juros</option>
-												<option value="3">3 x sem juros</option>
-												<option value="4">4 x sem juros</option>
-												<option value="5">5 x sem juros</option>
-												<option value="6">6 x sem juros</option>
-												<option value="7">7 x sem juros</option>
-												<option value="8">8 x sem juros</option>
-												<option value="9">9 x sem juros</option>
-												<option value="10">10 x sem juros</option>
-												<option value="11">11 x sem juros</option>
-												<option value="12">12 x sem juros</option>
-											</select>
-										</div>
-										<input type="hidden" name="formaPagamento"
-											value="Cartão de Crédito">
-										<div class="mt-3 mb-3">
-											<button type="submit" class="btn btn-danger btn-lg btn-block">Finalizar
-												Pedido</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="collapse" id="pix" data-parent="#pagamentos">
-					<div class="row">
-						<div class="card-body">
-							<h5>Pagar com Pix:</h5>
-							<br />
-							<div class="row">
-								<div class="col-sm">
-									<p>Pague com Pix ! É rápido , prático e seguro.</p>
-									<div>
-										<p>1. Abra o app do seu banco e acesse a opção de
-											pagamento com Pix.</p>
-										<p>2. Escolha a opção pagar com qr code e escaneie o
-											código.</p>
-										<p>3. Confirme as informações e finalize a compra.</p>
-										<img th:src="@{/img/ResumoCompra/QRCODE.jpg}"
-											alt="Pagamento com Pix">
-									</div>
-								</div>
-								<div class="  container mt-5">
-									<form th:action="@{/pedido/pag-pix-boleto}" th:method="post">
-										<input type="hidden" name="formaPagamento" value="PIX">
-										<button type="submit" class="btn btn-danger btn-lg btn-block">Finalizar
-											Pedido</button>
-										<br />
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="collapse" id="boleto" data-parent="#pagamentos">
-					<div class="row">
-						<div class="col-sm mt-2">
-							<div class="card-body">
-								<h5>Pagar com Boleto:</h5>
-								<br />
-								<div class="row">
-									<div class="col-sm">
-										<p>Pague com boleto.</p>
-										<div>
-											<p>1. O prazo de validade do boleto é de 5 dias.</p>
-
-											<p>3. O boleto será enviado para o seu e-mail em até 1
-												hora.</p>
-										</div>
-									</div>
-									<div class="  container mt-5">
-										<form th:action="@{/pedido/pag-pix-boleto}" th:method="post">
-											<input type="hidden" name="formaPagamento" value="Boleto">
-											<button type="submit" class="btn btn-danger btn-lg btn-block">Finalizar
-												Pedido</button>
-											<br />
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+		<a type="button" class="btn btn-primary btn-block mt-3 mb-3" th:href="@{/pedido/concluirPedido}">Concluir Pedido</a>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

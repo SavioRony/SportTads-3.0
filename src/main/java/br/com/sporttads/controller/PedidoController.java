@@ -40,6 +40,9 @@ public class PedidoController {
     private ItemPedidoService itemPedidoService;
 
     @Autowired
+    private ProdutoService produtoService;
+
+    @Autowired
     private CartaoService cartaoService;
 
     @Autowired
@@ -65,6 +68,11 @@ public class PedidoController {
         CarrinhoController.setCarrinho(carrinhoService.salvaCarrinho(user, this.carrinho));
         CarrinhoController.setTotal(this.carrinho.getTotal() + this.carrinho.getValorFrete());
         return "redirect:/pedido";
+    }
+
+    @GetMapping("/concluirPedido")
+    public ModelAndView concluirPedido(){
+        return new ModelAndView("Pedido/ConcluirPedido");
     }
 
     @PostMapping("/pag-cartao")
@@ -127,6 +135,7 @@ public class PedidoController {
         pedido.setFrete(carrinho.getValorFrete());
         pedido = pedidoService.save(pedido);
         List<ItemPedidoModel> itensPedido = new ArrayList<>();
+
         for(ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
             ItemPedidoModel itemPedido = new ItemPedidoModel();
             itemPedido.setProduto(itemCarrinho.getProduto());
@@ -135,6 +144,10 @@ public class PedidoController {
             itemPedido.setPedido(pedido);
             itemPedido.setValorUnitario(itemCarrinho.getProduto().getPreco());
             itensPedido.add(itemPedido);
+            //Alterar quantidade do estoque do produto
+            ProdutoModel produto = itemCarrinho.getProduto();
+            produto.setQuantidade(produto.getQuantidade() - itemCarrinho.getQuantidade());
+            produtoService.save(produto);
         }
         itensPedido = itemPedidoService.saveAll(itensPedido);
         pedido.setItens(itensPedido);

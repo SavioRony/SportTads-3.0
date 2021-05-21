@@ -2,7 +2,6 @@ package br.com.sporttads.service;
 
 import br.com.sporttads.model.ClienteModel;
 import br.com.sporttads.model.PedidoModel;
-import br.com.sporttads.repository.ClienteRepository;
 import br.com.sporttads.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
