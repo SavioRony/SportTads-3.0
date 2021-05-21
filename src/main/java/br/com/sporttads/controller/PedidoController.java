@@ -157,6 +157,7 @@ public class PedidoController {
             itemPedido.setQuantidade(itemCarrinho.getQuantidade());
             itemPedido.setSubtotal(itemCarrinho.getSubtotal());
             itemPedido.setPedido(pedido);
+            itemPedido.setValorUnitario(itemCarrinho.getProduto().getPreco());
             itensPedido.add(itemPedido);
         }
         itensPedido = itemPedidoService.saveAll(itensPedido);
@@ -164,5 +165,4 @@ public class PedidoController {
         pedido.calcularTotal();
         return pedido;
     }
-
 }

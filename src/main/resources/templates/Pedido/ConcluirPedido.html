@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta content="text/html; charset=UTF-8">
+<title>Concluir Pedido</title>
+<link rel="stylesheet" th:href="@{resumoCompra.css}">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+</head>
+
+<body>
+	<header th:replace="fragments/header :: cabecalho-cliente"></header>
+    
+    <div class="container">
+       
+        <div class="card w-90 mb-3 bg-light p-3">
+            <h5>Dados da entrega:</h5>
+            <b>Nome:</b> <span th:text="${pedido.endereco.nome}"></span>
+            <b>Logradouro: </b><span th:text="${pedido.endereco.logradouro}"></span>
+            <b>Número: </b><span th:text="${pedido.endereco.numero}"></span>
+            <b>Bairro: </b><span th:text="${pedido.endereco.bairro}"></span>
+            <b>CEP: </b><span th:text="${pedido.endereco.cep}"></span>
+            
+            <div class="card-body">
+                
+                <div class="collapse mt-5"  th:id="${pedido.id}">
+                    <hr>
+                <div class="card-body bg-light">
+                    
+                  
+                    <hr>
+                    <h5>Dados do pagamento</h5>
+                    <div class="resumo">
+                        <b>Forma de pagamento: </b><span th:text="${pedido.formaPagamento}"></span><br>
+                    </div>
+                    <div class="resumo">
+                        <span><b>Produto(s): </b></span><span class="dados"th:text="${#numbers.formatCurrency(pedido.total)}">11.097,00</span>
+                    </div>
+                    <div class="resumo">
+                        <span><b>Frete: </b></span>
+                        <span class="dados" th:text="${#numbers.formatCurrency(pedido.frete)}">11.097,00</span>
+                    </div>
+                    <div class="resumo">
+                        <span><b>Total: </b></span>
+                        <span class="dados" th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span>
+                    </div>
+                    <hr>
+                    <h5>Dados da entrega:</h5>
+                    <b>Nome: </b><span th:text="${pedido.endereco.nome}"></span><br>
+                    <b>Logradouro: </b><span th:text="${pedido.endereco.logradouro}"></span><br>
+                    <b>Número: </b><span th:text="${pedido.endereco.numero}"></span><br>
+                    <b>Bairro: </b><span th:text="${pedido.endereco.bairro}"></span><br>
+                    <b>CEP: </b><span th:text="${pedido.endereco.cep}"></span><br>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card w-90 mb-3 bg-light p-3">
+            <h5>Lista de produtos comprados</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Foto</th>
+                                <th>Produto</th>
+                                <th>Preço</th>
+                                <th>Quantidade</th>
+                                <th>Subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${pedido.itens}">
+                                <td th:text="${item.id}"></td>
+                                <td><img style="width: 50px" th:src="@{${item.produto.ImagemPath}}"></td>
+                                <td><a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}" class="font-weight-normal" role="button" aria-pressed="true" target="new" th:text="${item.produto.nome}"></a></td>
+                                <td th:text="${item.valorUnitario}"></td>
+                                <td th:text="${item.quantidade}"></td>
+                                <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            
+            <div class="card-body">
+                
+                <div class="collapse mt-5"  th:id="${pedido.id}">
+                    <hr>
+                <div class="card-body bg-light">
+                    
+                  
+                    <hr>
+                    <h5>Dados do pagamento</h5>
+                    <div class="resumo">
+                        <b>Forma de pagamento: </b><span th:text="${pedido.formaPagamento}"></span><br>
+                    </div>
+                    <div class="resumo">
+                        <span><b>Produto(s): </b></span><span class="dados"th:text="${#numbers.formatCurrency(pedido.total)}">11.097,00</span>
+                    </div>
+                    <div class="resumo">
+                        <span><b>Frete: </b></span>
+                        <span class="dados" th:text="${#numbers.formatCurrency(pedido.frete)}">11.097,00</span>
+                    </div>
+                    <div class="resumo">
+                        <span><b>Total: </b></span>
+                        <span class="dados" th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span>
+                    </div>
+                    <hr>
+                    <h5>Dados da entrega:</h5>
+                    <b>Nome: </b><span th:text="${pedido.endereco.nome}"></span><br>
+                    <b>Logradouro: </b><span th:text="${pedido.endereco.logradouro}"></span><br>
+                    <b>Número: </b><span th:text="${pedido.endereco.numero}"></span><br>
+                    <b>Bairro: </b><span th:text="${pedido.endereco.bairro}"></span><br>
+                    <b>CEP: </b><span th:text="${pedido.endereco.cep}"></span><br>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="container">
+		<div class="row" style="margin-right: 0px">
+			
+			<div class="col-12 mt-5">
+				<div class="card bg-light">
+					<div class="card-body">
+						<h5>Resumo do pagamento</h5>
+						<div class="resumo">
+							<span th:text="${@carrinhoController.carrinho.quantidadeTotal}"></span><span>
+								produto(s) </span><span class="dados"
+								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.total)}">
+								11.097,00</span>
+						</div>
+						<div class="resumo">
+							<span>Frete</span> <span class="dados"
+								th:text="${#numbers.formatCurrency(@carrinhoController.carrinho.valorFrete)}">
+								11.097,00</span>
+						</div>
+						<hr>
+						<div class="resumo">
+							<span><b>Total</b></span> <b><span class="dados"
+								th:text="${#numbers.formatCurrency(@carrinhoController.total)}">R$
+									1.999,00</span></b>
+						</div>
+						<div class="opcao-pagamento">em até 12x sem juros no cartão
+							de crédito</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row" id="pagamentos">
+			<div class="col-sm mt-5">
+				<div class="card bg-light p-3">
+					<h5>Pagamento</h5>
+					<hr>
+					<div class="custom-control custom-radio ">
+						<input type="radio" id="customRadio4" name="customRadio"
+							class="custom-control-input" data-toggle="collapse"
+							data-target="#cartao-credito"> <label
+							class="custom-control-label" for="customRadio4"> Cartão
+							de crédito</label>
+					</div>
+					<div class="custom-control custom-radio ">
+						<input type="radio" id="customRadio5" name="customRadio"
+							class="custom-control-input" data-toggle="collapse"
+							data-target="#pix"> <label class="custom-control-label"
+							for="customRadio5"> Pix</label>
+					</div>
+					<div class="custom-control custom-radio ">
+						<input type="radio" id="customRadio6" name="customRadio"
+							class="custom-control-input"> <label
+							class="custom-control-label" for="customRadio6"
+							data-toggle="collapse" data-target="#boleto"> Boleto</label>
+					</div>
+				</div>
+				<div class="collapse" id="cartao-credito" data-parent="#pagamentos">
+					<div class="row">
+						<div class="col-sm mt-2">
+							<div class="card-body">
+								<form th:action="@{/pedido/pag-cartao}" th:method="post">
+									<h5>Dados do cartão de crédito:</h5>
+									<div class="row">
+										<div class="col-sm">
+											<label>Número do cartão</label> <input type="text"
+												name="numero" class="form-control"
+												onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+												required="true">
+										</div>
+										<div class="col-lg-8">
+											<label>Nome impresso no cartão</label> <input type="text"
+												name="nome" class="form-control" required="true">
+										</div>
+										<div class="col-lg-4">
+											<label>Validade</label> <input type="text" name="validade"
+												class="form-control"
+												onkeypress="return event.charCode >= 47 && event.charCode <= 57"
+												required="true">
+										</div>
+										<div class="col-lg-2">
+											<label>CVV</label> <input type="text" name="cvv"
+												class="form-control"
+												onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+												required="true">
+										</div>
+										<div class="col-lg-4 mb-3">
+											<label>Número de parcelas</label> <select
+												class="form-control col-sm" name="parcelas">
+												<option>Selecione o número de parcelas</option>
+												<option value="1">1 x sem juros</option>
+												<option value="2">2 x sem juros</option>
+												<option value="3">3 x sem juros</option>
+												<option value="4">4 x sem juros</option>
+												<option value="5">5 x sem juros</option>
+												<option value="6">6 x sem juros</option>
+												<option value="7">7 x sem juros</option>
+												<option value="8">8 x sem juros</option>
+												<option value="9">9 x sem juros</option>
+												<option value="10">10 x sem juros</option>
+												<option value="11">11 x sem juros</option>
+												<option value="12">12 x sem juros</option>
+											</select>
+										</div>
+										<input type="hidden" name="formaPagamento"
+											value="Cartão de Crédito">
+										<div class="mt-3 mb-3">
+											<button type="submit" class="btn btn-danger btn-lg btn-block">Finalizar
+												Pedido</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="collapse" id="pix" data-parent="#pagamentos">
+					<div class="row">
+						<div class="card-body">
+							<h5>Pagar com Pix:</h5>
+							<br />
+							<div class="row">
+								<div class="col-sm">
+									<p>Pague com Pix ! É rápido , prático e seguro.</p>
+									<div>
+										<p>1. Abra o app do seu banco e acesse a opção de
+											pagamento com Pix.</p>
+										<p>2. Escolha a opção pagar com qr code e escaneie o
+											código.</p>
+										<p>3. Confirme as informações e finalize a compra.</p>
+										<img th:src="@{/img/ResumoCompra/QRCODE.jpg}"
+											alt="Pagamento com Pix">
+									</div>
+								</div>
+								<div class="  container mt-5">
+									<form th:action="@{/pedido/pag-pix-boleto}" th:method="post">
+										<input type="hidden" name="formaPagamento" value="PIX">
+										<button type="submit" class="btn btn-danger btn-lg btn-block">Finalizar
+											Pedido</button>
+										<br />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="collapse" id="boleto" data-parent="#pagamentos">
+					<div class="row">
+						<div class="col-sm mt-2">
+							<div class="card-body">
+								<h5>Pagar com Boleto:</h5>
+								<br />
+								<div class="row">
+									<div class="col-sm">
+										<p>Pague com boleto.</p>
+										<div>
+											<p>1. O prazo de validade do boleto é de 5 dias.</p>
+
+											<p>3. O boleto será enviado para o seu e-mail em até 1
+												hora.</p>
+										</div>
+									</div>
+									<div class="  container mt-5">
+										<form th:action="@{/pedido/pag-pix-boleto}" th:method="post">
+											<input type="hidden" name="formaPagamento" value="Boleto">
+											<button type="submit" class="btn btn-danger btn-lg btn-block">Finalizar
+												Pedido</button>
+											<br />
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div><br/>
+    <div class="container">
+    <div class="col-12">
+        <button id="btn-buscar" class="btn btn-primary">Voltar</button>
+    </div>
+    </div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+
+</html>

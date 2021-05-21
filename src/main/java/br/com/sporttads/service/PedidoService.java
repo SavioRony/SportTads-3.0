@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class PedidoService {
 
     public List<PedidoModel> getAllUser(User user) {
         ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
-        return pedidoRepository.findAllByCliente(cliente);
+        return pedidoRepository.findAllByClienteOrderByIdDesc(cliente).orElse(new ArrayList<>());
     }
 
     public List<PedidoModel> getAllPedidos() {

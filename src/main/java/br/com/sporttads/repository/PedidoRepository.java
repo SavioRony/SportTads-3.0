@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<PedidoModel, Integer> {
 
-    List<PedidoModel> findAllByCliente(ClienteModel cliente);
+    Optional<List<PedidoModel>> findAllByClienteOrderByIdDesc(ClienteModel cliente);
 }

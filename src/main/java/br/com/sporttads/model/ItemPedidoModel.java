@@ -24,8 +24,13 @@ public class ItemPedidoModel {
 	@JoinColumn(name = "id_produto")
 	private ProdutoModel produto;
 
+	@Column
 	private int quantidade;
 
+	@Column
+	private double valorUnitario;
+
+	@Column
 	private double subtotal;
 
 	public void calcularSubtotal() {
