@@ -1,28 +1,19 @@
 package br.com.sporttads.controller;
 
-import java.io.IOException;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import br.com.sporttads.model.ImagemModel;
 import br.com.sporttads.model.ProdutoModel;
 import br.com.sporttads.service.ImagemService;
 import br.com.sporttads.service.ProdutoService;
 import br.com.sporttads.utils.FileUploadUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -51,6 +42,7 @@ public class ProdutoController {
 		
 		return andView;
 	}
+
 	
 	@GetMapping("**/inativaativarproduto/{idproduto}")
 	public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
@@ -160,6 +152,23 @@ public class ProdutoController {
 		ModelAndView andView = new ModelAndView("Produto/ConsultarProduto");
 		andView.addObject("produto", produto);
 		andView.addObject("imagens", imagens);
+		return andView;
+	}
+
+	@GetMapping("/listaprodutosqtde")
+	public ModelAndView listaQtdeProdutos(){
+		List<ProdutoModel> produtos = produtoService.buscaQtdeProdutos();
+		ModelAndView andView = new ModelAndView("Produto/ListaProduto");
+		andView.addObject("produtos",produtos);
+		return andView;
+	}
+
+	@PostMapping("/alterar-qtde")
+	public ModelAndView alterarQtde (@ModelAttribute(name = "produto") ProdutoModel produto,
+									 @PathVariable("quantidade") Integer quantidade) {
+		ProdutoModel produtoSalvo = produtoService.editQtde(produto, quantidade);
+		ModelAndView andView = new ModelAndView("Produto/AlteraProduto");
+		andView.addObject("produto",produtoSalvo);
 		return andView;
 	}
 

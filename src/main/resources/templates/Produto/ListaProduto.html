@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,6 +31,8 @@
 						</div>
 					</div>
 				</form>
+			<a class="btn-primary" th:href="@{/produtos/listaprodutosqtde}" sec:authorize="hasAnyAuthority('Estoquista')">Listar Estoque Minimo</a>
+
 			<section>
 				<table class="highlight centered">
 					<thead >
