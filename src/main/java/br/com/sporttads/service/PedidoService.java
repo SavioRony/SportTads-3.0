@@ -31,12 +31,12 @@ public class PedidoService {
     }
 
     public List<PedidoModel> getAllPedidos() {
-        return this.pedidoRepository.findAll();
+        return this.pedidoRepository.findAllByOrderByIdDesc().orElse(new ArrayList<>());
     }
 
     public List<PedidoModel> getPedidosByStatus(int codigo) {
         String status = StatusEnumeration.getDescricao(codigo);
-        return this.pedidoRepository.findByStatus(status);
+        return this.pedidoRepository.findByStatusOrderByIdDesc(status).orElse(new ArrayList<>());
     }
 
     public Optional<PedidoModel> getById(int id) {
