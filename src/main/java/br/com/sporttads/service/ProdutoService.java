@@ -1,14 +1,12 @@
 package br.com.sporttads.service;
 
-import java.util.List;
-
+import br.com.sporttads.model.ProdutoModel;
+import br.com.sporttads.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.sporttads.enumeration.StatusEnumeration;
-import br.com.sporttads.model.ImagemModel;
-import br.com.sporttads.model.ProdutoModel;
-import br.com.sporttads.repository.ProdutoRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -58,6 +56,24 @@ public class ProdutoService {
 			produtoModel.setQuantidade(editProduto.getQuantidade());
 		}
 		return repository.save(produtoModel);
+	}
+	public ProdutoModel editQtde(ProdutoModel produto, Integer quantidade) {
+		ProdutoModel produtoModel = getById(produto.getId());
+		if (produtoModel.getQuantidade() != null) {
+			produtoModel.setQuantidade(quantidade);
+		}
+		return repository.save(produtoModel);
+	}
+
+	public List<ProdutoModel> buscaQtdeProdutos(){
+		List<ProdutoModel> list = repository.findAllByQuantidadeLessThanEqual(5).orElse(new ArrayList<>());
+
+//		for(ProdutoModel prod : list){
+//			if(prod.getQuantidade() > 5){
+//				list.remove(prod);
+//			}
+//		}
+		return list;
 	}
 
 	public List<ProdutoModel> findProdutoByName(String nome) {
