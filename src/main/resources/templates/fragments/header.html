@@ -33,17 +33,28 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" sec:authorize="hasAnyAuthority('Estoquista','Administrador')">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <a href="#linkspaginas" class="nav-link nav-link-collapse collapse" data-toggle="collapse" data-parent="#linkarccordion">
                             <i class="fas fa-archive"></i>
                             <span class="nav-link-text">Produtos</span>
                         </a>
                         <ul class="sidenav-second-level collapse" id="linkspaginas">
-                            <li>
+                            <li sec:authorize="hasAnyAuthority('Administrador')">
                                 <a th:href="@{/produtos/cadastroproduto}"><i class="fas fa-file-medical"></i> Cadastrar Produto</a>
                             </li>
+                            <li sec:authorize="hasAnyAuthority('Estoquista','Administrador')">
+                                <a th:href="@{/produtos/listaproduto}"><i class="fas fa-list"></i> Lista de Produtos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" sec:authorize="hasAnyAuthority('Estoquista')">
+                        <a href="#linkspaginas2" class="nav-link nav-link-collapse collapse" data-toggle="collapse" data-parent="#linkarccordion">
+                            <i class="fas fa-truck"></i>
+                            <span class="nav-link-text">Pedidos</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="linkspaginas2">
                             <li>
-                                <a th:href="@{/produtos/listaproduto}"><i class="fas fa-list"></i>Lista de Produtos</a>
+                                <a th:href="@{/pedido/estoquista/gerenciar-pedidos}"> Gerenciamento</a>
                             </li>
                         </ul>
                     </li>
@@ -173,6 +184,11 @@
             </div>
         </section>
     </header>
+    <footer class="sticky-footer" th:fragment="footer">
+        <div class="text-center">
+            <small>Copyright Sport Tads 2021</small>
+        </div>
+    </footer>
 </body>
 
 </html>
