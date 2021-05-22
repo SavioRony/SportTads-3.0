@@ -6,9 +6,10 @@ public enum StatusEnumeration {
 
     AGUARDANDO_CONFIRMACAO_PAGAMENTO(1, "Aguardando Confirmação do Pagamento"),
     PAGAMENTO_APROVADO(2, "Pagamento Aprovado"),
-    EM_SEPARACAO(3, "Em Separação"),
-    EM_TRANSITO(4, "Em Transporte"),
-    ENTREGUE(5, "Entregue");
+    PAGAMENTO_REJEITADO(3, "Pagamento rejeitado"),
+    AGUARDANDO_RETIRADA(4, "Aguardando retirada"),
+    EM_TRANSPORTE(5, "Em Transporte"),
+    ENTREGUE(6, "Entregue");
 
     private int codigo;
 

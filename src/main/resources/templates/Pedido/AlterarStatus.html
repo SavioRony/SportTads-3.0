@@ -35,7 +35,7 @@
         </ol>
         <div class="card w-75 mt-5">
             <h4 class="card-header">
-                Pedido: <span th:text="${pedido.id}"></span>
+                Pedido: <span th:text="${pedido.id}"></span> | Status: <span th:text="${pedido.status}"></span>
             </h4>
             <div class="card-body">
                 <input type="hidden" id="codPedido" th:field="${pedido.id}">
@@ -43,9 +43,10 @@
                     <label>Novo Status</label>
                     <select class="form-control" id="selectStatus">
                         <option value="2">Pagamento Aprovado</option>
-                        <option value="3">Em Separação</option>
-                        <option value="4">Em Transporte</option>
-                        <option value="5">Entregue</option>
+                        <option value="3">Pagamento rejeitado</option>
+                        <option value="4">Aguardando retirada</option>
+                        <option value="5">Em Transporte</option>
+                        <option value="6">Entregue</option>
                     </select>
                 </div>
                 <button class="btn btn-primary float-right mt-3" id="salvar">Salvar</button>
