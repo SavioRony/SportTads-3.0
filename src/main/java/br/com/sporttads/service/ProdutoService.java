@@ -57,23 +57,9 @@ public class ProdutoService {
 		}
 		return repository.save(produtoModel);
 	}
-	public ProdutoModel editQtde(ProdutoModel produto, Integer quantidade) {
-		ProdutoModel produtoModel = getById(produto.getId());
-		if (produtoModel.getQuantidade() != null) {
-			produtoModel.setQuantidade(quantidade);
-		}
-		return repository.save(produtoModel);
-	}
 
 	public List<ProdutoModel> buscaQtdeProdutos(){
-		List<ProdutoModel> list = repository.findAllByQuantidadeLessThanEqual(5).orElse(new ArrayList<>());
-
-//		for(ProdutoModel prod : list){
-//			if(prod.getQuantidade() > 5){
-//				list.remove(prod);
-//			}
-//		}
-		return list;
+		return repository.findAllByQuantidadeLessThanEqual(5).orElse(new ArrayList<>());
 	}
 
 	public List<ProdutoModel> findProdutoByName(String nome) {
