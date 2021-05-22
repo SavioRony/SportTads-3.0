@@ -26,10 +26,10 @@
 <div class="container">
     <h5>Meus Pedidos</h5>
     <div class="card w-90 mb-3" th:each="pedido : ${pedidos}">
-        <h5 class="card-header text-white bg-primary mb-3">Pedido: <span th:text="${pedido.id}"></span></h5>
+        <h5 class="card-header text-white bg-primary mb-3">Pedido: <span th:text="${pedido.id}"></span> | Status: <span th:text="${pedido.status}"></span></h5>
         <div class="card-body">
             <b>Data e Hora da compra: </b><span th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span>
-            <p><b>Status:</b> Aguardando Pagamento&nbsp;&nbsp;|&nbsp;&nbsp;<b>Valor Total:</b> <span th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span></p>
+            <p><b>Valor Total:</b> <span th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span></p>
             <button class="btn btn-primary float-right mr-2" type="button" data-toggle="collapse" th:data-target="${'#'+pedido.id}"
                     aria-expanded="false" aria-controls="collapseExample">
                 Mais detalhes

@@ -36,83 +36,22 @@
                 <option value="0" selected>Selecione um Status</option>
                 <option value="1">Aguardando Confirmação do Pagamento</option>
                 <option value="2">Pagamento Aprovado</option>
-                <option value="3">Em Separação</option>
-                <option value="4">Em Transporte</option>
-                <option value="5">Entregue</option>
+                <option value="3">Pagamento rejeitado</option>
+                <option value="4">Aguardando retirada</option>
+                <option value="5">Em Transporte</option>
+                <option value="6">Entregue</option>
             </select>
         </div>
         <div class="card w-90 mb-3" th:if="${!pedidos.isEmpty()}" th:each="pedido : ${pedidos}">
             <h5 class="card-header text-white bg-primary mb-3">Pedido: <span
                     th:text="${pedido.id} + ' | Status: '+ ${pedido.status}"></span></h5>
             <div class="card-body">
-                <p><b>Data e Hora da compra: </b><span
-                        th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span></p>
-                <button class="btn btn-primary float-right mr-2" type="button" data-toggle="collapse"
-                        th:data-target="${'#'+pedido.id}"
-                        aria-expanded="false" aria-controls="collapseExample">
-                    Mais detalhes
-                </button>
+                <p><b>Data e Hora da compra: </b><span th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span> |
+                    <b>Valor Total: </b><span th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span> </p>
                 <a class="btn btn-primary float-right mr-2" type="button"
                    th:href="@{/pedido/estoquista/{idPedido}(idPedido=${pedido.id})}">
                     Alterar Status
                 </a>
-                <div class="collapse mt-4" th:id="${pedido.id}">
-                    <hr>
-                    <div class="card-body bg-light">
-                        <h5>Lista de produtos comprados</h5>
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Foto</th>
-                                    <th>Produto</th>
-                                    <th>Quantidade</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="item : ${pedido.itens}">
-                                    <td th:text="${item.id}"></td>
-                                    <td><img style="width: 50px" th:src="@{${item.produto.ImagemPath}}"></img>
-                                    </td>
-                                    <td>
-                                        <a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}"
-                                           class="font-weight-normal" role="button" aria-pressed="true"
-                                           target="new"
-                                           th:text="${item.produto.nome}"></a></td>
-                                    <td th:text="${item.quantidade}"></td>
-                                    <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr>
-                        <h5>Dados do pagamento</h5>
-                        <div class="resumo">
-                            <b>Forma de pagamento: </b><span th:text="${pedido.formaPagamento}"></span><br>
-                        </div>
-                        <div class="resumo">
-                            <span><b>Produto(s): </b></span><span class="dados"
-                                                                  th:text="${#numbers.formatCurrency(pedido.total)}">11.097,00</span>
-                        </div>
-                        <div class="resumo">
-                            <span><b>Frete: </b></span>
-                            <span class="dados"
-                                  th:text="${#numbers.formatCurrency(pedido.frete)}">11.097,00</span>
-                        </div>
-                        <div class="resumo">
-                            <span><b>Total: </b></span>
-                            <span class="dados" th:text="${#numbers.formatCurrency(pedido.totalFinal)}"></span>
-                        </div>
-                        <hr>
-                        <h5>Dados da entrega:</h5>
-                        <b>Nome: </b><span th:text="${pedido.endereco.nome}"></span><br>
-                        <b>Logradouro: </b><span th:text="${pedido.endereco.logradouro}"></span><br>
-                        <b>Número: </b><span th:text="${pedido.endereco.numero}"></span><br>
-                        <b>Bairro: </b><span th:text="${pedido.endereco.bairro}"></span><br>
-                        <b>CEP: </b><span th:text="${pedido.endereco.cep}"></span><br>
-                    </div>
                 </div>
             </div>
             <div class="card w-90 mb-3" th:unless="${!pedidos.isEmpty()}">
