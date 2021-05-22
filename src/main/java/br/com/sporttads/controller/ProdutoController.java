@@ -163,13 +163,21 @@ public class ProdutoController {
 		return andView;
 	}
 
-	@PostMapping("/alterar-qtde")
-	public ModelAndView alterarQtde (@ModelAttribute(name = "produto") ProdutoModel produto,
+	@GetMapping("/alterar-qtde/{idProduto}/{quantidade}")
+	public String alterarQtde (@PathVariable("idProduto") Integer idProduto,
 									 @PathVariable("quantidade") Integer quantidade) {
-		ProdutoModel produtoSalvo = produtoService.editQtde(produto, quantidade);
-		ModelAndView andView = new ModelAndView("Produto/AlteraProduto");
-		andView.addObject("produto",produtoSalvo);
-		return andView;
+		ProdutoModel produto = produtoService.getById(idProduto);
+		produto.setQuantidade(quantidade);
+		produtoService.save(produto);
+		return "redirect:/produtos/listaproduto";
 	}
 
-}
+	@GetMapping("/alterar-quantidade/{idProduto}")
+		public ModelAndView abrirTelaQauntidade(@PathVariable("idProduto") Integer idProduto){
+			ProdutoModel produto = produtoService.getById(idProduto);
+			ModelAndView andView = new ModelAndView("Produto/AlterarQuantidade");
+			andView.addObject("produto", produto);
+			return andView;
+		}
+	}
+
