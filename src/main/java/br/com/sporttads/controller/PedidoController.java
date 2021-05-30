@@ -51,7 +51,14 @@ public class PedidoController {
 
     @GetMapping()
     public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
-        getEndereco(user);
+        Endereco(user);
+        if(CarrinhoController.getCarrinho().getFrete() == null){
+            CarrinhoController.getCarrinho().setFrete(freteService.findOne(1));
+            CarrinhoController.setFretes(this.freteService.findAll());
+            for (FreteModel frete : CarrinhoController.getFretes()) {
+                frete.setValorFrete(this.carrinho.getTotal() * frete.getTaxa());
+            }
+        }
         return new ModelAndView("Pedido/ResumoCompra");
     }
 
@@ -136,7 +143,7 @@ public class PedidoController {
         return new ModelAndView("Pedido/AlterarStatus", "pedido", pedido);
     }
 
-    public void getEndereco(User user) {
+    public void Endereco(User user) {
         if (endereco == null || endereco.getId() == null) {
             this.enderecos = enderecoService.getByClienteId(user);
             this.endereco = enderecos.get(0);

@@ -12,6 +12,6 @@ import br.com.sporttads.model.ItemCarrinhoModel;
 @Repository
 public interface ItemCarrinhoRepository extends JpaRepository<ItemCarrinhoModel, Integer> {
 
-	Optional<List<ItemCarrinhoModel>> findByCarrinho(CarrinhoModel carrinho);
+	Optional<List<ItemCarrinhoModel>> findByCarrinhoOrderById(CarrinhoModel carrinho);
 
 }
