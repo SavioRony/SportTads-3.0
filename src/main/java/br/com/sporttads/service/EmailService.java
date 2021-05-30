@@ -27,7 +27,7 @@ public class EmailService {
         Context context = new Context();
         context.setVariable("Titulo", "Bem vindo a Sport Tads");
         context.setVariable("texto", "Precisamos que confirme ser cadastro, clicando no link abaixo");
-        context.setVariable("linkConfirmacao","http://localhost:8081/usuario/confirmacao/cadastro?codigo=" + codigo);
+        context.setVariable("linkConfirmacao","http://localhost:8080/usuario/confirmacao/cadastro?codigo=" + codigo);
 
         String html = template.process("email/confirmacao", context);
         helper.setTo(destino);

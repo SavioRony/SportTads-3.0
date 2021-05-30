@@ -39,7 +39,7 @@ public class CarrinhoService {
 			carrinho.setCliente(cliente);
 			carrinho = carrinhoRepository.save(carrinho);
 		}else{
-			List<ItemCarrinhoModel> itens = itemRepository.findByCarrinho(carrinho).orElse(new ArrayList<>());
+			List<ItemCarrinhoModel> itens = itemRepository.findByCarrinhoOrderById(carrinho).orElse(new ArrayList<>());
 			if (itens != null) {
 				carrinho.setItens(itens);
 			}

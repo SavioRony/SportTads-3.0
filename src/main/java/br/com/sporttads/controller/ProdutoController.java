@@ -37,7 +37,7 @@ public class ProdutoController {
 	@GetMapping("**/editarproduto/{idproduto}")
 	public ModelAndView editar(@PathVariable("idproduto") Integer idproduto) {
 		ProdutoModel produto = produtoService.getById(idproduto);
-		ModelAndView andView = new ModelAndView("Produto/AlteraProduto");
+		ModelAndView andView = new ModelAndView("Produto/CadastroProduto");
 		andView.addObject("produtoObj", produto);
 		
 		return andView;
@@ -74,7 +74,7 @@ public class ProdutoController {
 
 	@GetMapping("/cadastroproduto")
 	public ModelAndView telaCadastro() {
-		ModelAndView andView = new ModelAndView("Produto/CadastroProduto");
+		ModelAndView andView = new ModelAndView("Produto/CadastroProduto", "produtoObj", new ProdutoModel());
 		return andView;
 	}
 	
