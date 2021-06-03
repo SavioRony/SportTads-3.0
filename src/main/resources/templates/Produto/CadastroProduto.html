@@ -96,7 +96,12 @@
                         <input type="hidden" name="status" value="Ativo" th:field="*{status}">
 
                         <button class="btn btn-primary mt-3 btn-block" type="submit">
+                            <span th:if="${produtoObj.id == null}">
+                        Cadastrar Imagens
+                        </span>
+                            <span th:unless="${produtoObj.id == null}">
                             Alterar Imagens
+                        </span>
                         </button>
                     </div>
                 </form>

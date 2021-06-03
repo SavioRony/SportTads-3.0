@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -78,14 +79,6 @@ public class ProdutoController {
 		return andView;
 	}
 	
-	@PostMapping("/alterarproduto")
-	public ModelAndView telaAltera(ProdutoModel produto) {
-		ProdutoModel produtoEditado = produtoService.save(produto);
-		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
-		andView.addObject("produto",produtoEditado);
-		return andView;
-	}
-	
 	@PostMapping("/save")
 	public ModelAndView saveProduto(@ModelAttribute(name = "produto") ProdutoModel produto,
 			@RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException{
@@ -105,7 +98,7 @@ public class ProdutoController {
 			FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);		
 		}
 
-		ModelAndView andView = new ModelAndView("Produto/CadastrarImagemProduto");
+		ModelAndView andView = new ModelAndView("Produto/Imagens");
 		andView.addObject("produto",produtoSalvo);
 		return andView;
 	}
@@ -128,17 +121,17 @@ public class ProdutoController {
 			String uploadDiretorio = "./imagem-principal/"+produtoSalvo.getId();
 			FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);		
 		}
-		ImagemModel imagem = imagemService.findByIdProduto(produtoSalvo.getId());
-		ModelAndView andView = new ModelAndView("Produto/AlterarImagemProduto");
-		andView.addObject("imagem",imagem);
-		
+		List<ImagemModel> imagens = imagemService.findByIdProduto(produtoSalvo.getId());
+		ModelAndView andView = new ModelAndView("Produto/Imagens");
+		andView.addObject("produto", produto);
+		andView.addObject("imagens",imagens);
 		return andView;
 	}
 
 	@GetMapping("/comprar-produto/{idproduto}")
 	public ModelAndView consultaCompra(@PathVariable("idproduto") Integer idproduto) {
 		ProdutoModel produto = produtoService.getById(idproduto);
-		ImagemModel imagens = imagemService.findByIdProduto(idproduto);
+		List<ImagemModel> imagens = imagemService.findByIdProduto(idproduto);
 		ModelAndView andView = new ModelAndView("Produto/DetalhesProdutoCompra");
 		andView.addObject("produto", produto);
 		andView.addObject("imagens", imagens);
@@ -148,7 +141,7 @@ public class ProdutoController {
 	@GetMapping("/consultar-produto/{idproduto}")
 	public ModelAndView visualizarProduto(@PathVariable("idproduto") Integer idproduto) {
 		ProdutoModel produto = produtoService.getById(idproduto);
-		ImagemModel imagens = imagemService.findByIdProduto(idproduto);
+		List<ImagemModel> imagens = imagemService.findByIdProduto(idproduto);
 		ModelAndView andView = new ModelAndView("Produto/ConsultarProduto");
 		andView.addObject("produto", produto);
 		andView.addObject("imagens", imagens);

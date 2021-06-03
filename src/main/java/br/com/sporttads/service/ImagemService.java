@@ -1,5 +1,6 @@
 package br.com.sporttads.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,6 @@ public class ImagemService {
 	@Autowired
 	private ImagemRepository repository;
 
-	public ImagemModel salvar(String caminho, ProdutoModel produto) {
-		ImagemModel imagem = new ImagemModel(caminho, produto.getId());
-		return repository.save(imagem);
-	}
 
 	public List<ImagemModel> listar() {
 		return repository.findAll();
@@ -40,8 +37,8 @@ public class ImagemService {
 		return repository.save(imagem);
 	}
 	
-	public ImagemModel findByIdProduto(Integer idProduto) {
-		return repository.findByIdProduto(idProduto);
+	public List<ImagemModel> findByIdProduto(Integer idProduto) {
+		return repository.findByIdProduto(idProduto).orElse(new ArrayList<>());
 	}
 	
 }
