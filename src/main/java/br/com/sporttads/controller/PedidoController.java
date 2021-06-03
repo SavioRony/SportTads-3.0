@@ -63,7 +63,7 @@ public class PedidoController {
     }
 
     @GetMapping("/endereco/{id}")
-    public String endereco(@PathVariable int id) {
+    public String alterarEndereco(@PathVariable int id) {
         this.endereco = enderecoService.getById(id);
         return "redirect:/pedido";
     }
