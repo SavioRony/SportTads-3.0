@@ -3,6 +3,8 @@ package br.com.sporttads.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.sporttads.model.*;
+import br.com.sporttads.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,15 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import br.com.sporttads.model.CarrinhoModel;
-import br.com.sporttads.model.FreteModel;
-import br.com.sporttads.model.ItemCarrinhoModel;
-import br.com.sporttads.model.ProdutoModel;
-import br.com.sporttads.service.CarrinhoService;
-import br.com.sporttads.service.FreteService;
-import br.com.sporttads.service.ItemCarrinhoService;
-import br.com.sporttads.service.ProdutoService;
 
 @Controller
 @RequestMapping("/carrinho")
@@ -37,6 +30,9 @@ public class CarrinhoController {
 	private ItemCarrinhoService itemService;
 
 	@Autowired
+	private ClienteService clienteService;
+
+	@Autowired
 	private FreteService freteService;
 
 	private boolean primeiroAcesso = true;
@@ -51,6 +47,18 @@ public class CarrinhoController {
 
 	@GetMapping()
 	public ModelAndView mostrarTela(@AuthenticationPrincipal User user) {
+
+		//Verifica se o cliente possui os dados cadastrados.
+		if(user != null){
+			ClienteModel cliente = clienteService.buscaPorEmailUser(user.getUsername());
+			if(cliente.getId() == null){
+				ModelAndView andView = new ModelAndView("cliente/cadastroCliente", "cliente", cliente);
+				andView.addObject("email", user.getUsername());
+				return andView;
+			}
+		}
+
+
 		if (this.carrinho.getCep() != null && !("".equals(this.carrinho.getCep()))) {
 			this.opcoesFrete(this.carrinho.getCep());
 		}

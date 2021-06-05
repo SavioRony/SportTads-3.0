@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="categoria">Categoria</label>
-                                <select id="categoria" name="categoria" class="form-control">
+                                <select id="categoria" name="categoria" class="form-control" th:field="*{categoria}">
                                     <option value="" disabled selected>Selecione</option>
                                     <option value="Aquaticos">Aquaticos</option>
                                     <option value="Basquete">Basquete</option>
@@ -135,6 +135,16 @@
             reader.readAsDataURL(fileToUpload);
         };
     </script>
+    <script th:inline="javascript" th:fragment="inlinescript">
+            $('#categoria').ready(function() {
+                var categoria = [
+                    [$ {
+                        produto.categoria
+                    }]
+                ];
+                $('#categoria option[value="' + categoria + '"]').attr('selected', 'selected');
+            });
+      </script>
 </body>
 
 </html>

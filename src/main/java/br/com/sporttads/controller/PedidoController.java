@@ -41,6 +41,9 @@ public class PedidoController {
     private ItemPedidoService itemPedidoService;
 
     @Autowired
+    private ItemCarrinhoService itemCarrinhoService;
+
+    @Autowired
     private ProdutoService produtoService;
 
     @Autowired
@@ -92,7 +95,10 @@ public class PedidoController {
         cartaoService.save(cartao);
         pedido.setFormaPagamento(cartao.getFormaPagamento());
         pedidoService.save(pedido);
-        carrinhoService.deleteAll();
+        for (ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
+            itemCarrinhoService.delete(itemCarrinho.getId());
+        }
+        carrinhoService.delete(carrinho.getId());
         return new ModelAndView("Pedido/FinalizarPedido", "pedido", pedido);
     }
 
@@ -103,7 +109,10 @@ public class PedidoController {
         pedido.setCliente(cliente);
         pedido.setFormaPagamento(formaPagamento);
         pedidoService.save(pedido);
-        carrinhoService.deleteAll();
+        for (ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
+           itemCarrinhoService.delete(itemCarrinho.getId());
+        }
+        carrinhoService.delete(carrinho.getId());
         return new ModelAndView("Pedido/FinalizarPedido", "pedido", pedido);
     }
 

@@ -47,7 +47,7 @@ public class ProdutoController {
     @GetMapping("**/inativaativarproduto/{idproduto}")
     public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
         ProdutoModel produto = produtoService.getById(idproduto);
-        ModelAndView andView = new ModelAndView("Produto/InativaAtivaProduto");
+        ModelAndView andView = new ModelAndView("Produto/InativarAtivar");
         andView.addObject("produtoObj", produto);
         return andView;
     }
@@ -152,7 +152,7 @@ public class ProdutoController {
     public ModelAndView visualizarProduto(@PathVariable("idproduto") Integer idproduto) {
         ProdutoModel produto = produtoService.getById(idproduto);
         List<ImagemModel> imagens = imagemService.findByIdProduto(idproduto);
-        ModelAndView andView = new ModelAndView("Produto/ConsultarProduto");
+        ModelAndView andView = new ModelAndView("Produto/VisualizarProduto");
         andView.addObject("produto", produto);
         andView.addObject("imagens", imagens);
         return andView;
