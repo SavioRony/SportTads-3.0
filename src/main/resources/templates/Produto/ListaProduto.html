@@ -42,9 +42,8 @@
                         <th>Categoria</th>
                         <th>Preço</th>
                         <th>Quantidade</th>
-                        <th>Status</th>
                         <th>Editar</th>
-                        <th sec:authorize="hasAnyAuthority('Administrador')">Inativar/Reativar</th>
+                        <th sec:authorize="hasAnyAuthority('Administrador')">Status</th>
                         <th>Visualizar</th>
                     </tr>
                     </thead>
@@ -56,14 +55,13 @@
                         <td th:text="${produto.categoria}">99</td>
                         <td th:text="${produto.preco}"></td>
                         <td th:text="${produto.quantidade}"></td>
-                        <td th:text="${produto.status}"></td>
                         <td sec:authorize="hasAnyAuthority('Administrador')"><a th:href="@{/produtos/editarproduto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-edit"></i></a></td>
                         <td sec:authorize="hasAnyAuthority('Estoquista')"><a th:href="@{/produtos/alterar-quantidade/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-edit"></i></a></td >
                         <div sec:authorize="hasAnyAuthority('Administrador')" th:switch="${produto.status}">
-                            <div th:case="'Ativo'">
+                            <div th:case="'Inativo'">
                                 <td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-times"></i></a></td>
                             </div>
-                            <div th:case="'Inativo'">
+                            <div th:case="'Ativo'">
                                 <td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-check"></i></a></td>
                             </div>
                         </div>

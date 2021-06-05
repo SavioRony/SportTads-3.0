@@ -55,7 +55,4 @@ public class CarrinhoService {
 		return this.carrinhoRepository.findAll();
 	}
 
-	public void deleteAll(){
-		this.carrinhoRepository.deleteAll();
-	}
 }

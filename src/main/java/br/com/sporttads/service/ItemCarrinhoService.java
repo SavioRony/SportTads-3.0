@@ -1,5 +1,7 @@
 package br.com.sporttads.service;
 
+import br.com.sporttads.model.CarrinhoModel;
+import br.com.sporttads.model.ClienteModel;
 import br.com.sporttads.model.ItemCarrinhoModel;
 import br.com.sporttads.repository.ItemCarrinhoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class ItemCarrinhoService {
         return itemRepository.save(item);
     }
 
-    public void delete(Integer id) {
+    public void delete(int id) {
         this.itemRepository.deleteById(id);
     }
 }

@@ -23,9 +23,6 @@ public class FreteModel {
 
 	private double taxa;
 
-	@OneToOne(mappedBy = "frete")
-	private CarrinhoModel carrinho;
-
 	@Transient
 	private double valorFrete = 0;
 }
