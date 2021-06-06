@@ -10,8 +10,6 @@
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-    <link rel="stylesheet" th:href="@{/css/stylee.css}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 
@@ -110,74 +108,8 @@
                     </div>
                 </div>
             </div>
-
         </section>
-        <footer>
-
-            <div class="container-fluid">
-                <div class="row ">
-                    <div class="logo col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
-                        <img class="logo" alt="Logo da empresa" title="Aqui é apresentado o logo da empresa XYZ" src="img/produto/logo.JPG" /> <br/>
-                        <a href="#"><img alt="Link para o Facebook" src="img/produto/facebook.jpg" /></a>
-                        <a href="#"><img alt="Link para o Twitter" src="img/produto/twitter.jpg" /></a>
-                        <a href="#"><img alt="Link par o Instagram" src="img/produto/Instragram.jpg" /></a>
-                    </div>
-
-                    <div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
-                        <h4>Formas de pagamento</h4>
-                        <a class="navbar-brand" th:href="@{/}">
-                            <img th:src="@{/img/produto/visa.png}" height="30" alt="mdb logo">
-                        </a>
-                        <a class="navbar-brand" th:href="@{/}">
-                            <img th:src="@{/img/produto/mastercard.png}" height="30" alt="mdb logo">
-                        </a>
-                        <a class="navbar-brand" th:href="@{/}">
-                            <img th:src="@{/img/produto/barras.png}" height="30" alt="mdb logo">
-                        </a>
-                        <a class="navbar-brand" th:href="@{/}">
-                            <img th:src="@{/img/produto/cedulas.png}" height="30" alt="mdb logo">
-                        </a>
-                    </div>
-
-                    <div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
-                        <h4>Links</h4>
-                        <a alt="direciona para a pagina inicial do site" href="#">Início</a><br/>
-                        <a href="#m">Produtos e Marcas</a><br/> <a title="Vai para a pagina fale conosco" href="#">Fale
-                        conosco</a>
-                        <br/> <a href="#"> Onde estamos</a><br/>
-                    </div>
-
-                    <div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
-                        <h4>Contato</h4>
-
-                        <p>
-                            <strong>Endereço:</strong> Av. Eng. Eusébio Stevaux, São Paulo-SP, 04136-000.
-                        </p>
-
-                        <p>
-                            <strong>Telefone:</strong><a href="tel:1135236923"> (11)
-                            3523-6923 </a>
-                        </p>
-                        <!-- Este atributo href="tel:6135236923 é usado se precisa direcionar o número para discar no celular -->
-
-                        <p>
-                            <strong>Email:</strong><a href="mailto:sporttads@sporttads.com.br">
-                            sporttads@sporttads.com.br</a>
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-            <br class="clearfix" />
-            <div class="direitosreservados">
-                <!--Usar uma tag DIV para fazer o efeito de cor de fundo -->
-                Todos os direitos reservados (@) 2021. <a href="">Termos
-                de uso</a> e <a href="">política de
-                privacidade</a>
-            </div>
-
-        </footer>
-
+        <footer th:replace="fragments/footer :: footer-cliente"></footer>
     </main>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

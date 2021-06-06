@@ -30,7 +30,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Lista de usuários
-                <a class="btn btn-primary float-right" th:href="@{/produtos/listaprodutosqtde}" sec:authorize="hasAnyAuthority('Estoquista')">Listar Estoque Minimo</a>
+                <a class="btn btn-primary float-right" th:href="@{/produtos/lista-estoque-minimo}" sec:authorize="hasAnyAuthority('Estoquista')">Listar Estoque Minimo</a>
             </div>
             <div class="card-body">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -55,17 +55,17 @@
                         <td th:text="${produto.categoria}">99</td>
                         <td th:text="${produto.preco}"></td>
                         <td th:text="${produto.quantidade}"></td>
-                        <td sec:authorize="hasAnyAuthority('Administrador')"><a th:href="@{/produtos/editarproduto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-edit"></i></a></td>
+                        <td sec:authorize="hasAnyAuthority('Administrador')"><a th:href="@{/produtos/editar/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-edit"></i></a></td>
                         <td sec:authorize="hasAnyAuthority('Estoquista')"><a th:href="@{/produtos/alterar-quantidade/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-edit"></i></a></td >
                         <div sec:authorize="hasAnyAuthority('Administrador')" th:switch="${produto.status}">
                             <div th:case="'Inativo'">
-                                <td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-times"></i></a></td>
+                                <td><a th:href="@{/produtos/inativa-ativar/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-times"></i></a></td>
                             </div>
                             <div th:case="'Ativo'">
-                                <td><a href="#"th:href="@{/produtos/inativaativarproduto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-check"></i></a></td>
+                                <td><a th:href="@{/produtos/inativa-ativar/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-check"></i></a></td>
                             </div>
                         </div>
-                        <td><a href="#"th:href="@{/produtos/consultar-produto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-external-link-alt"></i></a></td>
+                        <td><a th:href="@{/produtos/consultar-produto/{idproduto}(idproduto=${produto.id})}"><i class="fas fa-external-link-alt"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -73,7 +73,7 @@
         </div>
     </div>
 </div>
-<footer th:replace="fragments/header :: footer"></footer>
+<footer th:replace="fragments/footer :: footer"></footer>
 
 <script src="/Dashboard/bibliotecas/jquery/jquery.min.js"></script>
 <script src="/Dashboard/bibliotecas/bootstrap/js/bootstrap.bundle.min.js"></script>

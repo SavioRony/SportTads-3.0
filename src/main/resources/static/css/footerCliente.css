@@ -1,0 +1,15 @@
+.logo img {
+    width: 30px;
+}
+
+.direitosreservados {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.direitosreservados a {
+    color: white;
+}

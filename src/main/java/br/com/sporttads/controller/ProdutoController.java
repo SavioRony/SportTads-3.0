@@ -26,32 +26,32 @@ public class ProdutoController {
     @Autowired
     private ImagemService imagemService;
 
-    @GetMapping("/listaproduto")
+    /**
+     * Metodo para abrir a lista de produtos.
+     * @return ModelAndView - tela com todos os produtos cadastro no banco.
+     */
+    @GetMapping("/lista-produto")
     public ModelAndView getAll() {
-        List<ProdutoModel> produtos = produtoService.getAll();
-        ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-        andView.addObject("produtos", produtos);
-        return andView;
+        return new ModelAndView("Produto/ListaProduto", "produtos", produtoService.getAll());
     }
 
-    @GetMapping("**/editarproduto/{idproduto}")
-    public ModelAndView editar(@PathVariable("idproduto") Integer idproduto) {
+
+    /**
+     * Metodo usado para abrir a tela de status do produto.
+     * @param idproduto
+     * @return ModelAndView - Tela de inativa e ativa produto
+     */
+    @GetMapping("/inativa-ativar/{idproduto}")
+    public ModelAndView preAlterarStatus(@PathVariable("idproduto") Integer idproduto) {
         ProdutoModel produto = produtoService.getById(idproduto);
-        ModelAndView andView = new ModelAndView("Produto/CadastroProduto");
-        andView.addObject("produtoObj", produto);
-
-        return andView;
+        return new ModelAndView("Produto/InativarAtivar", "produtoObj", produto);
     }
 
-
-    @GetMapping("**/inativaativarproduto/{idproduto}")
-    public ModelAndView inativaAtiva(@PathVariable("idproduto") Integer idproduto) {
-        ProdutoModel produto = produtoService.getById(idproduto);
-        ModelAndView andView = new ModelAndView("Produto/InativarAtivar");
-        andView.addObject("produtoObj", produto);
-        return andView;
-    }
-
+    /**
+     * Metodo usando para alterar o status do produto Ativo ou Inativo no banco de dados.
+     * @param idProduto
+     * @return redirect - Tela de lista de produto.
+     */
     @GetMapping("/alterar-status/{idProduto}")
     public String alterarStatus(@PathVariable Integer idProduto) {
         ProdutoModel produto = this.produtoService.getById(idProduto);
@@ -61,44 +61,33 @@ public class ProdutoController {
             produto.setStatus("Ativo");
         }
         this.produtoService.save(produto);
-        return "redirect:/produtos/listaproduto";
+        return "redirect:/produtos/lista-produto";
     }
 
-    @PostMapping("**/inativarreativarproduto")
-    public ModelAndView ativaReativar(ProdutoModel produto) {
-        ProdutoModel p = produtoService.getById(produto.getId());
-        produto.setLogo(p.getLogo());
-        produtoService.save(produto);
-        ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-        List<ProdutoModel> produtos = produtoService.getAll();
-        andView.addObject("produtos", produtos);
-        return andView;
-    }
-
-    @PostMapping("**/pesquisarproduto")
-    public ModelAndView pesquisarproduto(@RequestParam("nomepesquisa") String nomepesquisa) {
-        ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-        andView.addObject("produtos", produtoService.findProdutoByName(nomepesquisa));
-
-        return andView;
-    }
-
-    @GetMapping("/cadastroproduto")
+    /**
+     * Metodo usando para abrir a tela de cadastro de produto.
+     * @return  ModelAndView - Tela de cadastro de produto.
+     */
+    @GetMapping("/cadastrar")
     public ModelAndView telaCadastro() {
-        ModelAndView andView = new ModelAndView("Produto/CadastroProduto", "produtoObj", new ProdutoModel());
-        return andView;
+        return new ModelAndView("Produto/CadastroProduto", "produtoObj", new ProdutoModel());
     }
 
-    @PostMapping("/save")
+    /**
+     * Metodo usado para salvar um novo produto.
+     * @param produto
+     * @param multipartfile
+     * @return ModelAndView - Tela de cadastro de imagens do produto.
+     * @throws IOException
+     */
+    @PostMapping("/salvar")
     public ModelAndView saveProduto(@ModelAttribute(name = "produto") ProdutoModel produto,
                                     @RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException {
-
+        //Verifica se contem arquivo de imagem setar o nome no produto
         String nomeArquivo = "NotFile";
-
         if (!multipartfile.isEmpty()) {
             nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
         }
-
         produto.setLogo(nomeArquivo);
 
         ProdutoModel produtoSalvo = produtoService.save(produto);
@@ -107,80 +96,117 @@ public class ProdutoController {
             String uploadDiretorio = "./imagem-principal/" + produtoSalvo.getId();
             FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);
         }
-
-        ModelAndView andView = new ModelAndView("Produto/Imagens");
-        andView.addObject("produto", produtoSalvo);
-        return andView;
+         return new ModelAndView("Produto/Imagens", "produto", produtoSalvo);
     }
 
-    @PostMapping("/alterar")
-    public ModelAndView alterarProduto(@ModelAttribute(name = "produto") ProdutoModel produto,
+    /**
+     * Metodo usando para abrir a tela de Alterar produto.
+     * @param idproduto
+     * @return ModelAndView - Tela de alteração de produto.
+     */
+    @GetMapping("/editar/{idproduto}")
+    public ModelAndView preEditar(@PathVariable("idproduto") Integer idproduto) {
+        return new ModelAndView("Produto/CadastroProduto", "produtoObj", produtoService.getById(idproduto));
+    }
+
+    /**
+     * Metodo acessado somente pelo usuario adiministrado para realizar alteração no cadastro de produtos.
+     * @param produto
+     * @param multipartfile
+     * @return ModelAndView - Tela de alterar imagens com a imagens que ja estão salva no produto.
+     * @throws IOException
+     */
+    @PostMapping("/editar")
+    public ModelAndView editar(@ModelAttribute(name = "produto") ProdutoModel produto,
                                        @RequestParam("arquivoImagem") MultipartFile multipartfile) throws IOException {
         ProdutoModel p = produtoService.getById(produto.getId());
 
+        //Usando para atualizar ou manter a imagem padrão verificando se contem algum arquivo novo multipartfile
         String nomeArquivo = p.getLogo();
-
         if (!multipartfile.isEmpty()) {
             nomeArquivo = StringUtils.cleanPath(StringUtils.cleanPath(multipartfile.getOriginalFilename()));
         }
-
         produto.setLogo(nomeArquivo);
         ProdutoModel produtoSalvo = produtoService.save(produto);
 
+        //Salvar a imagem no diretorio dentro do projeto
         if (!multipartfile.isEmpty()) {
             String uploadDiretorio = "./imagem-principal/" + produtoSalvo.getId();
             FileUploadUtil.saveFile(uploadDiretorio, multipartfile, nomeArquivo);
         }
+        //Buscar imagens salvas para que seja alteradas.
         List<ImagemModel> imagens = imagemService.findByIdProduto(produtoSalvo.getId());
-        ModelAndView andView = new ModelAndView("Produto/Imagens");
-        andView.addObject("produto", produto);
+        ModelAndView andView = new ModelAndView("Produto/Imagens", "produto", produto);
         andView.addObject("imagens", imagens);
         return andView;
     }
 
+    /**
+     * Metodo para abrir a tela com o detalhes de produtos para o usuario cliente adicionar no carrinho.
+     * @param idproduto
+     * @return ModelAndView - Tela de detalhes de produtos com os dados do produto.
+     */
     @GetMapping("/comprar-produto/{idproduto}")
     public ModelAndView consultaCompra(@PathVariable("idproduto") Integer idproduto) {
         ProdutoModel produto = produtoService.getById(idproduto);
         List<ImagemModel> imagens = imagemService.findByIdProduto(idproduto);
-        ModelAndView andView = new ModelAndView("Produto/DetalhesProdutoCompra");
-        andView.addObject("produto", produto);
+        ModelAndView andView = new ModelAndView("Produto/DetalhesProdutoCompra","produto", produto);
         andView.addObject("imagens", imagens);
         return andView;
     }
 
+
+    /**
+     * Metodo usando para abrir a tela de visualização de produtos pelo funcionarios
+     * @param idproduto
+     * @return ModelAndView - Tela VisualizarProduto e o ProdutoModel e imagens conforme passado idProduto.
+     */
     @GetMapping("/consultar-produto/{idproduto}")
     public ModelAndView visualizarProduto(@PathVariable("idproduto") Integer idproduto) {
         ProdutoModel produto = produtoService.getById(idproduto);
         List<ImagemModel> imagens = imagemService.findByIdProduto(idproduto);
-        ModelAndView andView = new ModelAndView("Produto/VisualizarProduto");
-        andView.addObject("produto", produto);
+        ModelAndView andView = new ModelAndView("Produto/VisualizarProduto","produto", produto);
         andView.addObject("imagens", imagens);
         return andView;
     }
 
-    @GetMapping("/listaprodutosqtde")
-    public ModelAndView listaQtdeProdutos() {
+
+    /**
+     * Metodo usando para lista produtos que estão com o estoque baixo de 5 unidades.
+     * @return ModelAndView - Tela ListaProduto
+     */
+    @GetMapping("/lista-estoque-minimo")
+    public ModelAndView listaPorEstoqueMinimo() {
         List<ProdutoModel> produtos = produtoService.buscaQtdeProdutos();
-        ModelAndView andView = new ModelAndView("Produto/ListaProduto");
-        andView.addObject("produtos", produtos);
-        return andView;
+        return new ModelAndView("Produto/ListaProduto","produtos", produtos);
     }
 
+    /**
+     * Metodo usado para abrir a tela de alteração de quantidade de produtos acessado somente pelo estoquista
+     * @param idProduto
+     * @return ModelAndView - Tela AlterarQuantidade com o objeto ProdutoModel
+     */
+    @GetMapping("/alterar-quantidade/{idProduto}")
+    public ModelAndView abrirTelaQuantidade(@PathVariable("idProduto") Integer idProduto) {
+        ProdutoModel produto = produtoService.getById(idProduto);
+        return new ModelAndView("Produto/AlterarQuantidade", "produto", produto);
+    }
+
+
+    /**
+     * Metodo usando para alterar no banco a quantidade em estoque pelo usuario estoquista
+     * @param idProduto
+     * @param quantidade
+     * @return redirect - Tela de Lista de produtos
+     */
     @GetMapping("/alterar-qtde/{idProduto}/{quantidade}")
     public String alterarQtde(@PathVariable("idProduto") Integer idProduto,
                               @PathVariable("quantidade") Integer quantidade) {
         ProdutoModel produto = produtoService.getById(idProduto);
         produto.setQuantidade(quantidade);
         produtoService.save(produto);
-        return "redirect:/produtos/listaproduto";
+        return "redirect:/produtos/lista-produto";
     }
 
-    @GetMapping("/alterar-quantidade/{idProduto}")
-    public ModelAndView abrirTelaQauntidade(@PathVariable("idProduto") Integer idProduto) {
-        ProdutoModel produto = produtoService.getById(idProduto);
-        ModelAndView andView = new ModelAndView("Produto/AlterarQuantidade");
-        andView.addObject("produto", produto);
-        return andView;
-    }
 }
 

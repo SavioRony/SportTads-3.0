@@ -47,10 +47,6 @@ public class ClienteService {
 		return repository.findBycpf(cpf).orElse(new ClienteModel());
 	}
 
-	/*
-	 * public boolean findByCpf(String cpf) { return repository.findBycpf(cpf); }
-	 */
-
 	public boolean validaNome(String nome) {
 		boolean valido = false;
 		if (nome.split(" ").length >= 2) {

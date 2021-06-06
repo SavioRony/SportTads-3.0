@@ -17,7 +17,7 @@ public class ItemCarrinhoService {
         return itemRepository.save(item);
     }
 
-    public void delete(int id) {
-        this.itemRepository.deleteById(id);
+    public void delete(ItemCarrinhoModel item) {
+        this.itemRepository.delete(item);
     }
 }

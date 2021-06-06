@@ -16,16 +16,11 @@ public class ImagemService {
 	@Autowired
 	private ImagemRepository repository;
 
-
 	public List<ImagemModel> listar() {
 		return repository.findAll();
 	}
 
 	public ImagemModel consultar(Integer id) {
-		return repository.findById(id).orElse(new ImagemModel());
-	}
-	
-	public ImagemModel consultarIdProduto(Integer id) {
 		return repository.findById(id).orElse(new ImagemModel());
 	}
 

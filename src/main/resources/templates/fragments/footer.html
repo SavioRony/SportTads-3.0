@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" th:href="@{/css/stylee.css}" />
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- Footer Cliente-->
+<footer class="sticky-footer mt-5 bg-light" th:fragment="footer-cliente">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="logo col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
+                <h4>Contato</h4>
+                <a href="#"><img alt="Link para o Facebook" th:src="@{/img/produto/facebook.jpg}"/></a>
+                <a href="#"><img alt="Link para o Twitter" th:src="@{/img/produto/twitter.jpg}"/></a>
+                <a href="#"><img alt="Link par o Instagram" th:src="@{/img/produto/Instragram.jpg}" /></a><br>
+                <strong>Email:</strong><a href="mailto:sporttads@sporttads.com.br"> sporttads@gmail.com.br</a><br>
+                <strong>Telefone:</strong><a href="tel:1155552222"> (11) 5555-2222 </a><br>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
+                <h4>Formas de pagamento</h4>
+                <a class="navbar-brand" th:href="@{/}">
+                    <img th:src="@{/img/produto/visa.png}" height="30" alt="mdb logo">
+                </a>
+                <a class="navbar-brand" th:href="@{/}">
+                    <img th:src="@{/img/produto/mastercard.png}" height="30" alt="mdb logo">
+                </a>
+                <a class="navbar-brand" th:href="@{/}">
+                    <img th:src="@{/img/produto/barras.png}" height="30" alt="mdb logo">
+                </a>
+                <a class="navbar-brand" th:href="@{/}">
+                    <img th:src="@{/img/produto/cedulas.png}" height="30" alt="mdb logo">
+                </a>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-xs-4 col-xl-4 ">
+                <h4>Links</h4>
+                <a alt="direciona para a pagina inicial do site" href="#">Início</a><br/>
+                <a href="#m">Produtos e Marcas</a><br/> <a title="Vai para a pagina fale conosco" href="#">Fale conosco</a>
+            </div>
+
+        </div>
+    </div>
+    <br class="clearfix" />
+    <div class="direitosreservados">
+        <!--Usar uma tag DIV para fazer o efeito de cor de fundo -->
+        Todos os direitos reservados (@) 2021. <a href="">Termos
+        de uso</a> e <a href="">política de
+        privacidade</a>
+    </div>
+</footer>
+
+
+<!-- Footer funcionario-->
+<footer class="sticky-footer" th:fragment="footer">
+    <div class="text-center">
+        <small>Copyright Sport Tads 2021</small>
+    </div>
+</footer>
+
+</body>
+</html>

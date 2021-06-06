@@ -10,6 +10,7 @@
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Carrinho de Compras</title>
     <link rel="stylesheet" th:href="@{carrinho.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footerCliente.css}" />
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
     <link rel="stylesheet"
@@ -51,7 +52,7 @@ table {
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8 mt-2">
+        <div class="col-lg-8 mt-5">
             <div class="card bg-light">
                 <div class="card-body">
                     <h5>Meu carrinho</h5>
@@ -156,12 +157,13 @@ table {
 									1.999,00</span></b>
                     </div>
                     <div class="opcao-pagamento">em até 12x sem juros</div>
-                    <a id="btn-comprar" class="btn btn-primary" th:href="@{/pedido}">Comprar</a>
+                    <a id="btn-comprar" class="btn btn-primary btn-block" th:href="@{/pedido}">Comprar</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<footer th:replace="fragments/footer :: footer-cliente"></footer>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
