@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footerCliente.css}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="Dashboard/bibliotecas/bootstrap/css/bootstrap.min.css">
@@ -12,7 +13,7 @@
 </head>
 
 <body class="bg-dark fixed-nav sticky-footer" id="page-top">
-    <header th:replace="fragments/header :: cabecalho">
+    <header th:replace="fragments/header :: cabecalho-cliente">
         <div>header</div>
     </header>
     <div class="content-wrapper">
@@ -50,11 +51,8 @@
             </div>
         </div>
     </div>
-    <footer class="sticky-footer">
-        <div class="text-center">
-            <small>Copyright Seu Site 2021</small>
-        </div>
-    </footer>
+    <footer th:replace="fragments/footer :: footer-cliente"></footer>
+
 
     <script src="Dashboard/bibliotecas/jquery/jquery.min.js"></script>
     <script src="Dashboard/bibliotecas/bootstrap/js/bootstrap.bundle.min.js"></script>

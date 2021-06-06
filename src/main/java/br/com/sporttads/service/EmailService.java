@@ -20,13 +20,19 @@ public class EmailService {
     @Autowired
     private SpringTemplateEngine template; // Para comunicar com a pagina de confirmação de email
 
+    /**
+     * Metodo para preencher as informações da mensagem que e envia para confirma o cadastro do email
+     * @param destino
+     * @param codigo
+     * @throws MessagingException
+     */
     public void enviarPedidoDeConfirmacaoDeCadastro(String destino, String codigo) throws MessagingException {
         MimeMessage menssage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(menssage, MimeMessageHelper.MULTIPART_MODE_RELATED, "UTF-8");
 
         Context context = new Context();
         context.setVariable("Titulo", "Bem vindo a Sport Tads");
-        context.setVariable("texto", "Precisamos que confirme ser cadastro, clicando no link abaixo");
+        context.setVariable("texto", "Precisamos que confirme seu cadastro, clicando no link abaixo");
         context.setVariable("linkConfirmacao","http://localhost:8080/usuario/confirmacao/cadastro?codigo=" + codigo);
 
         String html = template.process("email/confirmacao", context);
@@ -40,6 +46,12 @@ public class EmailService {
         mailSender.send(menssage);
     }
 
+    /**
+     * Metodo para preencher as informações da mensagem do email para redefinir senha
+     * @param destino
+     * @param verificador
+     * @throws MessagingException
+     */
     public void enviarPedidoRedefinirSenha(String destino, String verificador) throws MessagingException {
         MimeMessage menssage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(menssage, MimeMessageHelper.MULTIPART_MODE_RELATED, "UTF-8");

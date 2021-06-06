@@ -4,6 +4,7 @@
 
 <head>
 <meta content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/footerCliente.css}" />
 <title>Resumo da Compra</title>
 <link rel="stylesheet" th:href="@{resumoCompra.css}">
 <link rel="stylesheet"
@@ -152,8 +153,9 @@
 				</div>
 			</div>
 		</div>
-		<a type="button" class="btn btn-primary btn-block mt-3 mb-3" th:href="@{/pedido/concluirPedido}">Concluir Pedido</a>
+		<a type="button" class="btn btn-primary btn-block mt-3 mb-3" th:href="@{/pedido/resumo-pedido}">Concluir Pedido</a>
 	</div>
+	<footer th:replace="fragments/footer :: footer-cliente"></footer>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script

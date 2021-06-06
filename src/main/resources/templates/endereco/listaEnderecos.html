@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv='content-type' content='text/html; charset=UTF-8'>
 <title>Endereços</title>
-
+	<link rel="stylesheet" type="text/css" th:href="@{/css/footerCliente.css}" />
 <!-- Stile Bootstrap 4.2 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -38,8 +38,8 @@
 <body>
 	<header th:replace="fragments/header :: cabecalho-cliente"></header>
 	<div class="container">
+		<div th:replace="fragments/alert :: alerta-sucesso"></div>
 		<div class="row justify-content-center">
-			<div th:replace="fragments/alert :: alerta-sucesso"></div>
 			<div class="card mt-3 mr-3" style="width: 18rem;"
 				th:each="endereco : ${enderecos}">
 				<div class="card-body">
@@ -104,5 +104,6 @@
 			class="btn btn-primary float-right mb-20 mt-20 mr-115"
 			id="btn-salvar">Novo Endereço</a>
 	</div>
+	<footer th:replace="fragments/footer :: footer-cliente"></footer>
 </body>
 </html>

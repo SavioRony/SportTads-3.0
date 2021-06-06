@@ -4,6 +4,7 @@
 
 <head>
     <meta content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footerCliente.css}" />
     <title>Concluir Pedido</title>
     <link rel="stylesheet" th:href="@{resumoCompra.css}">
     <link rel="stylesheet"
@@ -233,13 +234,13 @@
             </div>
         </div>
     </div>
-</div>
 </div><br/>
 <div class="container">
-    <div class="col-12">
+    <div class="col-12 mb-3">
         <a id="btn-buscar" class="btn btn-primary" th:href="@{/pedido}">Voltar</a>
     </div>
 </div>
+<footer th:replace="fragments/footer :: footer-cliente"></footer>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>

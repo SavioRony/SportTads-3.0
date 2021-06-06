@@ -31,8 +31,16 @@ public class ProdutoService {
 	public List<ProdutoModel> getAll() {
 		return repository.findAll();
 	}
+
 	public List<ProdutoModel> getAllAtivo() {
-			return repository.findByStatus("Ativo");
+		List<ProdutoModel> produtos = repository.findByStatus("Ativo");
+		//Remover produtos com estoque 0 ou negativo.
+		for (int i = 0; i < produtos.size(); i++){
+			if(produtos.get(i).getQuantidade() <= 0){
+				produtos.remove(i);
+			}
+		}
+		return produtos;
 	}
 
 	public ProdutoModel edit(Integer id, ProdutoModel editProduto) {

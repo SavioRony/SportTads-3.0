@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv='content-type' content='text/html; charset=UTF-8'>
 <title>Cadastro de Endereço</title>
-
-<!-- Stile Bootstrap 4.2 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/footerCliente.css}" />
+	<!-- Stile Bootstrap 4.2 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
@@ -54,8 +54,7 @@ label {
 		<h1 th:if="${endereco.id} == null">Cadastro de Endereço</h1>
 		<h1 th:unless="${endereco.id} == null">Editar de Endereço</h1>
 		<div th:replace="fragments/alert :: alerta-sucesso"></div>
-		<form
-			th:action="${endereco.id == null} ? @{/enderecos/save} : @{/enderecos/update}"
+		<form th:action="${endereco.id == null} ? @{/enderecos/save} : @{/enderecos/update}"
 			class="form-group" method="POST" th:object="${endereco}">
 			<div class="row">
 				<input th:field="*{id}" type="hidden" name="id" id="id">
@@ -113,6 +112,8 @@ label {
 			<button type="submit" class="btn btn-primary float-right mt-3"
 				id="btn-salvar">Salvar Endereço</button>
 		</form>
+	</div>
+	<footer th:replace="fragments/footer :: footer-cliente"></footer>
 </body>
 <script>
     $("#cep").blur(function () {

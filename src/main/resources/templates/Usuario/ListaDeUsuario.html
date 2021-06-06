@@ -39,12 +39,11 @@
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Tipo de Usuário</th>
-                                <th>Status</th>
                                 <span sec:authorize="hasAuthority('Administrador')">
                                         <th>Editar</th>
                                     </span>
                                 <span sec:authorize="hasAuthority('Administrador')">
-                                        <th>Ativar/Inativar</th>
+                                        <th>Status</th>
                                     </span>
                             </tr>
                         </thead>
@@ -54,13 +53,17 @@
                                 <td th:text="${usuario.nome}"></td>
                                 <td th:text="${usuario.email}"></td>
                                 <td th:text="${usuario.tipo}"></td>
-                                <td th:text="${usuario.status}"></td>
                                 <span sec:authorize="hasAuthority('Administrador')">
-                                        <td><a href="#"th:href="@{/usuario/editar/{id}(id=${usuario.id})}"><div th:replace="fragments/icones :: editar"></div></a></td>
+                                        <td><a th:href="@{/usuario/editar/{id}(id=${usuario.id})}"><div th:replace="fragments/icones :: editar"></div></a></td>
                                     </span>
-                                <span sec:authorize="hasAuthority('Administrador')">
-                                        <td><a href="#"th:href="@{/usuario/inativaAtivar/{id}(id=${usuario.id})}"><div th:replace="fragments/icones :: ativarInativar"></div></a></td>
-                                    </span>
+                                <div sec:authorize="hasAuthority('Administrador')" th:switch="${usuario.status}">
+                                    <div th:case="'Inativo'">
+                                        <td><a th:href="@{/usuario/inativa-ativar/{id}(id=${usuario.id})}"><i class="fas fa-times"></i></a></td>
+                                    </div>
+                                    <div th:case="'Ativo'">
+                                        <td><a th:href="@{/usuario/inativa-ativar/{id}(id=${usuario.id})}"><i class="fas fa-check"></i></a></td>
+                                    </div>
+                                </div>
                             </tr>
                         </tbody>
                     </table>
@@ -68,7 +71,7 @@
             </div>
         </div>
     </div>
-    <footer th:replace="fragments/header :: footer"></footer>
+    <footer th:replace="fragments/footer :: footer"></footer>
 
     <script src="/Dashboard/bibliotecas/jquery/jquery.min.js"></script>
     <script src="/Dashboard/bibliotecas/bootstrap/js/bootstrap.bundle.min.js"></script>

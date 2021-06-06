@@ -39,7 +39,7 @@
                     </span>
             </div>
             <div class="card-body">
-                <form th:action="${produtoObj.id == null} ? @{/produtos/save} : @{/produtos/alterar}" th:object="${produtoObj}" method="post" enctype="multipart/form-data">
+                <form th:action="${produtoObj.id == null} ? @{/produtos/salvar} : @{/produtos/editar}" th:object="${produtoObj}" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" th:field="*{id}">
                     <div class="form-group">
                         <div class="form-row mt-2 justify-content-center">
@@ -111,7 +111,7 @@
     </div>
 </div>
 
-    <footer th:replace="fragments/header :: footer"></footer>
+    <footer th:replace="fragments/footer :: footer"></footer>
 
     <script src="/Dashboard/bibliotecas/jquery/jquery.min.js"></script>
     <script src="/Dashboard/bibliotecas/bootstrap/js/bootstrap.bundle.min.js"></script>
