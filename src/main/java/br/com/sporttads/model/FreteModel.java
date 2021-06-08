@@ -25,4 +25,12 @@ public class FreteModel {
 
 	@Transient
 	private double valorFrete = 0;
+
+	public FreteModel() {
+	}
+
+	public FreteModel(String descricao, double taxa) {
+		this.descricao = descricao;
+		this.taxa = taxa;
+	}
 }
