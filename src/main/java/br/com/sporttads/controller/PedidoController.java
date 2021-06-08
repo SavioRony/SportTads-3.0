@@ -124,10 +124,11 @@ public class PedidoController {
         cartaoService.save(cartao);
         pedido.setFormaPagamento(cartao.getFormaPagamento());
         pedidoService.save(pedido);
-        for (ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
+        CarrinhoModel carrinhoModel = carrinhoService.populaCarrinho(user);
+        for (ItemCarrinhoModel itemCarrinho : carrinhoModel.getItens()){
             itemCarrinhoService.delete(itemCarrinho);
         }
-        carrinhoService.delete(carrinho.getId());
+        carrinhoService.delete(carrinhoModel.getId());
         CarrinhoController.setFretes(new ArrayList<>());
         return new ModelAndView("Pedido/PedidoFinalizado", "pedido", pedido);
     }
@@ -148,10 +149,11 @@ public class PedidoController {
         pedido.setCliente(cliente);
         pedido.setFormaPagamento(formaPagamento);
         pedidoService.save(pedido);
-        for (ItemCarrinhoModel itemCarrinho : carrinho.getItens()){
+        CarrinhoModel carrinhoModel = carrinhoService.populaCarrinho(user);
+        for (ItemCarrinhoModel itemCarrinho : carrinhoModel.getItens()){
            itemCarrinhoService.delete(itemCarrinho);
         }
-        carrinhoService.delete(carrinho.getId());
+        carrinhoService.delete(carrinhoModel.getId());
         CarrinhoController.setFretes(new ArrayList<>());
         return new ModelAndView("Pedido/PedidoFinalizado", "pedido", pedido);
     }
