@@ -1,4 +1,4 @@
-package br.com.sporttads;
+package br.com.sporttads.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
