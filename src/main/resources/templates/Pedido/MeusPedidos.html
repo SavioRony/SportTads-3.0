@@ -53,7 +53,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="item : ${pedido.itens}">
-                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.produto.id}"></td>
                             <td><img style="width: 50px" th:src="@{${item.produto.ImagemPath}}"></td>
                             <td><a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}" class="font-weight-normal" role="button" aria-pressed="true" target="new" th:text="${item.produto.nome}"></a></td>
                             <td th:text="${item.valorUnitario}"></td>

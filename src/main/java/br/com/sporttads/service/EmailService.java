@@ -31,7 +31,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(menssage, MimeMessageHelper.MULTIPART_MODE_RELATED, "UTF-8");
 
         Context context = new Context();
-        context.setVariable("Titulo", "Bem vindo a Sport Tads");
+        context.setVariable("titulo", "Bem vindo a Sport Tads");
         context.setVariable("texto", "Precisamos que confirme seu cadastro, clicando no link abaixo");
         context.setVariable("linkConfirmacao","http://localhost:8080/usuario/confirmacao/cadastro?codigo=" + codigo);
 
@@ -57,7 +57,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(menssage, MimeMessageHelper.MULTIPART_MODE_RELATED, "UTF-8");
 
         Context context = new Context();
-        context.setVariable("Titulo", "Redefinição de Senha");
+        context.setVariable("titulo", "Redefinição de Senha");
         context.setVariable("texto", "Para redefinir sua senha use o codigo de verificação quando exigido no formulario.");
         context.setVariable("verificador",verificador);
 
@@ -65,6 +65,46 @@ public class EmailService {
         helper.setTo(destino);
         helper.setText(html, true);
         helper.setSubject("Redefinicao de Senha");
+        helper.setFrom("nao-responder@SportTads.com.br");
+
+        helper.addInline("logo", new ClassPathResource("/static/img/logo/lg.png"));
+
+        mailSender.send(menssage);
+    }
+
+    public void pedidoFinalizado(String destino, int numero) throws MessagingException {
+        MimeMessage menssage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(menssage, MimeMessageHelper.MULTIPART_MODE_RELATED, "UTF-8");
+
+        Context context = new Context();
+        context.setVariable("titulo", "Parabéns pela Compra");
+        context.setVariable("texto", "Seu pedido Nº "+ numero +", foi realizado com sucesso para mais detalhes acesse o link abaixo.");
+        context.setVariable("meusPedidos","http://localhost:8080/pedido/meus-pedidos");
+
+        String html = template.process("email/confirmacao", context);
+        helper.setTo(destino);
+        helper.setText(html, true);
+        helper.setSubject("Pedido realizado com sucesso");
+        helper.setFrom("nao-responder@SportTads.com.br");
+
+        helper.addInline("logo", new ClassPathResource("/static/img/logo/lg.png"));
+
+        mailSender.send(menssage);
+    }
+
+    public void statusPedido(String destino,int numero, String status) throws MessagingException {
+        MimeMessage menssage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(menssage, MimeMessageHelper.MULTIPART_MODE_RELATED, "UTF-8");
+
+        Context context = new Context();
+        context.setVariable("titulo", "Seu pedido Nº "+numero+" foi atualizado");
+        context.setVariable("texto", "Status atual: "+status+", para mais detalhes acesse o link abaixo.");
+        context.setVariable("meusPedidos","http://localhost:8080/pedido/meus-pedidos");
+
+        String html = template.process("email/confirmacao", context);
+        helper.setTo(destino);
+        helper.setText(html, true);
+        helper.setSubject("Pedido atualizado");
         helper.setFrom("nao-responder@SportTads.com.br");
 
         helper.addInline("logo", new ClassPathResource("/static/img/logo/lg.png"));
