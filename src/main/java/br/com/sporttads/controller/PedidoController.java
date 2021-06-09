@@ -123,7 +123,7 @@ public class PedidoController {
         cartao.setPedido(pedido);
         cartaoService.save(cartao);
         pedido.setFormaPagamento(cartao.getFormaPagamento());
-        pedidoService.save(pedido);
+        pedidoService.save(pedido, user);
         CarrinhoModel carrinhoModel = carrinhoService.populaCarrinho(user);
         for (ItemCarrinhoModel itemCarrinho : carrinhoModel.getItens()){
             itemCarrinhoService.delete(itemCarrinho);
@@ -148,7 +148,7 @@ public class PedidoController {
         PedidoModel pedido = getPedido();
         pedido.setCliente(cliente);
         pedido.setFormaPagamento(formaPagamento);
-        pedidoService.save(pedido);
+        pedidoService.save(pedido, user);
         CarrinhoModel carrinhoModel = carrinhoService.populaCarrinho(user);
         for (ItemCarrinhoModel itemCarrinho : carrinhoModel.getItens()){
            itemCarrinhoService.delete(itemCarrinho);
@@ -213,10 +213,10 @@ public class PedidoController {
      * @return String - Tela de gerencia status
      */
     @GetMapping("estoquista/{idPedido}/alterar-status/{statusId}")
-    public String gerenciarPedidos(@PathVariable int idPedido, @PathVariable int statusId) {
+    public String gerenciarPedidos(@PathVariable int idPedido, @PathVariable int statusId,@AuthenticationPrincipal User user) {
         PedidoModel pedido = this.pedidoService.getById(idPedido).get();
         pedido.setStatus(StatusEnumeration.getDescricao(statusId));
-        this.pedidoService.save(pedido);
+        this.pedidoService.saveStatus(pedido,user);
         return "redirect:/pedido/estoquista/gerenciar-pedidos";
     }
 
