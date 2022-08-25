@@ -72,7 +72,8 @@ table {
                             <tr th:if="${@carrinhoController.carrinho.itens} != null" th:each="item : ${@carrinhoController.carrinho.itens}">
                                 <td th:text="${item.produto.id}">3</td>
                                 <td><img style="width: 50px" th:src="@{${item.produto.ImagemPath}}"></img></td>
-                                <td><a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}" class="font-weight-normal" role="button" aria-pressed="true" target="new" th:text="${item.produto.nome}"></a></td>
+                                <td><a th:href="@{/produtos/comprar-produto/{idproduto}(idproduto=${item.produto.id})}"
+                                       class="font-weight-normal" role="button" aria-pressed="true" target="new" th:text="${item.produto.nome}"></a></td>
                                 <td><a class="btn btn-default"
                                        th:href="@{/carrinho/SubQuant/{idproduto}(idproduto=${item.produto.id})}">-</a>
                                     <span th:text="${item.quantidade}"></span> <a

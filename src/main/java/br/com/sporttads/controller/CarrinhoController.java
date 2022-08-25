@@ -35,7 +35,7 @@ public class CarrinhoController {
 	@Autowired
 	private FreteService freteService;
 
-	//Flag para validar o primeiro acesso após o login
+	//Flag para validar o acesso após o login
 	private boolean primeiroAcesso = true;
 
 	private static CarrinhoModel carrinho = new CarrinhoModel();
@@ -47,7 +47,7 @@ public class CarrinhoController {
 	private static double total;
 
 	/**
-	 * Metedod para abrir a tela do carrinho mais e feito diversas verificação com primeiro acesso
+	 * Metedo para abrir a tela do carrinho mais e feito diversas verificação com primeiro acesso
 	 * para atualiza a lista do carrinho conforme os itens em sessão com os que estão salvo no banco
 	 * e atualização dos valores de frete e valor total.
 	 * @param user
